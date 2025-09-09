@@ -1,5 +1,5 @@
 acme_sylius_example_admin:
-    resource: "@SyliusHotpayPlugin/config/routes/admin.yaml"
+    resource: "@SyliusDigitalProductPlugin/config/routes/admin.yaml"
 
 acme_sylius_example_shop:
-    resource: "@SyliusHotpayPlugin/config/routes/shop.yaml"
+    resource: "@SyliusDigitalProductPlugin/config/routes/shop.yaml"

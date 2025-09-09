@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusHotpayPlugin\Behat\Page\Shop;
+namespace Tests\SyliusDigitalProductPlugin\Behat\Page\Shop;
 
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 

@@ -1,7 +1,7 @@
 {
-    "name": "jkindly/sylius-hotpay-plugin",
+    "name": "jkindly/sylius-digital-product-plugin",
     "type": "sylius-plugin",
-    "description": "Sylius HotPay Plugin",
+    "description": "Sylius Digital Product Plugin",
     "keywords": [
         "sylius",
         "sylius-plugin"
@@ -64,12 +64,12 @@
     },
     "autoload": {
         "psr-4": {
-            "SyliusHotpayPlugin\\": "src/"
+            "SyliusDigitalProductPlugin\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\SyliusHotpayPlugin\\": ["tests/", "tests/TestApplication/src/"]
+            "Tests\\SyliusDigitalProductPlugin\\": ["tests/", "tests/TestApplication/src/"]
         }
     },
     "scripts": {

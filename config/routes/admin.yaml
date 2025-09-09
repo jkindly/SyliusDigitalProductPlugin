@@ -1,1 +1,35 @@
-# Define your own admin routes here
+sylius_admin_product_create_digital_simple:
+    path: /products/new/digital-simple
+    methods: [ GET, POST ]
+    defaults:
+        _controller: sylius.controller.product::createAction
+        _sylius:
+            section: admin
+            permission: true
+            factory:
+                method: createWithVariant
+            form:
+                type: Sylius\Bundle\AdminBundle\Form\Type\ProductType
+            template: "@SyliusAdmin/shared/crud/create.html.twig"
+            redirect: sylius_admin_product_update
+            vars:
+                route:
+                    name: sylius_admin_product_create_digital_simple
+
+sylius_admin_product_create_digital_configurable:
+    path: /products/new/digital-configurable
+    methods: [ GET, POST ]
+    defaults:
+        _controller: sylius.controller.product::createAction
+        _sylius:
+            section: admin
+            permission: true
+            factory:
+                method: createWithVariant
+            form:
+                type: Sylius\Bundle\AdminBundle\Form\Type\ProductType
+            template: "@SyliusAdmin/shared/crud/create.html.twig"
+            redirect: sylius_admin_product_update
+            vars:
+                route:
+                    name: sylius_admin_product_create_digital_configurable

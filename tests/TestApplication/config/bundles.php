@@ -1,5 +1,5 @@
 <?php
 
 return [
-    SyliusHotpayPlugin\SyliusHotpayPlugin::class => ['all' => true],
+    SyliusDigitalProductPlugin\SyliusDigitalProductPlugin::class => ['all' => true],
 ];

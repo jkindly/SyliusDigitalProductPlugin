@@ -1,10 +1,15 @@
 sylius_twig_hooks:
     hooks:
-        'app_shop.greeting.dynamic':
-            content:
-                template: '@SyliusHotpayPlugin/shop/greeting/dynamic/content.html.twig'
-                priority: 0
-        'app_shop.greeting.static':
-            content:
-                template: '@SyliusHotpayPlugin/shop/greeting/static/content.html.twig'
-                priority: 0
+        'sylius_admin.product.create.content.form.side_navigation':
+            digital_files:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/side_navigation/digital_files.html.twig'
+                priority: 801
+        'sylius_admin.product.create.content.form.sections':
+            digital_files:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files.html.twig'
+                priority: 801
+        'sylius_admin.product.create.content.form.sections.digital_files':
+            header:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files/header.html.twig'
+            add_file:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files/add_file.html.twig'

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusHotpayPlugin\Behat\Context\Ui\Shop;
+namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
-use Tests\SyliusHotpayPlugin\Behat\Page\Shop\WelcomePageInterface;
+use Tests\SyliusDigitalProductPlugin\Behat\Page\Shop\WelcomePageInterface;
 use Webmozart\Assert\Assert;
 
 final class WelcomeContext implements Context

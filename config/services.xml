@@ -10,7 +10,5 @@
     </imports>
 
     <services>
-        <service id="SyliusHotpayPlugin\Controller\GreetingController" autowire="true" autoconfigure="true" public="true" />
-        <!-- Put your services here -->
     </services>
 </container>
