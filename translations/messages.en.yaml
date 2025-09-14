@@ -1,4 +1,9 @@
 sylius_digital_product:
     ui:
         digital_files: Digital files
+        file: File
         files: Files
+        uploaded_file: Uploaded file
+        name: Name
+        add_file: Add file
+        type: File type

@@ -9,7 +9,8 @@ sylius_twig_hooks:
                 template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files.html.twig'
                 priority: 801
         'sylius_admin.product.create.content.form.sections.digital_files':
-            header:
-                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files/header.html.twig'
+            files:
+                component: 'sylius_admin:digital_product:file_entry'
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files/files.html.twig'
             add_file:
                 template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files/add_file.html.twig'

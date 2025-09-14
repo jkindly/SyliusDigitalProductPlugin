@@ -15,11 +15,10 @@ class DigitalProductSectionType extends AbstractType
         $builder
             ->add('files', LiveCollectionType::class, [
                 'entry_type' => DigitalProductFileType::class,
-//                'entry_options' => ['product' => $options['data']],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'label' => 'sylius.form.digital_product.files',
+                'label' => 'sylius_digital_product.ui.files',
                 'block_name' => 'entry',
             ])
         ;

@@ -1,0 +1,15 @@
+{% set files = hookable_metadata.context.form %}
+{% set product = hookable_metadata.context.product %}
+
+<div class="row" {{ sylius_test_html_attribute('files') }} {{ sylius_test_html_attribute('file-subforms') }}>
+    {% for file_form in files %}
+        <div class="col-12 col-md-4 row mb-4">
+            <div class="col">
+                {{ component('sylius_admin:digital_product:file_entry') }}
+                <div class="d-flex items-center mt-2">
+                    {{ form_widget(file_form.vars.button_delete, { attr: { class: 'btn btn-outline-danger w-100' } }) }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
