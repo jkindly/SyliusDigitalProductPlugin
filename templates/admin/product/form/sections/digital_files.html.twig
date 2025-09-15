@@ -1,16 +1,17 @@
 {% set product = hookable_metadata.context.resource %}
-{% set currentForm = hookable_metadata.context.form %}
-{% set rootOrParent = currentForm.parent ?? currentForm %}
-{% set digital_product_section_form = rootOrParent.children.digitalProductSection ?? null %}
+{% set digital_product_section_form = hookable_metadata.context.form.digitalProductSection %}
 
-{% if product.isSimple and digital_product_section_form is not null %}
+{% if product.isSimple %}
     <div class="tab-pane {% if hookable_metadata.configuration.active|default(false) %}show active{% endif %}" id="product-digital-files" role="tabpanel" tabindex="0">
         <div class="card mb-3">
             <div class="card-header">
                 <h2 class="card-title">{{ 'sylius_digital_product.ui.digital_files'|trans }}</h2>
             </div>
             <div class="card-body">
-                {% hook 'digital_files' with { form: digital_product_section_form.files, product: product } %}
+                {% hook 'digital_files' %}
+            </div>
+            <div class="card-footer">
+                {{ form_row(digital_product_section_form.files.vars.button_add) }}
             </div>
         </div>
     </div>

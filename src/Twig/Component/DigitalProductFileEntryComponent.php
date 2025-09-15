@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Twig\Component;
 
+use Sylius\Bundle\UiBundle\Twig\Component\TemplatePropTrait;
 use SyliusDigitalProductPlugin\Form\Type\DigitalProductFileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -18,6 +19,7 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 final class DigitalProductFileEntryComponent extends AbstractController
 {
     use DefaultActionTrait;
+    use TemplatePropTrait;
 
     public function __construct(
         private readonly FormFactoryInterface $formFactory,

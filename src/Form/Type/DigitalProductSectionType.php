@@ -4,12 +4,23 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Form\Type;
 
+use Sylius\Bundle\AdminBundle\Form\Type\AddButtonType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 class DigitalProductSectionType extends AbstractType
 {
+    private array $digitalProductTypes = [
+        'uploaded_file',
+        'external_link',
+    ];
+
+    public function __construct()
+    {
+
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -18,8 +29,14 @@ class DigitalProductSectionType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'label' => 'sylius_digital_product.ui.files',
-                'block_name' => 'entry',
+                'button_add_type' => AddButtonType::class,
+                'button_add_options' => [
+                    'label' => 'sylius.ui.add_scope',
+                    'types' => $this->digitalProductTypes,
+                ],
+                'button_delete_options' => [
+                    'label' => false,
+                ],
             ])
         ;
     }

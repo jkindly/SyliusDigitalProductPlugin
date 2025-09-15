@@ -35,40 +35,10 @@ final class DigitalProductFileType extends AbstractType
             // autosubmit po zmianie (patrz pkt 2):
             'attr' => ['onchange' => 'this.form.requestSubmit()'],
         ]);
-
-        // inicjalizacja przy edycji / kiedy dane są już ustawione
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $data = $event->getData() ?? [];
-            $type = \is_array($data) ? ($data['type'] ?? null) : ($data->getType() ?? null);
-            $this->addPayloadSubform($event->getForm(), $type);
-        });
-
-        // kluczowe: dołóż sub-formę na podstawie wybranej opcji w submitcie
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-            $data = $event->getData() ?? [];
-            $type = $data['type'] ?? null;
-            $this->addPayloadSubform($event->getForm(), $type);
-        });
     }
 
     public function getBlockPrefix(): string
     {
         return 'sylius_admin_digital_product_file';
-    }
-
-    private function addPayloadSubform(FormInterface $form, ?string $type): void
-    {
-        if (!$type) {
-            if ($form->has('payload')) {
-                $form->remove('payload');
-            }
-            return;
-        }
-
-        $provider = $this->registry->get($type);
-        $form->add('payload', $provider->getFormType(), [
-            'label' => false,
-            // ewentualnie: 'validation_groups' => ['Default', 'digital_file_'.$type],
-        ]);
     }
 }
