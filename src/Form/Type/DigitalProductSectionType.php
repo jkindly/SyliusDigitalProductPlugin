@@ -12,8 +12,8 @@ use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 class DigitalProductSectionType extends AbstractType
 {
     private array $digitalProductTypes = [
-        'uploaded_file',
-        'external_link',
+        'uploaded_file' => 'uploaded_file',
+        'external_url' => 'external_url',
     ];
 
     public function __construct()

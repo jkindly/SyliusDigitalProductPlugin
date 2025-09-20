@@ -8,9 +8,11 @@ use SyliusDigitalProductPlugin\Form\Type\UploadedFileType;
 
 final class UploadedDigitalFileProvider implements DigitalFileProviderInterface
 {
+    public const string TYPE = 'uploaded_file';
+
     public function getType(): string
     {
-        return 'uploaded_file';
+        return self::TYPE;
     }
 
     public function getLabel(): string

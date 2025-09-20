@@ -8,8 +8,11 @@ sylius_twig_hooks:
             digital_files:
                 template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files.html.twig'
                 priority: 801
-#        'sylius_admin.product.create.content.form.sections.digital_files':
-#            files:
-#                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files/files.html.twig'
-#            add_file:
-#                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files/add_file.html.twig'
+        'sylius_admin.product.update.content.form.side_navigation':
+            digital_files:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/side_navigation/digital_files.html.twig'
+                priority: 801
+        'sylius_admin.product.update.content.form.sections':
+            digital_files:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files.html.twig'
+                priority: 801

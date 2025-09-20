@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Provider;
 
+use SyliusDigitalProductPlugin\Form\Type\ExternalUrlFileType;
 use SyliusDigitalProductPlugin\Form\Type\UploadedFileType;
 
 final class ExternalUrlDigitalFileProvider implements DigitalFileProviderInterface
 {
+    public const string TYPE = 'external_url';
+
     public function getType(): string
     {
-        return 'external_url';
+        return self::TYPE;
     }
 
     public function getLabel(): string
@@ -20,6 +23,6 @@ final class ExternalUrlDigitalFileProvider implements DigitalFileProviderInterfa
 
     public function getFormType(): string
     {
-        return UploadedFileType::class;
+        return ExternalUrlFileType::class;
     }
 }

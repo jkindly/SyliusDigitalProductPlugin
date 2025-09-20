@@ -30,7 +30,7 @@ final class SyliusDigitalProductExtension extends AbstractResourceExtension impl
 
     protected function getMigrationsNamespace(): string
     {
-        return 'DoctrineMigrations';
+        return 'SyliusDigitalProductPlugin\Migrations';
     }
 
     protected function getMigrationsDirectory(): string

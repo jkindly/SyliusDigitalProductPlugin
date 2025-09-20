@@ -17,7 +17,6 @@ final class ProductTypeExtension extends AbstractTypeExtension
             ->add('digitalProductSection', DigitalProductSectionType::class, [
                 'label' => false,
                 'required' => false,
-                'mapped' => false,
             ])
         ;
     }

@@ -5,17 +5,22 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
+    <parameters>
+        <parameter key="sylius_digital_product_plugin.file_type.uploaded" type="constant">SyliusDigitalProductPlugin\Provider\UploadedDigitalFileProvider::TYPE</parameter>
+        <parameter key="sylius_digital_product_plugin.file_type.external_url" type="constant">SyliusDigitalProductPlugin\Provider\ExternalUrlDigitalFileProvider::TYPE</parameter>
+    </parameters>
+
     <services>
         <service id="sylius_digital_product_plugin.provider.digital_file_registry" class="SyliusDigitalProductPlugin\Provider\DigitalFileProviderRegistry">
-            <argument type="tagged_iterator" tag="sylius_digital_product_plugin.digital_file.provider"/>
+            <argument type="tagged_iterator" tag="sylius_digital_product_plugin.digital_file.provider" index-by="key"/>
         </service>
 
         <service id="sylius_digital_product_plugin.provider.uploaded_digital_file" class="SyliusDigitalProductPlugin\Provider\UploadedDigitalFileProvider">
-            <tag name="sylius_digital_product_plugin.digital_file.provider"/>
+            <tag name="sylius_digital_product_plugin.digital_file.provider" key="%sylius_digital_product_plugin.file_type.uploaded%"/>
         </service>
 
         <service id="sylius_digital_product_plugin.provider.external_url_digital_file" class="SyliusDigitalProductPlugin\Provider\ExternalUrlDigitalFileProvider">
-            <tag name="sylius_digital_product_plugin.digital_file.provider"/>
+            <tag name="sylius_digital_product_plugin.digital_file.provider" key="%sylius_digital_product_plugin.file_type.external_url%"/>
         </service>
     </services>
 </container>

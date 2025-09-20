@@ -1,9 +1,0 @@
-{% set files = hookable_metadata.context.form %}
-{% set attributes = sylius_test_form_attribute('add-digital-file')|sylius_merge_recursive({
-    label: 'sylius_digital_product.ui.add_file'|trans,
-    attr: { class: 'btn btn-outline-primary' }
-}) %}
-
-<div class="d-grid gap-2">
-    {{ form_widget(files.vars.button_add, attributes) }}
-</div>
