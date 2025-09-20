@@ -8,7 +8,7 @@ use SyliusDigitalProductPlugin\Form\Type\UploadedFileType;
 
 final class UploadedDigitalFileProvider implements DigitalFileProviderInterface
 {
-    public const string TYPE = 'uploaded_file';
+    public const TYPE = 'uploaded_file';
 
     public function getType(): string
     {

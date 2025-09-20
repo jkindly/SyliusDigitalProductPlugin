@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Entity;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-
-interface UploadedDigitalFileInterface extends ResourceInterface
+interface UploadedDigitalFileInterface
 {
     public function getPath(): ?string;
 

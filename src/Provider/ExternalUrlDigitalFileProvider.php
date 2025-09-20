@@ -9,7 +9,7 @@ use SyliusDigitalProductPlugin\Form\Type\UploadedFileType;
 
 final class ExternalUrlDigitalFileProvider implements DigitalFileProviderInterface
 {
-    public const string TYPE = 'external_url';
+    public const TYPE = 'external_url';
 
     public function getType(): string
     {

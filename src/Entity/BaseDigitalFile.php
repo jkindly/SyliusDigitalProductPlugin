@@ -9,7 +9,7 @@ use Sylius\Component\Core\Model\PositionAwareInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Resource\Model\TimestampableTrait;
 
-abstract class BaseDigitalFile implements PositionAwareInterface
+abstract class BaseDigitalFile implements DigitalFileInterface
 {
     use TimestampableTrait;
 
