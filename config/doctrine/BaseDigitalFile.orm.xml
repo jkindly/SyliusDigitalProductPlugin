@@ -7,7 +7,7 @@
             <generator/>
         </id>
 
-        <field name="uuid" type="binary" column="uuid" length="16" unique="true" />
+        <field name="uuid" column="uuid" length="36" unique="true" />
 
         <field name="position" type="integer">
             <gedmo:sortable-position />

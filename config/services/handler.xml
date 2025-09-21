@@ -7,12 +7,12 @@
 >
     <services>
         <service id="sylius_digital_product_plugin.handler.digital_file_handler_registry" class="SyliusDigitalProductPlugin\Handler\DigitalFileHandlerRegistry">
-            <argument type="tagged_iterator" tag="sylius_digital_product_plugin.digital_file.handler" index-by="key"/>
+            <argument type="tagged_iterator" tag="sylius_digital_product_plugin.digital_file.handler"/>
         </service>
 
         <service id="sylius_digital_product_plugin.handler.uploaded_digital_file" class="SyliusDigitalProductPlugin\Handler\UploadedDigitalFileHandler">
-            <argument>%sylius_digital_product_plugin.file_type.uploaded%%</argument>
-            <tag name="sylius_digital_product_plugin.digital_file.handler" key="%sylius_digital_product_plugin.file_type.uploaded%"/>
+            <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
+            <tag name="sylius_digital_product_plugin.digital_file.handler"/>
         </service>
     </services>
 </container>

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Synchronizer;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Product\Model\ProductInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
 use SyliusDigitalProductPlugin\Entity\UploadedDigitalFileInterface;
 use SyliusDigitalProductPlugin\Handler\DigitalFileHandlerRegistry;
@@ -21,7 +21,7 @@ final readonly class UploadedDigitalFileSynchronizer implements DigitalFileSynch
     ) {
     }
 
-    public function sync(ProductInterface $product, array $submittedFiles, bool $flush = true): void
+    public function sync(ProductInterface $product, DigitalFileInterface $submittedFile, bool $flush = true): void
     {
         $existingFilesForProduct = $this->uploadedDigitalFileRepository->findBy(['product' => $product]);
 
@@ -30,23 +30,21 @@ final readonly class UploadedDigitalFileSynchronizer implements DigitalFileSynch
             $existingById[$existingFile->getId()] = $existingFile;
         }
 
-        foreach ($submittedFiles as $file) {
-            if (!$file instanceof UploadedDigitalFileInterface) {
-                continue;
-            }
+        if (!$submittedFile instanceof UploadedDigitalFileInterface) {
+            return;
+        }
 
-            if (null === $file->getProduct()) {
-                $file->setProduct($product);
-            }
+        if (null === $submittedFile->getProduct()) {
+            $submittedFile->setProduct($product);
+        }
 
-            $handler = $this->registry->getHandlerForType($this->type);
-            $handler->process($file);
+        $handler = $this->registry->getHandlerForType($this->type);
+        $handler->process($submittedFile);
 
-            if ($file->getId() === null) {
-                $this->entityManager->persist($file);
-            } else {
-                unset($existingById[$file->getId()]);
-            }
+        if ($submittedFile->getId() === null) {
+            $this->entityManager->persist($submittedFile);
+        } else {
+            unset($existingById[$submittedFile->getId()]);
         }
 
         foreach ($existingById as $toRemove) {
@@ -56,5 +54,10 @@ final readonly class UploadedDigitalFileSynchronizer implements DigitalFileSynch
         if ($flush) {
             $this->entityManager->flush();
         }
+    }
+
+    public function supports(string $type): bool
+    {
+        return $this->type === $type;
     }
 }

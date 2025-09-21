@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Entity;
 
-use Ramsey\Uuid\Uuid;
-use Sylius\Component\Core\Model\PositionAwareInterface;
-use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Resource\Model\TimestampableTrait;
+use Symfony\Component\Uid\Uuid;
 
 abstract class BaseDigitalFile implements DigitalFileInterface
 {
@@ -23,7 +22,7 @@ abstract class BaseDigitalFile implements DigitalFileInterface
 
     public function __construct()
     {
-        $this->uuid = Uuid::uuid4()->getBytes();
+        $this->uuid = Uuid::v4()->toRfc4122();
     }
 
     public function getId(): ?int
@@ -33,17 +32,7 @@ abstract class BaseDigitalFile implements DigitalFileInterface
 
     public function getUuid(): string
     {
-        return Uuid::fromBytes($this->uuid)->toString();
-    }
-
-    public function getUuidBytes(): string
-    {
         return $this->uuid;
-    }
-
-    public function setUuidFromString(string $uuid): void
-    {
-        $this->uuid = Uuid::fromString($uuid)->getBytes();
     }
 
     public function getPosition(): ?int

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Form\Type;
 
 use Sylius\Bundle\AdminBundle\Form\Type\AddButtonType;
+use SyliusDigitalProductPlugin\EventSubscriber\ProductDigitalFilesSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
@@ -16,7 +17,7 @@ class DigitalProductSectionType extends AbstractType
         'external_url' => 'external_url',
     ];
 
-    public function __construct()
+    public function __construct(private readonly ProductDigitalFilesSubscriber $digitalFilesSubscriber)
     {
 
     }
@@ -39,6 +40,8 @@ class DigitalProductSectionType extends AbstractType
                 ],
             ])
         ;
+
+        $builder->addEventSubscriber($this->digitalFilesSubscriber);
     }
 
     public function getBlockPrefix(): string

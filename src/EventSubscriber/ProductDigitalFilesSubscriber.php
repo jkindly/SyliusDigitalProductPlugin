@@ -7,13 +7,14 @@ namespace SyliusDigitalProductPlugin\EventSubscriber;
 use Sylius\Component\Product\Model\ProductInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
 use SyliusDigitalProductPlugin\Synchronizer\DigitalFileSynchronizerInterface;
+use SyliusDigitalProductPlugin\Synchronizer\DigitalFileSynchronizerRegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 final readonly class ProductDigitalFilesSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private DigitalFileSynchronizerInterface $synchronizer)
+    public function __construct(private DigitalFileSynchronizerRegistryInterface $registry)
     {
     }
 
@@ -27,31 +28,14 @@ final readonly class ProductDigitalFilesSubscriber implements EventSubscriberInt
     public function onPostSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
-        $parent = $form->getParent();
-        if ($parent === null) {
-            return;
-        }
-
-        $product = $parent->getData();
+        $product = $form->getParent()?->getData();
         if (!$product instanceof ProductInterface) {
             return;
         }
-
-        if (!$form->has('files')) {
-            return;
-        }
-
-        /** @var array<DigitalFileInterface> $submittedFiles */
-        $submittedFiles = $form->get('files')->getData() ?? [];
-        $uploadedFiles = [];
-        foreach ($submittedFiles as $file) {
-            if ($file instanceof DigitalFileInterface) {
-                $uploadedFiles[] = $file;
-            }
-        }
-
-        if (count($uploadedFiles) > 0) {
-            $this->synchronizer->sync($product, $uploadedFiles);
+dump($form->get('files')->getData());
+        foreach ($form->get('files')->getData() ?? [] as $file) {
+            $sync = $this->registry->getForType($file['type']);
+            $sync->sync($product, $file['configuration'], false);
         }
     }
 }

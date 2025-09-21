@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Provider;
 
-use SyliusDigitalProductPlugin\Form\Type\ExternalUrlFileType;
-use SyliusDigitalProductPlugin\Form\Type\UploadedFileType;
+use SyliusDigitalProductPlugin\Form\Type\ExternalUrlDigitalFileType;
+use SyliusDigitalProductPlugin\Form\Type\UploadedDigitalFileType;
 
 final class ExternalUrlDigitalFileProvider implements DigitalFileProviderInterface
 {
@@ -23,6 +23,6 @@ final class ExternalUrlDigitalFileProvider implements DigitalFileProviderInterfa
 
     public function getFormType(): string
     {
-        return ExternalUrlFileType::class;
+        return ExternalUrlDigitalFileType::class;
     }
 }

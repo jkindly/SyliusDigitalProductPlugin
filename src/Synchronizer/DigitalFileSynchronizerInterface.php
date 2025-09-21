@@ -9,8 +9,7 @@ use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
 
 interface DigitalFileSynchronizerInterface
 {
-    /**
-     * @param array<DigitalFileInterface> $submittedFiles
-     */
-    public function sync(ProductInterface $product, array $submittedFiles, bool $flush = true): void;
+    public function sync(ProductInterface $product, DigitalFileInterface $submittedFile, bool $flush = true): void;
+
+    public function supports(string $type): bool;
 }

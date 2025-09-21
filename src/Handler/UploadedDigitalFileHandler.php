@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Handler;
 
 use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
+use SyliusDigitalProductPlugin\Entity\UploadedDigitalFileInterface;
 
 final readonly class UploadedDigitalFileHandler implements DigitalFileHandlerInterface
 {
@@ -19,6 +20,16 @@ final readonly class UploadedDigitalFileHandler implements DigitalFileHandlerInt
 
     public function process(DigitalFileInterface $digitalFile): void
     {
-        // TODO: Implement process() method.
+        if (!$digitalFile instanceof UploadedDigitalFileInterface) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Wrong digital file type, expected %s, got %s',
+                    UploadedDigitalFileInterface::class,
+                    get_class($digitalFile),
+                ),
+            );
+        }
+
+
     }
 }

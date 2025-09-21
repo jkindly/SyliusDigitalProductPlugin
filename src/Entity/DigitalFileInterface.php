@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Entity;
 
 use Sylius\Component\Core\Model\PositionAwareInterface;
-use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Resource\Model\TimestampableInterface;
 
 interface DigitalFileInterface extends
@@ -13,6 +13,8 @@ interface DigitalFileInterface extends
     TimestampableInterface
 {
     public function getId(): ?int;
+
+    public function getUuid(): string;
 
     public function getProduct(): ?ProductInterface;
 

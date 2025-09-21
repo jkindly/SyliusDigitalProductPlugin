@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Provider;
 
-use SyliusDigitalProductPlugin\Form\Type\UploadedFileType;
+use SyliusDigitalProductPlugin\Form\Type\UploadedDigitalFileType;
 
 final class UploadedDigitalFileProvider implements DigitalFileProviderInterface
 {
@@ -22,6 +22,6 @@ final class UploadedDigitalFileProvider implements DigitalFileProviderInterface
 
     public function getFormType(): string
     {
-        return UploadedFileType::class;
+        return UploadedDigitalFileType::class;
     }
 }

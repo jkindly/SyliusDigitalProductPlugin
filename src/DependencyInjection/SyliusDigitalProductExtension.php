@@ -15,10 +15,12 @@ final class SyliusDigitalProductExtension extends AbstractResourceExtension impl
 {
     use PrependDoctrineMigrationsTrait;
 
-    /** @psalm-suppress UnusedVariable */
     public function load(array $configs, ContainerBuilder $container): void
     {
+        $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
+dd($config);
+        $container->setParameter('sylius.admin.notification.enabled', $config['uploaded_digital_file_directory']);
 
         $loader->load('services.xml');
     }
