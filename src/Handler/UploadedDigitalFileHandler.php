@@ -6,11 +6,14 @@ namespace SyliusDigitalProductPlugin\Handler;
 
 use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
 use SyliusDigitalProductPlugin\Entity\UploadedDigitalFileInterface;
+use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 
 final readonly class UploadedDigitalFileHandler implements DigitalFileHandlerInterface
 {
-    public function __construct(private string $type)
-    {
+    public function __construct(
+        private DigitalProductFileUploaderInterface $localDigitalProductFileUploader,
+        private string $type,
+    ) {
     }
 
     public function supports(string $type): bool
@@ -30,5 +33,18 @@ final readonly class UploadedDigitalFileHandler implements DigitalFileHandlerInt
             );
         }
 
+        if (null === $uploadedFile = $digitalFile->getUploadedFile()) {
+            throw new \InvalidArgumentException('No file was uploaded.');
+        }
+
+//        $fileData = $this->localDigitalProductFileUploader->upload($uploadedFile);
+
+        $originalFilename = $uploadedFile->getClientOriginalName();
+
+
+        $digitalFile->setPath($fileData[DigitalProductFileUploaderInterface::PROPERTY_PATH]);
+        $digitalFile->setSize($fileData[DigitalProductFileUploaderInterface::PROPERTY_SIZE]);
+        $digitalFile->setOriginalFilename();
+        $digitalFile
     }
 }

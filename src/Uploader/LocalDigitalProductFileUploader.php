@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Uploader;
 
+use Random\RandomException;
+use RuntimeException;
+use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class LocalDigitalProductFileUploader implements DigitalProductFileUploaderInterface
@@ -13,15 +18,37 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
 
     public function __construct(
         private Filesystem $filesystem,
+        private PathGeneratorInterface $datePathGenerator,
         string $uploadPath,
     ) {
         $this->uploadPath = rtrim($uploadPath, '/');
     }
 
-    public function upload(UploadedFile $uploadedFile): string
+    public function upload(UploadedFile $uploadedFile): array
     {
-        $dir = $this->uploadPath . '/' . bin2hex(random_bytes(1));
-        $this->filesystem->mkdir($dir, 0755);
+        $uploadPath = sprintf('%s/%s', $this->datePathGenerator->generate(), bin2hex(random_bytes(1)));
+        $absolutePath = sprintf('%s/%s', $this->uploadPath, $uploadPath,);
+
+        $this->filesystem->mkdir($absolutePath, 0755);
+
+        $ext = $uploadedFile->guessExtension() ?? pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION) ?: '';
+        $fileName = hash('sha256', random_bytes(16) . microtime(true)) . ($ext ? '.' . $ext : '');
+
+        $target = $absolutePath . '/' . $fileName;
+
+        $uploadedFile->move($absolutePath, $fileName);
+        if (!file_exists($target)) {
+            throw new RuntimeException('Failed to move uploaded file.');
+        }
+
+        $size = filesize($target);
+        $relativePath = sprintf('%s/%s', trim($uploadPath, '/'), $fileName);
+
+        return [
+            self::PROPERTY_PATH => $relativePath,
+            self::PROPERTY_FILENAME => $fileName,
+            self::PROPERTY_SIZE => $size,
+        ];
     }
 
     public function remove(string $storedFilename): void

@@ -11,6 +11,7 @@
         </service>
 
         <service id="sylius_digital_product_plugin.handler.uploaded_digital_file" class="SyliusDigitalProductPlugin\Handler\UploadedDigitalFileHandler">
+            <argument type="service" id="sylius_digital_product_plugin.uploader.local_digital_product_file"/>
             <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
             <tag name="sylius_digital_product_plugin.digital_file.handler"/>
         </service>

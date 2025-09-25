@@ -16,6 +16,8 @@ class UploadedDigitalFile extends BaseDigitalFile implements UploadedDigitalFile
 
     protected ?string $originalFilename = null;
 
+    protected ?string $extension = null;
+
     protected ?int $size = null;
 
     protected ?UploadedFile $uploadedFile = null;
@@ -58,6 +60,16 @@ class UploadedDigitalFile extends BaseDigitalFile implements UploadedDigitalFile
     public function setOriginalFilename(?string $originalFilename): void
     {
         $this->originalFilename = $originalFilename;
+    }
+
+    public function getExtension(): ?string
+    {
+        return $this->extension;
+    }
+
+    public function setExtension(?string $extension): void
+    {
+        $this->extension = $extension;
     }
 
     public function getSize(): ?int
