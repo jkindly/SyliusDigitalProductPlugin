@@ -30,6 +30,5 @@ final readonly class UploadedDigitalFileHandler implements DigitalFileHandlerInt
             );
         }
 
-
     }
 }

@@ -6,6 +6,7 @@ namespace SyliusDigitalProductPlugin\DependencyInjection;
 
 use Sylius\Bundle\CoreBundle\DependencyInjection\PrependDoctrineMigrationsTrait;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -19,8 +20,7 @@ final class SyliusDigitalProductExtension extends AbstractResourceExtension impl
     {
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
-dd($config);
-        $container->setParameter('sylius.admin.notification.enabled', $config['uploaded_digital_file_directory']);
+        $container->setParameter('sylius_digital_product_plugin.uploaded_file.directory', $config['uploaded_digital_file_directory']);
 
         $loader->load('services.xml');
     }
@@ -45,5 +45,14 @@ dd($config);
         return [
             'Sylius\Bundle\CoreBundle\Migrations',
         ];
+    }
+
+    private function getCurrentConfiguration(ContainerBuilder $container): array
+    {
+        /** @var ConfigurationInterface $configuration */
+        $configuration = $this->getConfiguration([], $container);
+        $configs = $container->getExtensionConfig($this->getAlias());
+
+        return $this->processConfiguration($configuration, $configs);
     }
 }

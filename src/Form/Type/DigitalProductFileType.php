@@ -53,6 +53,11 @@ final class DigitalProductFileType extends AbstractType
         if ($data === null) {
             return;
         }
+
+        if (!is_array($data) && !$data instanceof DigitalFileProviderInterface) {
+            return;
+        }
+
         $dataType = $data instanceof DigitalFileProviderInterface ? $data->getType() : $data['type'];
         $scopeConfigurationType = $this->fileTypes[$dataType];
 

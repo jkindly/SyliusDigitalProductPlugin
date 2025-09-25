@@ -32,9 +32,17 @@ final readonly class ProductDigitalFilesSubscriber implements EventSubscriberInt
         if (!$product instanceof ProductInterface) {
             return;
         }
-dump($form->get('files')->getData());
-        foreach ($form->get('files')->getData() ?? [] as $file) {
-            $sync = $this->registry->getForType($file['type']);
+
+        /** @var array<int, array<string, mixed>> $files */
+        $files = $form->get('files')->getData() ?? [];
+        foreach ($files as $file) {
+            if (!$file['configuration'] instanceof DigitalFileInterface) {
+                continue;
+            }
+
+            /** @var string $type */
+            $type = $file['type'];
+            $sync = $this->registry->getForType($type);
             $sync->sync($product, $file['configuration'], false);
         }
     }
