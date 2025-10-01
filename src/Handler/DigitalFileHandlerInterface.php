@@ -10,5 +10,5 @@ interface DigitalFileHandlerInterface
 {
     public function supports(string $type): bool;
 
-    public function process(DigitalFileInterface $digitalFile): void;
+    public function handle(DigitalFileInterface $digitalFile): void;
 }

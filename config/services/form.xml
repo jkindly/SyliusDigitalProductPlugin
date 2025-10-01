@@ -6,17 +6,13 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="sylius_digital_product_plugin.form.type.digital_product_section" class="SyliusDigitalProductPlugin\Form\Type\DigitalProductSectionType">
-            <argument type="service" id="sylius_digital_product_plugin.event_subscriber.product_digital_files" />
-            <tag name="form.type" />
-        </service>
-
         <service id="sylius_digital_product_plugin.form.type.digital_product_file" class="SyliusDigitalProductPlugin\Form\Type\DigitalProductFileType">
             <argument type="service" id="sylius_digital_product_plugin.provider.digital_file_registry" />
             <tag name="form.type" />
         </service>
 
         <service id="sylius_digital_product_plugin.form.extension.product_type" class="SyliusDigitalProductPlugin\Form\Extension\ProductTypeExtension">
+            <argument type="service" id="sylius_digital_product_plugin.event_subscriber.product_digital_files" />
             <tag name="form.type_extension" />
         </service>
     </services>

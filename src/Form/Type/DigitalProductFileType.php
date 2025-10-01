@@ -60,7 +60,6 @@ final class DigitalProductFileType extends AbstractType
 
         $dataType = $data instanceof DigitalFileProviderInterface ? $data->getType() : $data['type'];
         $scopeConfigurationType = $this->fileTypes[$dataType];
-
         $form = $event->getForm();
         $form->add('configuration', $scopeConfigurationType);
     }

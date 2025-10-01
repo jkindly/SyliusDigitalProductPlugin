@@ -24,6 +24,10 @@ interface UploadedDigitalFileInterface
 
     public function setOriginalFilename(?string $originalFilename): void;
 
+    public function getExtension(): ?string;
+
+    public function setExtension(?string $extension): void;
+
     public function getSize(): ?int;
 
     public function setSize(?int $size): void;

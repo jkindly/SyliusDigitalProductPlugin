@@ -12,7 +12,13 @@ interface DigitalProductFileUploaderInterface
 
     public const PROPERTY_FILENAME = 'filename';
 
+    public const PROPERTY_ORIGINAL_FILENAME = 'original_filename';
+
     public const PROPERTY_SIZE = 'size';
+
+    public const PROPERTY_EXTENSION = 'extension';
+
+    public const PROPERTY_MIME_TYPE = 'mime_type';
 
     public function upload(UploadedFile $uploadedFile): array;
 

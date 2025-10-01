@@ -9,7 +9,8 @@
         <field name="path" column="path" length="255"/>
         <field name="mimeType" column="mime_type" length="255"/>
         <field name="originalFilename" column="original_file_name" length="255"/>
-        <field name="extension" column="original_file_name" length="10"/>
+        <field name="name" column="name" length="255"/>
+        <field name="extension" column="extension" length="20"/>
         <field name="size" column="size" type="bigint">
             <options>
                 <option name="unsigned">true</option>

@@ -21,7 +21,7 @@ final readonly class UploadedDigitalFileHandler implements DigitalFileHandlerInt
         return $this->type === $type;
     }
 
-    public function process(DigitalFileInterface $digitalFile): void
+    public function handle(DigitalFileInterface $digitalFile): void
     {
         if (!$digitalFile instanceof UploadedDigitalFileInterface) {
             throw new \InvalidArgumentException(
@@ -37,14 +37,13 @@ final readonly class UploadedDigitalFileHandler implements DigitalFileHandlerInt
             throw new \InvalidArgumentException('No file was uploaded.');
         }
 
-//        $fileData = $this->localDigitalProductFileUploader->upload($uploadedFile);
-
-        $originalFilename = $uploadedFile->getClientOriginalName();
-
+        $fileData = $this->localDigitalProductFileUploader->upload($uploadedFile);
 
         $digitalFile->setPath($fileData[DigitalProductFileUploaderInterface::PROPERTY_PATH]);
         $digitalFile->setSize($fileData[DigitalProductFileUploaderInterface::PROPERTY_SIZE]);
-        $digitalFile->setOriginalFilename();
-        $digitalFile
+        $digitalFile->setOriginalFilename($fileData[DigitalProductFileUploaderInterface::PROPERTY_ORIGINAL_FILENAME]);
+        $digitalFile->setExtension($fileData[DigitalProductFileUploaderInterface::PROPERTY_EXTENSION]);
+        $digitalFile->setName($digitalFile->getName() ?? $fileData[DigitalProductFileUploaderInterface::PROPERTY_FILENAME]);
+        $digitalFile->setMimeType($fileData[DigitalProductFileUploaderInterface::PROPERTY_MIME_TYPE]);
     }
 }

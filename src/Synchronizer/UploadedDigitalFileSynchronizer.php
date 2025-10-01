@@ -39,7 +39,7 @@ final readonly class UploadedDigitalFileSynchronizer implements DigitalFileSynch
         }
 
         $handler = $this->registry->getHandlerForType($this->type);
-        $handler->process($submittedFile);
+        $handler->handle($submittedFile);
 
         if ($submittedFile->getId() === null) {
             $this->entityManager->persist($submittedFile);

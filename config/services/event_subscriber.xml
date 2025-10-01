@@ -10,6 +10,7 @@
                  class="SyliusDigitalProductPlugin\EventSubscriber\ProductDigitalFilesSubscriber"
         >
             <argument type="service" id="sylius_digital_product_plugin.synchronizer.digital_file_handler_registry"/>
+            <argument type="service" id="sylius_digital_product_plugin.repository.uploaded_digital_file"/>
         </service>
     </services>
 </container>

@@ -32,8 +32,9 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
         $this->filesystem->mkdir($absolutePath, 0755);
 
         $ext = $uploadedFile->guessExtension() ?? pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION) ?: '';
+        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
         $fileName = hash('sha256', random_bytes(16) . microtime(true)) . ($ext ? '.' . $ext : '');
-
+        $mimeType = $uploadedFile->getMimeType();
         $target = $absolutePath . '/' . $fileName;
 
         $uploadedFile->move($absolutePath, $fileName);
@@ -47,7 +48,10 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
         return [
             self::PROPERTY_PATH => $relativePath,
             self::PROPERTY_FILENAME => $fileName,
+            self::PROPERTY_ORIGINAL_FILENAME => $originalFilename,
             self::PROPERTY_SIZE => $size,
+            self::PROPERTY_EXTENSION => $ext,
+            self::PROPERTY_MIME_TYPE => $mimeType,
         ];
     }
 
