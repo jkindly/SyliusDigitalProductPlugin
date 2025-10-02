@@ -39,11 +39,10 @@ final class ProductTypeExtension extends AbstractTypeExtension
                 'button_delete_options' => [
                     'label' => false,
                 ],
-                'data' => [],
             ])
         ;
 
-        $builder->addEventSubscriber($this->digitalFilesSubscriber);
+//        $builder->addEventSubscriber($this->digitalFilesSubscriber);
     }
 
     public static function getExtendedTypes(): iterable

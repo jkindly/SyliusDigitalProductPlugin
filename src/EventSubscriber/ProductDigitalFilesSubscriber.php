@@ -40,6 +40,7 @@ final readonly class ProductDigitalFilesSubscriber implements EventSubscriberInt
 
         /** @var array<int, array<string, mixed>> $files */
         $files = $form->get('files')->getData() ?? [];
+
         foreach ($files as $file) {
             if (!$file['configuration'] instanceof DigitalFileInterface) {
                 continue;
@@ -59,7 +60,7 @@ final readonly class ProductDigitalFilesSubscriber implements EventSubscriberInt
         if (!$product instanceof ProductInterface) {
             return;
         }
-
+        dd($files);;
         /** @var UploadedDigitalFileInterface[] $existingFilesForProduct */
         $existingFilesForProduct = $this->uploadedDigitalFileRepository->findBy(['product' => $product]);
         if (empty($existingFilesForProduct)) {
