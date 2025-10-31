@@ -1,5 +1,6 @@
 acme_sylius_example_admin:
     resource: "@SyliusDigitalProductPlugin/config/routes/admin.yaml"
+    prefix: /admin
 
 acme_sylius_example_shop:
     resource: "@SyliusDigitalProductPlugin/config/routes/shop.yaml"

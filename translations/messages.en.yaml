@@ -3,7 +3,13 @@ sylius_digital_product:
         digital_files: Digital files
         file: File
         files: Files
-        uploaded_file: Uploaded file
+        url: URL
+        uploaded_file:
+            title: Uploaded file
+            download: Download file
+        external_url:
+            title: External URL
+            placeholder: 'https://example.com/url'
         name: Name
-        add_file: Add file
+        add_digital_file: Add digital file
         type: File type

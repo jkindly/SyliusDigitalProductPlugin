@@ -16,7 +16,15 @@ interface DigitalFileInterface extends
 
     public function getUuid(): string;
 
+    public function getType(): ?string;
+
+    public function setType(?string $type): void;
+
     public function getProduct(): ?ProductInterface;
 
     public function setProduct(?ProductInterface $product): void;
+
+    public function getConfiguration(): array;
+
+    public function setConfiguration(array $configuration): void;
 }

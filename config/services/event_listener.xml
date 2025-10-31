@@ -11,5 +11,23 @@
         >
             <tag name="kernel.event_listener" event="sylius.grid.admin_product" method="addDigitalCreateLink"/>
         </service>
+
+        <service id="sylius_digital_product_plugin.event_listener.product" class="SyliusDigitalProductPlugin\EventListener\ProductListener">
+            <argument type="service" id="sylius_digital_product_plugin.handler.uploaded_digital_file"/>
+            <argument type="service" id="sylius_digital_product_plugin.serializer.uploaded_digital_file_configuration"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
+            <tag name="kernel.event_listener" event="sylius.product.post_create" method="handleUpload"/>
+            <tag name="kernel.event_listener" event="sylius.product.post_update" method="handleUpload"/>
+        </service>
+
+        <service id="sylius_digital_product_plugin.event_listener.remove_uploaded_digital_file"
+                 class="SyliusDigitalProductPlugin\EventListener\RemoveUploadedDigitalFileListener"
+        >
+            <argument>%sylius_digital_product_plugin.uploaded_file.delete_from_storage_on_remove%</argument>
+            <argument>%sylius_digital_product_plugin.uploaded_file.directory%</argument>
+            <tag name="doctrine.orm.entity_listener" entity="SyliusDigitalProductPlugin\Entity\DigitalFile" method="preRemove"/>
+        </service>
+
     </services>
 </container>

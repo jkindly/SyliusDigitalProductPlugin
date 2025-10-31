@@ -14,4 +14,9 @@ interface DigitalFileProviderInterface
      * FQCN of the form type.
      */
     public function getFormType(): string;
+
+    /**
+     * FQCN of the DTO.
+     */
+    public function getDto(): string;
 }

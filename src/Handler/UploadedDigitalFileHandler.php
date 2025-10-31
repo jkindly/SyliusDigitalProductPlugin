@@ -4,37 +4,24 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Handler;
 
-use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
-use SyliusDigitalProductPlugin\Entity\UploadedDigitalFileInterface;
+use SyliusDigitalProductPlugin\Dto\DigitalFileDtoInterface;
+use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
 use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 
 final readonly class UploadedDigitalFileHandler implements DigitalFileHandlerInterface
 {
     public function __construct(
         private DigitalProductFileUploaderInterface $localDigitalProductFileUploader,
-        private string $type,
     ) {
     }
 
-    public function supports(string $type): bool
+    /**
+     * @param UploadedDigitalFileDto $digitalFile
+     */
+    public function handle(DigitalFileDtoInterface $digitalFile): void
     {
-        return $this->type === $type;
-    }
-
-    public function handle(DigitalFileInterface $digitalFile): void
-    {
-        if (!$digitalFile instanceof UploadedDigitalFileInterface) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Wrong digital file type, expected %s, got %s',
-                    UploadedDigitalFileInterface::class,
-                    get_class($digitalFile),
-                ),
-            );
-        }
-
         if (null === $uploadedFile = $digitalFile->getUploadedFile()) {
-            throw new \InvalidArgumentException('No file was uploaded.');
+            return;
         }
 
         $fileData = $this->localDigitalProductFileUploader->upload($uploadedFile);

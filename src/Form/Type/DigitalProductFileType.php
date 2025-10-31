@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Form\Type;
 
-use Sylius\Component\Promotion\Model\CatalogPromotionScopeInterface;
-use SyliusDigitalProductPlugin\Provider\DigitalFileProviderInterface;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
 use SyliusDigitalProductPlugin\Provider\DigitalFileProviderRegistryInterface;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 
-final class DigitalProductFileType extends AbstractType
+final class DigitalProductFileType extends AbstractResourceType
 {
     private array $fileTypes = [];
 
-    public function __construct(private readonly DigitalFileProviderRegistryInterface $registry)
-    {
+    public function __construct(
+        private readonly DigitalFileProviderRegistryInterface $registry,
+        protected string $dataClass,
+        protected array $validationGroups = [],
+    ) {
+        parent::__construct($dataClass, $validationGroups);
+
         foreach ($this->registry->getAll() as $key => $provider) {
             $this->fileTypes[$key] = $provider->getFormType();
         }
@@ -54,11 +54,11 @@ final class DigitalProductFileType extends AbstractType
             return;
         }
 
-        if (!is_array($data) && !$data instanceof DigitalFileProviderInterface) {
+        if (!is_array($data) && !$data instanceof DigitalFileInterface) {
             return;
         }
 
-        $dataType = $data instanceof DigitalFileProviderInterface ? $data->getType() : $data['type'];
+        $dataType = $data instanceof DigitalFileInterface ? $data->getType() : $data['type'];
         $scopeConfigurationType = $this->fileTypes[$dataType];
         $form = $event->getForm();
         $form->add('configuration', $scopeConfigurationType);

@@ -8,6 +8,7 @@ sylius_twig_hooks:
             digital_files:
                 template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files.html.twig'
                 priority: 801
+                
         'sylius_admin.product.update.content.form.side_navigation':
             digital_files:
                 template: '@SyliusDigitalProductPlugin/admin/product/form/side_navigation/digital_files.html.twig'
@@ -15,4 +16,13 @@ sylius_twig_hooks:
         'sylius_admin.product.update.content.form.sections':
             digital_files:
                 template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files.html.twig'
+                priority: 801
+                
+        'sylius_admin.product_variant.create.content.form.side_navigation':
+            digital_files:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/side_navigation/digital_files.html.twig'
+                priority: 301
+        'sylius_admin.product_variant.create.content.form.sections':
+            digital_files:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_files.html.twig'
                 priority: 801

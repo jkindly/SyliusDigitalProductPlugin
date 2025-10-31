@@ -24,7 +24,8 @@ final class DigitalProductFileEntryComponent extends AbstractController
     public function __construct(
         private readonly FormFactoryInterface $formFactory,
         private readonly RequestStack $requestStack,
-    ) {}
+    ) {
+    }
 
     /** Aktualnie wybrany typ (bindowany z selecta) */
     #[LiveProp(writable: true)]
@@ -47,7 +48,7 @@ final class DigitalProductFileEntryComponent extends AbstractController
             'digital_file_entry_' . spl_object_id($this),
             DigitalProductFileType::class,
             $data,
-            ['csrf_protection' => false] // entry i tak finalnie zapisze parent form
+            ['csrf_protection' => false], // entry i tak finalnie zapisze parent form
         );
     }
 

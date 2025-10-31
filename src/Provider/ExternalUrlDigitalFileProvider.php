@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Provider;
 
+use SyliusDigitalProductPlugin\Dto\ExternalUrlDigitalFileDto;
 use SyliusDigitalProductPlugin\Form\Type\ExternalUrlDigitalFileType;
-use SyliusDigitalProductPlugin\Form\Type\UploadedDigitalFileType;
 
 final class ExternalUrlDigitalFileProvider implements DigitalFileProviderInterface
 {
@@ -18,11 +18,16 @@ final class ExternalUrlDigitalFileProvider implements DigitalFileProviderInterfa
 
     public function getLabel(): string
     {
-        return 'sylius_digital_product.ui.external_url';
+        return 'sylius_digital_product.ui.external_url.title';
     }
 
     public function getFormType(): string
     {
         return ExternalUrlDigitalFileType::class;
+    }
+
+    public function getDto(): string
+    {
+        return ExternalUrlDigitalFileDto::class;
     }
 }

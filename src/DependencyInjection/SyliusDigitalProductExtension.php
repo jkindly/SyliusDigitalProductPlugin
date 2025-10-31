@@ -20,7 +20,11 @@ final class SyliusDigitalProductExtension extends AbstractResourceExtension impl
     {
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
-        $container->setParameter('sylius_digital_product_plugin.uploaded_file.directory', $config['uploaded_digital_file_directory']);
+
+        $uploadedFile = $config['uploaded_file'] ?? [];
+
+        $container->setParameter('sylius_digital_product_plugin.uploaded_file.directory', $uploadedFile['directory']);
+        $container->setParameter('sylius_digital_product_plugin.uploaded_file.delete_from_storage_on_remove', $uploadedFile['delete_from_storage_on_remove']);
 
         $loader->load('services.xml');
     }
@@ -28,6 +32,16 @@ final class SyliusDigitalProductExtension extends AbstractResourceExtension impl
     public function prepend(ContainerBuilder $container): void
     {
         $this->prependDoctrineMigrations($container);
+
+        $validatorConfig = [
+            'mapping' => [
+                'paths' => [
+                    __DIR__ . '/../../config/validator',
+                ],
+            ],
+        ];
+
+        $container->prependExtensionConfig('framework', ['validation' => $validatorConfig]);
     }
 
     protected function getMigrationsNamespace(): string

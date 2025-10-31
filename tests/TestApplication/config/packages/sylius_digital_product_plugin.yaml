@@ -1,2 +1,4 @@
 sylius_digital_product:
-    uploaded_digital_file_directory: test
+    uploaded_file:
+        directory: '../../../../var/uploads/digital_files'
+        delete_from_storage_on_remove: true

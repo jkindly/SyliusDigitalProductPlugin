@@ -5,15 +5,47 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
+    <parameters>
+        <parameter key="sylius_digital_product_plugin.form.type.digital_product_file.validation_groups" type="collection">
+            <parameter>sylius_digital_file</parameter>
+        </parameter>
+    </parameters>
+
     <services>
         <service id="sylius_digital_product_plugin.form.type.digital_product_file" class="SyliusDigitalProductPlugin\Form\Type\DigitalProductFileType">
             <argument type="service" id="sylius_digital_product_plugin.provider.digital_file_registry" />
+            <argument>SyliusDigitalProductPlugin\Entity\DigitalFile</argument>
+            <argument>%sylius_digital_product_plugin.form.type.digital_product_file.validation_groups%</argument>
             <tag name="form.type" />
         </service>
 
         <service id="sylius_digital_product_plugin.form.extension.product_type" class="SyliusDigitalProductPlugin\Form\Extension\ProductTypeExtension">
-            <argument type="service" id="sylius_digital_product_plugin.event_subscriber.product_digital_files" />
+            <argument type="service" id="sylius_digital_product_plugin.provider.digital_file_registry" />
             <tag name="form.type_extension" />
+        </service>
+
+        <service id="sylius_digital_product_plugin.form.type.uploaded_digital_file" class="SyliusDigitalProductPlugin\Form\Type\UploadedDigitalFileType">
+            <argument type="service" id="sylius_digital_product_plugin.form.data_transformer.uploaded_digital_file" />
+            <argument type="service" id="sylius_digital_product_plugin.validator.uploaded_digital_file_dto" />
+            <argument>SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto</argument>
+            <argument>%sylius_digital_product_plugin.form.type.digital_product_file.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="sylius_digital_product_plugin.form.type.external_url_digital_file" class="SyliusDigitalProductPlugin\Form\Type\ExternalUrlDigitalFileType">
+            <argument type="service" id="sylius_digital_product_plugin.form.data_transformer.external_url_digital_file" />
+            <argument type="service" id="sylius_digital_product_plugin.validator.external_url_digital_file_dto" />
+            <argument>SyliusDigitalProductPlugin\Dto\ExternalUrlDigitalFileDto</argument>
+            <argument>%sylius_digital_product_plugin.form.type.digital_product_file.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="sylius_digital_product_plugin.form.data_transformer.uploaded_digital_file" class="SyliusDigitalProductPlugin\Form\DataTransformer\UploadedDigitalFileTransformer">
+            <argument type="service" id="sylius_digital_product_plugin.serializer.uploaded_digital_file_configuration" />
+        </service>
+
+        <service id="sylius_digital_product_plugin.form.data_transformer.external_url_digital_file" class="SyliusDigitalProductPlugin\Form\DataTransformer\ExternalUrlDigitalFileTransformer">
+            <argument type="service" id="sylius_digital_product_plugin.serializer.external_url_digital_file_configuration" />
         </service>
     </services>
 </container>

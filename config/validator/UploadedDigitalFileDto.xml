@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
+    <class name="SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto">
+        <constraint name="Callback">
+            <option name="callback">validateFileIfPresent</option>
+            <option name="groups">
+                <value>sylius_digital_file</value>
+            </option>
+        </constraint>
+        <property name="uploadedFile">
+            <constraint name="File">
+                <option name="maxSize">1M</option>
+                <option name="extensions">
+                    <value>jpg</value>
+                    <value>png</value>
+                    <value>gif</value>
+                </option>
+                <option name="groups">
+                    <value>sylius_digital_file</value>
+                </option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

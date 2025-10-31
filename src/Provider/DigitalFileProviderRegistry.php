@@ -6,9 +6,7 @@ namespace SyliusDigitalProductPlugin\Provider;
 
 final class DigitalFileProviderRegistry implements DigitalFileProviderRegistryInterface
 {
-    /**
-     * @var array<string, DigitalFileProviderInterface>
-     */
+    /** @var array<string, DigitalFileProviderInterface> */
     private array $providers = [];
 
     /**

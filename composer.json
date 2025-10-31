@@ -9,7 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "sylius/sylius": "^2.0"
+        "phpdocumentor/reflection-docblock": "^5.6",
+        "phpstan/phpdoc-parser": "^2.3",
+        "sylius/sylius": "^2.0",
+        "symfony/property-access": "^6.4",
+        "symfony/property-info": "^6.4",
+        "symfony/serializer": "^6.4"
     },
     "require-dev": {
         "behat/behat": "^3.16",
@@ -33,7 +38,7 @@
         "sylius-labs/coding-standard": "^4.4",
         "sylius-labs/suite-tags-extension": "~0.2",
         "sylius/sylius-rector": "^2.0",
-        "sylius/test-application": "2.0.0-ALPHA.5 || 2.1.x-dev",
+        "sylius/test-application": "^2.0.0@alpha",
         "symfony/browser-kit": "^6.4 || ^7.1",
         "symfony/debug-bundle": "^6.4 || ^7.1",
         "symfony/dotenv": "^6.4 || ^7.1",

@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Handler;
 
-use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
+use SyliusDigitalProductPlugin\Dto\DigitalFileDtoInterface;
 
 interface DigitalFileHandlerInterface
 {
-    public function supports(string $type): bool;
-
-    public function handle(DigitalFileInterface $digitalFile): void;
+    public function handle(DigitalFileDtoInterface $digitalFile): void;
 }

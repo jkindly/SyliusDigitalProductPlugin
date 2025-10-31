@@ -19,9 +19,15 @@ final class AdminProductGridListener
         $create = $main->getAction('create');
 
         $links = $create->getOptions()['links'] ?? [];
-        $links['digital'] = [
-            'label' => 'Digital Product',
+
+        $links['simple_digital'] = [
+            'label' => 'Simple Digital Product',
             'route' => 'sylius_admin_product_create_digital_simple',
+        ];
+
+        $links['configurable_digital'] = [
+            'label' => 'Configurable Digital Product',
+            'route' => 'sylius_admin_product_create_digital_configurable',
         ];
 
         $create->setOptions(array_merge($create->getOptions(), ['links' => $links]));
