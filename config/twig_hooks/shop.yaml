@@ -1,28 +1,99 @@
 sylius_twig_hooks:
     hooks:
         'sylius_admin.product.create.content.form.side_navigation':
-            digital_files:
-                template: '@SyliusDigitalProductPlugin/admin/product/form/side_navigation/digital_files.html.twig'
-                priority: 801
+            digital_section:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/side_navigation/digital_section.html.twig'
+                priority: 810
         'sylius_admin.product.create.content.form.sections':
-            digital_files:
-                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files.html.twig'
-                priority: 801
+            digital_product:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product.html.twig'
+                priority: 810
+        'sylius_admin.product.create.content.form.sections.digital_product':
+            settings:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/settings.html.twig'
+                priority: 10
+            files:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/files.html.twig'
+                priority: 0
                 
         'sylius_admin.product.update.content.form.side_navigation':
-            digital_files:
-                template: '@SyliusDigitalProductPlugin/admin/product/form/side_navigation/digital_files.html.twig'
-                priority: 801
+            digital_section:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/side_navigation/digital_section.html.twig'
+                priority: 810
         'sylius_admin.product.update.content.form.sections':
-            digital_files:
-                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_files.html.twig'
-                priority: 801
+            digital_product:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product.html.twig'
+                priority: 810
+        'sylius_admin.product.update.content.form.sections.digital_product':
+            settings:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/settings.html.twig'
+                priority: 10
+            files:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/files.html.twig'
+                priority: 0
                 
         'sylius_admin.product_variant.create.content.form.side_navigation':
-            digital_files:
-                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/side_navigation/digital_files.html.twig'
-                priority: 301
+            digital_section:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/side_navigation/digital_section.html.twig'
+                priority: 310
         'sylius_admin.product_variant.create.content.form.sections':
-            digital_files:
-                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_files.html.twig'
-                priority: 801
+            digital_variant:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant.html.twig'
+                priority: 310
+        'sylius_admin.product_variant.create.content.form.sections.digital_variant':
+            settings:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant/settings.html.twig'
+                priority: 10
+            files:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant/files.html.twig'
+                priority: 0
+                
+        'sylius_admin.product_variant.update.content.form.side_navigation':
+            digital_section:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/side_navigation/digital_section.html.twig'
+                priority: 310
+        'sylius_admin.product_variant.update.content.form.sections':
+            digital_variant:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant.html.twig'
+                priority: 310
+        'sylius_admin.product_variant.update.content.form.sections.digital_variant':
+            settings:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant/settings.html.twig'
+                priority: 10
+            files:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant/files.html.twig'
+                priority: 0
+                
+        'sylius_admin.product.create.content.form.sections.general':
+            is_digital:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/general/body/is_digital.html.twig'
+                priority: 490        
+        'sylius_admin.product.update.content.form.sections.general':
+            is_digital:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/general/body/is_digital.html.twig'
+                priority: 490
+            
+        'sylius_admin.product_variant.create.content.form.sections.general.body':
+            is_digital:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/general/body/is_digital.html.twig'
+                priority: 290        
+        'sylius_admin.product_variant.update.content.form.sections.general.body':
+            is_digital:
+                template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/general/body/is_digital.html.twig'
+                priority: 290
+        
+        'sylius_admin.channel.update.content.form.sections':
+            digital_product_settings:
+                template: '@SyliusDigitalProductPlugin/admin/channel/form/sections/digital_product_settings.html.twig'
+                priority: 10
+        'sylius_admin.channel.update.content.form.sections.digital_product_settings':
+            uploaded_file_download_limit:
+                template: '@SyliusDigitalProductPlugin/admin/channel/form/sections/digital_product_settings/uploaded_file_download_limit.html.twig'
+                priority: 20
+            hidden_quantity:
+                template: '@SyliusDigitalProductPlugin/admin/channel/form/sections/digital_product_settings/hidden_quantity.html.twig'
+                priority: 10
+        
+        'sylius_shop.product.show.content.info.summary.add_to_cart':
+            quantity:
+                template: '@SyliusDigitalProductPlugin/shop/product/show/content/info/summary/add_to_cart/quantity.html.twig'

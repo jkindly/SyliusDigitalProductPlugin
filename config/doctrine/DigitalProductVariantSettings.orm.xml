@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettings" table="sylius_digital_product_variant_settings">
+        <id name="id" type="integer" column="id">
+            <generator/>
+        </id>
+
+        <one-to-one field="productVariant" target-entity="Sylius\Component\Core\Model\ProductVariantInterface" inversed-by="digitalProductVariantSettings">
+            <join-column name="variant_id" referenced-column-name="id" nullable="false" unique="true" />
+        </one-to-one>
+
+        <field name="configuration" column="configuration" type="json" />
+    </entity>
+</doctrine-mapping>

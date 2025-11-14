@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Entity;
 
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Resource\Model\TimestampableTrait;
 use Symfony\Component\Uid\Uuid;
@@ -20,7 +21,7 @@ class DigitalFile implements DigitalFileInterface
 
     protected ?int $position = null;
 
-    protected ?ProductInterface $product = null;
+    protected ?ProductVariantInterface $productVariant = null;
 
     protected array $configuration = [];
 
@@ -59,14 +60,14 @@ class DigitalFile implements DigitalFileInterface
         $this->position = $position;
     }
 
-    public function getProduct(): ?ProductInterface
+    public function getProductVariant(): ?ProductVariantInterface
     {
-        return $this->product;
+        return $this->productVariant;
     }
 
-    public function setProduct(?ProductInterface $product): void
+    public function setProductVariant(?ProductVariantInterface $productVariant): void
     {
-        $this->product = $product;
+        $this->productVariant = $productVariant;
     }
 
     public function getConfiguration(): array

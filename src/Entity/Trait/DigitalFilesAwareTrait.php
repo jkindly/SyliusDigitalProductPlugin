@@ -27,7 +27,7 @@ trait DigitalFilesAwareTrait
     {
         if (!$this->digitalFiles->contains($file)) {
             $this->digitalFiles->add($file);
-            $file->setProduct($this);
+            $file->setProductVariant($this);
         }
     }
 
@@ -35,7 +35,7 @@ trait DigitalFilesAwareTrait
     {
         if ($this->digitalFiles->contains($file)) {
             $this->digitalFiles->removeElement($file);
-            $file->setProduct(null);
+            $file->setProductVariant(null);
         }
     }
 }

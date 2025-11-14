@@ -6,8 +6,10 @@ namespace SyliusDigitalProductPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
 
-interface DigitalProductInterface
+interface DigitalProductVariantInterface
 {
+    public function isDigital(): bool;
+
     /**
      * @return Collection<int, DigitalFileInterface>
      */
@@ -16,4 +18,8 @@ interface DigitalProductInterface
     public function addDigitalFile(DigitalFileInterface $file): void;
 
     public function removeDigitalFile(DigitalFileInterface $file): void;
+
+    public function getDigitalProductVariantSettings(): ?DigitalProductVariantSettingsInterface;
+
+    public function setDigitalProductVariantSettings(?DigitalProductVariantSettingsInterface $settings): void;
 }

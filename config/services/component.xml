@@ -7,13 +7,11 @@ xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/sc
 >
 <services>
     <service
-        id="sylius_digital_product_plugin.twig.component.digital_product_file_entry"
-        class="SyliusDigitalProductPlugin\Twig\Component\DigitalProductFileEntryComponent"
+        id="sylius_digital_product_plugin.twig.component.product_variant.form"
+        class="SyliusDigitalProductPlugin\Twig\Component\ProductVariant\FormComponent"
+        parent="sylius_admin.twig.component.product_variant.form"
     >
-        <argument type="service" id="form.factory" />
-        <argument type="service" id="request_stack" />
-        <tag name="sylius.live_component.admin" key="sylius_admin:digital_product:file_entry" />
+        <tag name="sylius.live_component.admin" key="sylius_admin:product_variant:form" />
     </service>
-
 </services>
 </container>

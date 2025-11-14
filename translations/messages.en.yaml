@@ -1,15 +1,30 @@
 sylius_digital_product:
     ui:
+        digital_product_settings:
+            title: Digital Product Settings
+        settings: Settings
+        is_digital_variant: Digital variant?
+        is_digital_product: Digital product?
         digital_files: Digital files
+        digital_section: Digital section
         file: File
         files: Files
         url: URL
         uploaded_file:
             title: Uploaded file
+            path: Path
             download: Download file
+            download_limit_per_customer: Download limit per customer
+            download_limit_per_customer_help: Default download limit per customer can be set in Channel settings. Leave empty for unlimited downloads.
         external_url:
             title: External URL
             placeholder: 'https://example.com/url'
         name: Name
         add_digital_file: Add digital file
         type: File type
+    form:
+        digital_product_settings:
+            download_limit_per_customer: Download limit per customer
+            hidden_quantity: Hide quantity on product page
+            show_digital_files_name: Show digital files name on product page
+            

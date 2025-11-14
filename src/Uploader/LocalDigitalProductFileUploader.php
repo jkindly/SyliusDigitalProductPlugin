@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Uploader;
 
 use RuntimeException;
+use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
 use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -16,6 +17,8 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
     public function __construct(
         private Filesystem $filesystem,
         private PathGeneratorInterface $datePathGenerator,
+        private bool $deleteLocalFile,
+        private string $uploadedDigitalFileType,
         string $uploadPath,
     ) {
         $this->uploadPath = rtrim($uploadPath, '/');
@@ -30,21 +33,22 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
 
         $ext = $uploadedFile->guessExtension() ?? pathinfo($uploadedFile->getClientOriginalName(), \PATHINFO_EXTENSION) ?: '';
         $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), \PATHINFO_FILENAME);
-        $fileName = hash('sha256', random_bytes(16) . microtime(true)) . ($ext ? '.' . $ext : '');
+        $filename = hash('sha256', random_bytes(16) . microtime(true));
+        $filenameWithExtension = $filename . ($ext ? '.' . $ext : '');
         $mimeType = $uploadedFile->getMimeType();
-        $target = $absolutePath . '/' . $fileName;
+        $target = $absolutePath . '/' . $filenameWithExtension;
 
-        $uploadedFile->move($absolutePath, $fileName);
+        $uploadedFile->move($absolutePath, $filenameWithExtension);
         if (!file_exists($target)) {
             throw new RuntimeException('Failed to move uploaded file.');
         }
 
         $size = filesize($target);
-        $relativePath = sprintf('%s/%s', trim($uploadPath, '/'), $fileName);
+        $relativePath = sprintf('%s/%s', trim($uploadPath, '/'), $filenameWithExtension);
 
         return [
             self::PROPERTY_PATH => $relativePath,
-            self::PROPERTY_FILENAME => $fileName,
+            self::PROPERTY_FILENAME => $filename,
             self::PROPERTY_ORIGINAL_FILENAME => $originalFilename,
             self::PROPERTY_SIZE => $size,
             self::PROPERTY_EXTENSION => $ext,
@@ -52,8 +56,21 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
         ];
     }
 
-    public function remove(string $storedFilename): void
+    public function remove(DigitalFileInterface $file): void
     {
-        // TODO: Implement remove() method.
+        if (false === $this->deleteLocalFile) {
+            return;
+        }
+
+        $configuration = $file->getConfiguration();
+        if (empty($configuration['path']) || $this->uploadedDigitalFileType !== $file->getType()) {
+            return;
+        }
+
+        $path = sprintf('%s/%s', $this->uploadPath, $configuration['path']);
+
+        if (file_exists($path)) {
+            unlink($path);
+        }
     }
 }

@@ -1,14 +1,14 @@
-{% set product = hookable_metadata.context.resource %}
+{% set product = hookable_metadata.context.resource.product %}
 
-{% if product.isSimple %}
+{% if not product.isSimple %}
     <button
         type="button"
         class="list-group-item list-group-item-action {% if hookable_metadata.configuration.active|default(false) %}active{% endif %}"
         data-bs-toggle="tab"
-        data-bs-target="#product-digital-files"
+        data-bs-target="#variant-digital-section"
         role="tab"
         {{ sylius_test_html_attribute('side-navigation-tab', 'digital-files') }}
     >
-        {{ 'sylius_digital_product.ui.digital_files'|trans }}
+        {{ 'sylius_digital_product.ui.digital_section'|trans }}
     </button>
 {% endif %}

@@ -13,12 +13,12 @@ use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Response;
 use Webmozart\Assert\Assert;
 
-final class UploadedDigitalFileDownloadAction
+final readonly class UploadedDigitalFileDownloadAction
 {
     public function __construct(
-        private readonly DigitalFileRepositoryInterface $digitalFileRepository,
-        private readonly DigitalFileConfigurationSerializerInterface $uploadedFileSerializer,
-        private readonly string $uploadedFilesPath,
+        private DigitalFileRepositoryInterface $digitalFileRepository,
+        private DigitalFileConfigurationSerializerInterface $uploadedFileSerializer,
+        private string $uploadedFilesPath,
     ) {
     }
 

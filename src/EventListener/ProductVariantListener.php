@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\EventListener;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
-use SyliusDigitalProductPlugin\Entity\DigitalProductInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
 use SyliusDigitalProductPlugin\Handler\DigitalFileHandlerInterface;
 use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 
-final readonly class ProductListener
+final readonly class ProductVariantListener
 {
     public function __construct(
         private DigitalFileHandlerInterface $uploadedDigitalFileHandler,
@@ -22,12 +25,35 @@ final readonly class ProductListener
     ) {
     }
 
-    public function handleUpload(GenericEvent $event): void
+    public function handleProductVariantUpdate(GenericEvent $event): void
+    {
+        $productVariant = $event->getSubject();
+        Assert::isInstanceOf($productVariant, DigitalProductVariantInterface::class);
+
+        $this->handleUploadedDigitalFiles($productVariant->getDigitalFiles());
+    }
+
+    public function handleSimpleProductUpdate(GenericEvent $event): void
     {
         $product = $event->getSubject();
-        Assert::isInstanceOf($product, DigitalProductInterface::class);
+        Assert::isInstanceOf($product, ProductInterface::class);
 
-        foreach ($product->getDigitalFiles() as $digitalFile) {
+        if (false === $product->isSimple()) {
+            return;
+        }
+
+        $variant = $product->getVariants()->first();
+        Assert::isInstanceOf($variant, DigitalProductVariantInterface::class);
+
+        $this->handleUploadedDigitalFiles($variant->getDigitalFiles());
+    }
+
+    /**
+     * @param Collection<int, DigitalFileInterface> $digitalFiles
+     */
+    private function handleUploadedDigitalFiles(Collection $digitalFiles): void
+    {
+        foreach ($digitalFiles as $digitalFile) {
             if ($this->uploadedDigitalFileType !== $digitalFile->getType()) {
                 continue;
             }

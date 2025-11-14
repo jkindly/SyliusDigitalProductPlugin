@@ -48,12 +48,36 @@
 {% endblock %}
 
 {%- block sylius_admin_digital_product_uploaded_file_row -%}
-    {{ form_widget(form) }}
+    {% set path = form.parent.vars.data.configuration.path|default(null) %}
 
-    {% if form.size.vars.value|default(null) %}
-        {% set id = form.parent.vars.value.id|default(null) %}
-        <a class="text-decoration-none" href="{{ path('sylius_admin_product_digital_download', { id }) }}">
-            {{ 'sylius_digital_product.ui.uploaded_file.download'|trans }}
-        </a>
+    {{ form_row(form.name) }}
+
+    <div class="field {% if path is null %}mb-3{% endif %}">
+        {{ form_label(form.uploadedFile) }}
+        {{ form_widget(form.uploadedFile) }}
+        {{ form_errors(form.uploadedFile) }}
+    </div>
+
+
+    {% if path is not null %}
+        {% set id = form.parent.vars.data.id|default(null) %}
+        {% if id is not null %}
+            <div class="mb-3 form-text help-text">
+                {{ path }}
+                <a class="text-decoration-none" href="{{ path('sylius_admin_product_digital_download', { id }) }}">
+                    [{{ 'sylius_digital_product.ui.uploaded_file.download'|trans }}]
+                </a>
+            </div>
+        {% endif %}
     {% endif %}
+
+    {{ form_row(form.downloadLimitPerChannel) }}
+{% endblock %}
+
+{% block sylius_admin_digital_product_variant_settings_row %}
+    <fieldset class="field">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </fieldset>
 {% endblock %}

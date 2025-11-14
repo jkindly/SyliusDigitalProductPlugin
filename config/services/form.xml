@@ -19,8 +19,24 @@
             <tag name="form.type" />
         </service>
 
-        <service id="sylius_digital_product_plugin.form.extension.product_type" class="SyliusDigitalProductPlugin\Form\Extension\ProductTypeExtension">
+        <service id="sylius_digital_product_plugin.form.extension.product_variant_type" class="SyliusDigitalProductPlugin\Form\Extension\ProductVariantTypeExtension">
             <argument type="service" id="sylius_digital_product_plugin.provider.digital_file_registry" />
+            <tag name="form.type_extension" />
+        </service>
+
+        <service id="sylius_digital_product_plugin.form.type.digital_product_channel_settings" class="SyliusDigitalProductPlugin\Form\Type\DigitalProductChannelSettingsType">
+            <argument>SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings</argument>
+            <argument>%sylius_digital_product_plugin.form.type.digital_product_file.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="sylius_digital_product_plugin.form.type.digital_product_variant_settings" class="SyliusDigitalProductPlugin\Form\Type\DigitalProductVariantSettingsType">
+            <argument>SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettings</argument>
+            <argument>%sylius_digital_product_plugin.form.type.digital_product_file.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="sylius_digital_product_plugin.form.extension.channel_type" class="SyliusDigitalProductPlugin\Form\Extension\ChannelTypeExtension">
             <tag name="form.type_extension" />
         </service>
 

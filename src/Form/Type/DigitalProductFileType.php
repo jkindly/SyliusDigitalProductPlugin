@@ -50,6 +50,7 @@ final class DigitalProductFileType extends AbstractResourceType
     private function addFileTypeToForm(FormEvent $event): void
     {
         $data = $event->getData();
+
         if ($data === null) {
             return;
         }
@@ -59,8 +60,8 @@ final class DigitalProductFileType extends AbstractResourceType
         }
 
         $dataType = $data instanceof DigitalFileInterface ? $data->getType() : $data['type'];
-        $scopeConfigurationType = $this->fileTypes[$dataType];
+        $formType = $this->fileTypes[$dataType];
         $form = $event->getForm();
-        $form->add('configuration', $scopeConfigurationType);
+        $form->add('configuration', $formType);
     }
 }

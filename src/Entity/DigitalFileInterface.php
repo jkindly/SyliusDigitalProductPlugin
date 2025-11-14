@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Entity;
 
 use Sylius\Component\Core\Model\PositionAwareInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Resource\Model\TimestampableInterface;
 
@@ -20,9 +21,9 @@ interface DigitalFileInterface extends
 
     public function setType(?string $type): void;
 
-    public function getProduct(): ?ProductInterface;
+    public function getProductVariant(): ?ProductVariantInterface;
 
-    public function setProduct(?ProductInterface $product): void;
+    public function setProductVariant(?ProductVariantInterface $productVariant): void;
 
     public function getConfiguration(): array;
 

@@ -1,0 +1,7 @@
+{% set product = hookable_metadata.context.resource.product %}
+
+{% if not product.isSimple %}
+    <div class="tab-pane {% if hookable_metadata.configuration.active|default(false) %}show active{% endif %}" id="variant-digital-section" role="tabpanel" tabindex="0">
+        {% hook 'digital_variant' %}
+    </div>
+{% endif %}

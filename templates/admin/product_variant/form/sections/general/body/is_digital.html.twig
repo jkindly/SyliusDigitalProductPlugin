@@ -1,0 +1,6 @@
+{% set form = hookable_metadata.context.form %}
+{% set variant = hookable_metadata.context.resource %}
+
+{% if not variant.product.isSimple %}
+    {{ form_row(form.isDigital, {'label': 'sylius_digital_product.ui.is_digital_variant'}) }}
+{% endif %}

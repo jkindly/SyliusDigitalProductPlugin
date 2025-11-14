@@ -21,6 +21,8 @@ class UploadedDigitalFileDto implements DigitalFileDtoInterface
 
     protected ?int $size = null;
 
+    protected array $downloadLimitPerChannel = [];
+
     protected ?UploadedFile $uploadedFile = null;
 
     public function getName(): ?string
@@ -83,6 +85,16 @@ class UploadedDigitalFileDto implements DigitalFileDtoInterface
         $this->size = $size;
     }
 
+    public function getDownloadLimitPerChannel(): array
+    {
+        return $this->downloadLimitPerChannel;
+    }
+
+    public function setDownloadLimitPerChannel(array $downloadLimitPerChannel): void
+    {
+        $this->downloadLimitPerChannel = $downloadLimitPerChannel;
+    }
+
     public function getUploadedFile(): ?UploadedFile
     {
         return $this->uploadedFile;
@@ -97,8 +109,9 @@ class UploadedDigitalFileDto implements DigitalFileDtoInterface
     {
         if (empty($this->size) && null === $this->uploadedFile) {
             $context->buildViolation('sylius.digital_product.file.uploaded_file.not_blank')
-            ->atPath('uploadedFile')
-            ->addViolation();
+                ->atPath('uploadedFile')
+                ->addViolation()
+            ;
         }
     }
 }

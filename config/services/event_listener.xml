@@ -6,26 +6,20 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="sylius_digital_product_plugin.event_listener.admin_product_grid"
-                 class="SyliusDigitalProductPlugin\EventListener\AdminProductGridListener"
-        >
-            <tag name="kernel.event_listener" event="sylius.grid.admin_product" method="addDigitalCreateLink"/>
-        </service>
-
-        <service id="sylius_digital_product_plugin.event_listener.product" class="SyliusDigitalProductPlugin\EventListener\ProductListener">
+        <service id="sylius_digital_product_plugin.event_listener.product" class="SyliusDigitalProductPlugin\EventListener\ProductVariantListener">
             <argument type="service" id="sylius_digital_product_plugin.handler.uploaded_digital_file"/>
             <argument type="service" id="sylius_digital_product_plugin.serializer.uploaded_digital_file_configuration"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
-            <tag name="kernel.event_listener" event="sylius.product.post_create" method="handleUpload"/>
-            <tag name="kernel.event_listener" event="sylius.product.post_update" method="handleUpload"/>
+            <tag name="kernel.event_listener" event="sylius.product_variant.post_create" method="handleProductVariantUpdate"/>
+            <tag name="kernel.event_listener" event="sylius.product_variant.post_update" method="handleProductVariantUpdate"/>
+            <tag name="kernel.event_listener" event="sylius.product.post_update" method="handleSimpleProductUpdate"/>
         </service>
 
         <service id="sylius_digital_product_plugin.event_listener.remove_uploaded_digital_file"
                  class="SyliusDigitalProductPlugin\EventListener\RemoveUploadedDigitalFileListener"
         >
-            <argument>%sylius_digital_product_plugin.uploaded_file.delete_from_storage_on_remove%</argument>
-            <argument>%sylius_digital_product_plugin.uploaded_file.directory%</argument>
+            <argument type="service" id="sylius_digital_product_plugin.uploader.local_digital_product_file"/>
             <tag name="doctrine.orm.entity_listener" entity="SyliusDigitalProductPlugin\Entity\DigitalFile" method="preRemove"/>
         </service>
 
