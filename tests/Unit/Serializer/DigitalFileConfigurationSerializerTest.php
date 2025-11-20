@@ -33,7 +33,6 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
         $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
         $this->assertNull($result->getPath());
-        $this->assertNull($result->getName());
     }
 
     public function testGetDtoReturnsEmptyDtoForEmptyConfiguration(): void
@@ -47,19 +46,16 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
         $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
         $this->assertNull($result->getPath());
-        $this->assertNull($result->getName());
     }
 
     public function testGetDtoDenormalizesConfiguration(): void
     {
         $configuration = [
             'path' => '/path/to/file',
-            'name' => 'test.pdf',
         ];
 
         $dto = new UploadedDigitalFileDto();
         $dto->setPath('/path/to/file');
-        $dto->setName('test.pdf');
 
         $this->serializer->expects($this->once())
             ->method('denormalize')
@@ -75,7 +71,6 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
         $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
         $this->assertSame('/path/to/file', $result->getPath());
-        $this->assertSame('test.pdf', $result->getName());
     }
 
     public function testGetDtoWithExternalUrlDigitalFileDto(): void
@@ -120,11 +115,9 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
     {
         $dto = new UploadedDigitalFileDto();
         $dto->setPath('/path/to/file');
-        $dto->setName('test.pdf');
 
         $normalizedData = [
             'path' => '/path/to/file',
-            'name' => 'test.pdf',
         ];
 
         $this->serializer->expects($this->once())
@@ -141,7 +134,6 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
         $this->assertIsArray($result);
         $this->assertSame('/path/to/file', $result['path']);
-        $this->assertSame('test.pdf', $result['name']);
     }
 
     public function testGetConfigurationThrowsExceptionWhenNormalizeReturnsNonArray(): void
@@ -217,7 +209,6 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
         $dto = new UploadedDigitalFileDto();
         $dto->setPath('/path/to/file');
-        $dto->setName('test.pdf');
         $dto->setMimeType('application/pdf');
         $dto->setOriginalFilename('original.pdf');
         $dto->setExtension('pdf');
@@ -237,7 +228,6 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
         $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
         $this->assertSame('/path/to/file', $result->getPath());
-        $this->assertSame('test.pdf', $result->getName());
         $this->assertSame('application/pdf', $result->getMimeType());
         $this->assertSame('original.pdf', $result->getOriginalFilename());
         $this->assertSame('pdf', $result->getExtension());
@@ -248,7 +238,6 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
     {
         $dto = new UploadedDigitalFileDto();
         $dto->setPath('/path/to/file');
-        $dto->setName('test.pdf');
         $dto->setMimeType('application/pdf');
         $dto->setOriginalFilename('original.pdf');
         $dto->setExtension('pdf');
@@ -256,7 +245,6 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
         $normalizedData = [
             'path' => '/path/to/file',
-            'name' => 'test.pdf',
             'mimeType' => 'application/pdf',
             'originalFilename' => 'original.pdf',
             'extension' => 'pdf',
@@ -277,7 +265,6 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
         $this->assertIsArray($result);
         $this->assertSame('/path/to/file', $result['path']);
-        $this->assertSame('test.pdf', $result['name']);
         $this->assertSame('application/pdf', $result['mimeType']);
         $this->assertSame('original.pdf', $result['originalFilename']);
         $this->assertSame('pdf', $result['extension']);

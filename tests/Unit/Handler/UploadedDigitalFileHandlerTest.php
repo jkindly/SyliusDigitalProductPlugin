@@ -82,14 +82,6 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             ->method('setMimeType')
             ->with('application/pdf');
 
-        $digitalFile->expects($this->once())
-            ->method('getName')
-            ->willReturn('My Custom Name');
-
-        $digitalFile->expects($this->once())
-            ->method('setName')
-            ->with('My Custom Name');
-
         $this->handler->handle($digitalFile);
     }
 
@@ -115,14 +107,6 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             ->method('upload')
             ->with($uploadedFile)
             ->willReturn($uploadData);
-
-        $digitalFile->expects($this->once())
-            ->method('getName')
-            ->willReturn(null);
-
-        $digitalFile->expects($this->once())
-            ->method('setName')
-            ->with('generated_filename.pdf');
 
         $digitalFile->expects($this->once())
             ->method('setPath')
@@ -171,15 +155,6 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             ->willReturn($uploadData);
 
         $digitalFile->expects($this->once())
-            ->method('getName')
-            ->willReturn('');
-
-        // Empty string is truthy for ??, so it will be preserved
-        $digitalFile->expects($this->once())
-            ->method('setName')
-            ->with('');
-
-        $digitalFile->expects($this->once())
             ->method('setPath')
             ->with('2024/11/13/file.pdf');
 
@@ -224,14 +199,6 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             ->method('upload')
             ->with($uploadedFile)
             ->willReturn($uploadData);
-
-        $digitalFile->expects($this->once())
-            ->method('getName')
-            ->willReturn('Product Image');
-
-        $digitalFile->expects($this->once())
-            ->method('setName')
-            ->with('Product Image');
 
         $digitalFile->expects($this->once())
             ->method('setPath')
@@ -280,14 +247,6 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             ->method('upload')
             ->with($uploadedFile)
             ->willReturn($uploadData);
-
-        $digitalFile->expects($this->once())
-            ->method('getName')
-            ->willReturn('Large Archive');
-
-        $digitalFile->expects($this->once())
-            ->method('setName')
-            ->with('Large Archive');
 
         $digitalFile->expects($this->once())
             ->method('setPath')

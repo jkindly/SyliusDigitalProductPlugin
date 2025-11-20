@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\User\Model\UserInterface;
 use SyliusDigitalProductPlugin\Entity\OrderItemFileInterface;
 use SyliusDigitalProductPlugin\Repository\OrderItemFileRepositoryInterface;
+use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
+use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerRegistry;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +22,8 @@ final readonly class DownloadOrderItemFileAction
         private OrderItemFileRepositoryInterface $orderItemFileRepository,
         private Security $security,
         private EntityManagerInterface $entityManager,
+        private FileResponseGeneratorRegistry $responseGeneratorRegistry,
+        private DigitalFileConfigurationSerializerRegistry $serializerRegistry,
     )
     {
     }
@@ -40,8 +44,15 @@ final readonly class DownloadOrderItemFileAction
             throw new AccessDeniedException('Download limit exceeded for this file.');
         }
 
-        $file->incrementDownloadCount();
+        $fileType = $file->getType();
+        Assert::notNull($fileType, 'File type must not be null.');
 
+        $serializer = $this->serializerRegistry->get($fileType);
+        $configurationDto = $serializer->getDto($file->getConfiguration());
+
+        $file->incrementDownloadCount();
         $this->entityManager->flush();
+
+        return $this->responseGeneratorRegistry->get($fileType)->generate($file, $configurationDto);
     }
 }

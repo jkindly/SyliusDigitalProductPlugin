@@ -26,12 +26,10 @@ final class UploadedDigitalFileTransformerTest extends TestCase
     {
         $configuration = [
             'path' => '/path/to/file',
-            'name' => 'test.pdf',
         ];
 
         $dto = new UploadedDigitalFileDto();
         $dto->setPath('/path/to/file');
-        $dto->setName('test.pdf');
 
         $this->serializer->expects($this->once())
             ->method('getDto')
@@ -42,7 +40,6 @@ final class UploadedDigitalFileTransformerTest extends TestCase
 
         $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
         $this->assertSame('/path/to/file', $result->getPath());
-        $this->assertSame('test.pdf', $result->getName());
     }
 
     public function testTransformWithNullValue(): void
@@ -79,12 +76,10 @@ final class UploadedDigitalFileTransformerTest extends TestCase
 
         $dto = new UploadedDigitalFileDto();
         $dto->setPath('/path/to/file');
-        $dto->setName('test.pdf');
         $dto->setUploadedFile($uploadedFile);
 
         $configuration = [
             'path' => '/path/to/file',
-            'name' => 'test.pdf',
         ];
 
         $this->serializer->expects($this->once())
@@ -96,7 +91,6 @@ final class UploadedDigitalFileTransformerTest extends TestCase
 
         $this->assertIsArray($result);
         $this->assertSame('/path/to/file', $result['path']);
-        $this->assertSame('test.pdf', $result['name']);
         $this->assertSame($uploadedFile, $result['uploadedFile']);
     }
 
@@ -163,7 +157,6 @@ final class UploadedDigitalFileTransformerTest extends TestCase
     {
         $configuration = [
             'path' => '/path/to/file',
-            'name' => 'test.pdf',
             'mimeType' => 'application/pdf',
             'originalFilename' => 'original.pdf',
             'extension' => 'pdf',
@@ -172,7 +165,6 @@ final class UploadedDigitalFileTransformerTest extends TestCase
 
         $dto = new UploadedDigitalFileDto();
         $dto->setPath('/path/to/file');
-        $dto->setName('test.pdf');
         $dto->setMimeType('application/pdf');
         $dto->setOriginalFilename('original.pdf');
         $dto->setExtension('pdf');
@@ -186,7 +178,6 @@ final class UploadedDigitalFileTransformerTest extends TestCase
         $result = $this->transformer->transform($configuration);
 
         $this->assertSame('/path/to/file', $result->getPath());
-        $this->assertSame('test.pdf', $result->getName());
         $this->assertSame('application/pdf', $result->getMimeType());
         $this->assertSame('original.pdf', $result->getOriginalFilename());
         $this->assertSame('pdf', $result->getExtension());
@@ -199,7 +190,6 @@ final class UploadedDigitalFileTransformerTest extends TestCase
 
         $dto = new UploadedDigitalFileDto();
         $dto->setPath('/path/to/file');
-        $dto->setName('test.pdf');
         $dto->setMimeType('application/pdf');
         $dto->setOriginalFilename('original.pdf');
         $dto->setExtension('pdf');
@@ -208,7 +198,6 @@ final class UploadedDigitalFileTransformerTest extends TestCase
 
         $configuration = [
             'path' => '/path/to/file',
-            'name' => 'test.pdf',
             'mimeType' => 'application/pdf',
             'originalFilename' => 'original.pdf',
             'extension' => 'pdf',
@@ -223,7 +212,6 @@ final class UploadedDigitalFileTransformerTest extends TestCase
         $result = $this->transformer->reverseTransform($dto);
 
         $this->assertSame('/path/to/file', $result['path']);
-        $this->assertSame('test.pdf', $result['name']);
         $this->assertSame('application/pdf', $result['mimeType']);
         $this->assertSame('original.pdf', $result['originalFilename']);
         $this->assertSame('pdf', $result['extension']);

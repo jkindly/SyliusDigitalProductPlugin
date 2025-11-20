@@ -283,15 +283,16 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testRemoveDoesNotThrowExceptionWhenFileDoesNotExist(): void
+    public function testRemoveThrowsExceptionWhenFileDoesNotExist(): void
     {
         $digitalFile = $this->createMock(DigitalFileInterface::class);
         $digitalFile->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
         $digitalFile->method('getConfiguration')->willReturn(['path' => 'non/existent/file.pdf']);
 
-        $this->uploader->remove($digitalFile);
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Error resolving real path for file deletion');
 
-        $this->assertTrue(true);
+        $this->uploader->remove($digitalFile);
     }
 
     private function createMockedUploadedFile(

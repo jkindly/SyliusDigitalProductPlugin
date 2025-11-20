@@ -6,11 +6,16 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
+        <service id="sylius_digital_product_plugin.serializer.registry" class="SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerRegistry">
+            <argument type="tagged_iterator" tag="sylius_digital_product_plugin.file_configuration_serializer" index-by="key"/>
+        </service>
+
         <service id="sylius_digital_product_plugin.serializer.uploaded_digital_file_configuration"
                  class="SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializer"
         >
             <argument type="service" id="serializer"/>
             <argument>SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto</argument>
+            <tag name="sylius_digital_product_plugin.file_configuration_serializer" key="%sylius_digital_product_plugin.file_type.uploaded%"/>
         </service>
 
         <service id="sylius_digital_product_plugin.serializer.external_url_digital_file_configuration"
@@ -18,6 +23,7 @@
         >
             <argument type="service" id="serializer"/>
             <argument>SyliusDigitalProductPlugin\Dto\ExternalUrlDigitalFileDto</argument>
+            <tag name="sylius_digital_product_plugin.file_configuration_serializer" key="%sylius_digital_product_plugin.file_type.external_url%"/>
         </service>
     </services>
 </container>

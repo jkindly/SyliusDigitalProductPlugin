@@ -16,6 +16,9 @@
         <service id="sylius_digital_product_plugin.controller.shop.action.download_order_item_file" class="SyliusDigitalProductPlugin\Controller\Shop\Action\DownloadOrderItemFileAction">
             <argument type="service" id="sylius_digital_product_plugin.repository.order_item_file"/>
             <argument type="service" id="security.helper"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="sylius_digital_product_plugin.response_generator.registry"/>
+            <argument type="service" id="sylius_digital_product_plugin.serializer.registry"/>
             <tag name="controller.service_arguments" />
         </service>
     </services>

@@ -54,7 +54,7 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
         $uploadedFile->move($realAbsolutePath, $filenameWithExtension);
 
         if (!file_exists($target)) {
-            throw new RuntimeException('Failed to move uploaded file');
+            throw new RuntimeException('Failed to move uploaded file.');
         }
 
         $size = filesize($target);

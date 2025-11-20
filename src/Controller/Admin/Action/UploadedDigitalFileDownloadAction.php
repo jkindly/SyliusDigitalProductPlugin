@@ -14,6 +14,7 @@ use SyliusDigitalProductPlugin\Factory\DigitalFileResponseFactoryInterface;
 use SyliusDigitalProductPlugin\Finder\CustomerOrderFinderInterface;
 use SyliusDigitalProductPlugin\Repository\DigitalFileRepositoryInterface;
 use SyliusDigitalProductPlugin\Resolver\UploadedFilePathResolverInterface;
+use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
 use SyliusDigitalProductPlugin\Tracking\DownloadTrackerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +26,8 @@ final readonly class UploadedDigitalFileDownloadAction
 {
     public function __construct(
         private DigitalFileRepositoryInterface $digitalFileRepository,
-        private UploadedFilePathResolverInterface $filePathResolver,
-        private DigitalFileResponseFactoryInterface $responseFactory,
         private Security $security,
+        private FileResponseGeneratorInterface $uploadedFileResponseGenerator,
     ) {
     }
 
@@ -44,9 +44,6 @@ final readonly class UploadedDigitalFileDownloadAction
             throw new AccessDeniedHttpException('Only admins can download this file.');
         }
 
-
-        $filePath = $this->filePathResolver->resolve($file);
-
-        return $this->responseFactory->createResponse($file, $filePath);
+//        return $this->uploadedFileResponseGenerator->
     }
 }
