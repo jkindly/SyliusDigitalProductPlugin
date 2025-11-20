@@ -1,6 +1,7 @@
 {% set variant = hookable_metadata.context.variant %}
 {% set channel = sylius.channel %}
-{% set settings = variant.configurationForChannel(channel)|default(channel.digitalProductChannelSettings.configuration) %}
+{% set channel_settings = channel.digitalProductChannelSettings %}
+{% set settings = variant.configurationForChannel(channel)|default(channel_settings ? channel_settings.configuration : null) %}
 {% set hidden_quantity = constant('SyliusDigitalProductPlugin\\Entity\\DigitalProductVariantSettingsInterface::CONFIGURATION_HIDDEN_QUANTITY') %}
 
 {% if settings is null or not settings[hidden_quantity] %}

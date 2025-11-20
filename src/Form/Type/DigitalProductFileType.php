@@ -8,9 +8,12 @@ use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
 use SyliusDigitalProductPlugin\Provider\DigitalFileProviderRegistryInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Valid;
 
 final class DigitalProductFileType extends AbstractResourceType
 {
@@ -30,7 +33,12 @@ final class DigitalProductFileType extends AbstractResourceType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('type', HiddenType::class);
+        $builder
+            ->add('type', HiddenType::class)
+            ->add('name', TextType::class, [
+                'label' => 'sylius_digital_product.ui.name',
+            ])
+        ;
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {

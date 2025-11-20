@@ -1,0 +1,9 @@
+{% set file = hookable_metadata.context.file %}
+
+<td class="text-end">
+    {% if file.downloadLimit is null %}
+        {{ 'sylius_digital_product.ui.download_unlimited'|trans }}
+    {% else %}
+        {{ file.remainingDownloadCount }}
+    {% endif %}
+</td>

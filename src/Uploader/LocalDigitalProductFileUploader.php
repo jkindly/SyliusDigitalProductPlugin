@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Uploader;
 
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
 use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
@@ -26,21 +27,34 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
 
     public function upload(UploadedFile $uploadedFile): array
     {
-        $uploadPath = sprintf('%s/%s', $this->datePathGenerator->generate(), bin2hex(random_bytes(1)));
-        $absolutePath = sprintf('%s/%s', $this->uploadPath, $uploadPath, );
+        $uploadPath = sprintf('%s/%s', $this->datePathGenerator->generate(), bin2hex(random_bytes(2)));
+        $absolutePath = sprintf('%s/%s', $this->uploadPath, $uploadPath);
 
-        $this->filesystem->mkdir($absolutePath, 0755);
+        $this->filesystem->mkdir($absolutePath, 0750);
+
+        $realUploadPath = realpath($this->uploadPath);
+        $realAbsolutePath = realpath($absolutePath);
+
+        if (false === $realAbsolutePath || false === $realUploadPath || !str_starts_with($realAbsolutePath, $realUploadPath)) {
+            throw new RuntimeException('Upload path validation failed');
+        }
 
         $ext = $uploadedFile->guessExtension() ?? pathinfo($uploadedFile->getClientOriginalName(), \PATHINFO_EXTENSION) ?: '';
         $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), \PATHINFO_FILENAME);
-        $filename = hash('sha256', random_bytes(16) . microtime(true));
-        $filenameWithExtension = $filename . ($ext ? '.' . $ext : '');
         $mimeType = $uploadedFile->getMimeType();
-        $target = $absolutePath . '/' . $filenameWithExtension;
 
-        $uploadedFile->move($absolutePath, $filenameWithExtension);
+        $filename = hash('sha256', random_bytes(32) . microtime(true));
+        $filenameWithExtension = $filename . ($ext ? '.' . $ext : '');
+        $target = $realAbsolutePath . '/' . $filenameWithExtension;
+
+        if (file_exists($target)) {
+            throw new RuntimeException('File with the same name already exists');
+        }
+
+        $uploadedFile->move($realAbsolutePath, $filenameWithExtension);
+
         if (!file_exists($target)) {
-            throw new RuntimeException('Failed to move uploaded file.');
+            throw new RuntimeException('Failed to move uploaded file');
         }
 
         $size = filesize($target);
@@ -67,10 +81,21 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
             return;
         }
 
-        $path = sprintf('%s/%s', $this->uploadPath, $configuration['path']);
+        $relativePath = $configuration['path'];
+        $path = sprintf('%s/%s', $this->uploadPath, $relativePath);
+        $realUploadPath = realpath($this->uploadPath);
+        $realPath = realpath($path);
 
-        if (file_exists($path)) {
-            unlink($path);
+        if (false === $realPath) {
+            throw new RuntimeException('Error resolving real path for file deletion');
+        }
+
+        if (false === $realUploadPath || !str_starts_with($realPath, $realUploadPath)) {
+            throw new RuntimeException('File deletion path validation failed');
+        }
+
+        if (file_exists($realPath) && !unlink($realPath)) {
+            throw new RuntimeException(sprintf('Failed to delete file: %s', $realPath));
         }
     }
 }

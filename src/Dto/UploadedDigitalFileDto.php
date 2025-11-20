@@ -9,8 +9,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class UploadedDigitalFileDto implements DigitalFileDtoInterface
 {
-    protected ?string $name = null;
-
     protected ?string $path = null;
 
     protected ?string $mimeType = null;
@@ -24,16 +22,6 @@ class UploadedDigitalFileDto implements DigitalFileDtoInterface
     protected array $downloadLimitPerChannel = [];
 
     protected ?UploadedFile $uploadedFile = null;
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
 
     public function getPath(): ?string
     {

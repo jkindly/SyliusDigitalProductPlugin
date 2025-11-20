@@ -39,7 +39,7 @@ class DigitalProductChannelSettings implements DigitalProductChannelSettingsInte
         $this->configuration = $configuration;
     }
 
-    public function getUploadedFileDownloadLimit(): ?int
+    public function getDownloadLimit(): ?int
     {
         return $this->configuration[self::CONFIGURATION_DOWNLOAD_LIMIT] ?? null;
     }

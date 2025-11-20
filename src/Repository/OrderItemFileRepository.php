@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SyliusDigitalProductPlugin\Repository;
+
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\ShopUserInterface;
+use SyliusDigitalProductPlugin\Entity\OrderItemFileInterface;
+
+class OrderItemFileRepository extends ServiceEntityRepository implements OrderItemFileRepositoryInterface
+{
+    public function __construct(ManagerRegistry $registry, string $entityClass)
+    {
+        parent::__construct($registry, $entityClass);
+    }
+
+    public function findOneByUuidAndUser(string $uuid, ShopUserInterface $user): ?OrderItemFileInterface
+    {
+        return $this->createQueryBuilder('oif')
+            ->join('oif.orderItem', 'oi')
+            ->join('oi.order', 'o')
+            ->join('o.customer', 'c')
+            ->join('c.user', 'u')
+            ->andWhere('oif.uuid = :uuid')
+            ->andWhere('u = :user')
+            ->setParameter('uuid', $uuid)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+}

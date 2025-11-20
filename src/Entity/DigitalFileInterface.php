@@ -17,6 +17,10 @@ interface DigitalFileInterface extends
 
     public function getUuid(): string;
 
+    public function getName(): ?string;
+
+    public function setName(?string $name): void;
+
     public function getType(): ?string;
 
     public function setType(?string $type): void;

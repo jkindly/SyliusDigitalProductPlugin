@@ -19,10 +19,13 @@
             {{- form_row(form.type) -}}
             <div class="alert text-body flex-column gap-0">
                 <div class="d-flex align-items-center">
-                    <div class="me-auto mb-3"><strong>{{ ('sylius_digital_product.ui.' ~ form.type.vars.data ~ '.title')|trans }}</strong></div>
+                    <div class="me-auto mb-3">
+                        <strong>{{ ('sylius_digital_product.ui.' ~ form.type.vars.data ~ '.title')|trans }}</strong>
+                    </div>
                     {{- form_row(button_delete, sylius_test_form_attribute('delete-action')|sylius_merge_recursive({'attr': {'class': 'btn-close'}})) -}}
                 </div>
                 <div class="flex-grow-1">
+                    {{- form_row(form.name) -}}
                     {{- form_row(form.configuration, {'label': false}) -}}
                 </div>
             </div>
@@ -50,14 +53,11 @@
 {%- block sylius_admin_digital_product_uploaded_file_row -%}
     {% set path = form.parent.vars.data.configuration.path|default(null) %}
 
-    {{ form_row(form.name) }}
-
     <div class="field {% if path is null %}mb-3{% endif %}">
         {{ form_label(form.uploadedFile) }}
         {{ form_widget(form.uploadedFile) }}
         {{ form_errors(form.uploadedFile) }}
     </div>
-
 
     {% if path is not null %}
         {% set id = form.parent.vars.data.id|default(null) %}

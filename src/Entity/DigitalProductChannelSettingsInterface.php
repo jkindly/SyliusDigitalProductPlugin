@@ -6,7 +6,7 @@ namespace SyliusDigitalProductPlugin\Entity;
 
 use Sylius\Component\Core\Model\ChannelInterface;
 
-interface DigitalProductChannelSettingsInterface
+interface DigitalProductChannelSettingsInterface extends SettingsInterface
 {
     public const CONFIGURATION_DOWNLOAD_LIMIT = 'downloadLimit';
 
@@ -17,8 +17,4 @@ interface DigitalProductChannelSettingsInterface
     public function getConfiguration(): array;
 
     public function setConfiguration(array $configuration): void;
-
-    public function getUploadedFileDownloadLimit(): ?int;
-
-    public function isHiddenQuantity(): bool;
 }

@@ -12,6 +12,9 @@ use SyliusDigitalProductPlugin\Form\Type\DigitalProductVariantSettingsType;
 use SyliusDigitalProductPlugin\Provider\DigitalFileProviderRegistryInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 final class ProductVariantTypeExtension extends AbstractTypeExtension
@@ -48,6 +51,9 @@ final class ProductVariantTypeExtension extends AbstractTypeExtension
                 ],
                 'button_delete_options' => [
                     'label' => false,
+                ],
+                'constraints' => [
+                    new Valid(),
                 ],
             ])
         ;

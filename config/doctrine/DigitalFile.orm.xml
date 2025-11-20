@@ -9,6 +9,8 @@
 
         <field name="uuid" column="uuid" length="36" unique="true" />
 
+        <field name="name" column="name" />
+
         <field name="type" column="type" />
 
         <field name="position" type="integer">

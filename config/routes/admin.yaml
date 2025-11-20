@@ -1,5 +1,3 @@
-
-
 sylius_admin_product_digital_download:
     path: /products/digital/uploaded/download/{id}
     methods: [ GET ]

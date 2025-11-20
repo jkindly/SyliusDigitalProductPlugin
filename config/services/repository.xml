@@ -12,5 +12,12 @@
             <argument>SyliusDigitalProductPlugin\Entity\DigitalFile</argument>
             <tag name="doctrine.repository_service"/>
         </service>
+
+        <service id="sylius_digital_product_plugin.repository.order_item_file"
+                 class="SyliusDigitalProductPlugin\Repository\OrderItemFileRepository">
+            <argument type="service" id="doctrine"/>
+            <argument>SyliusDigitalProductPlugin\Entity\OrderItemFile</argument>
+            <tag name="doctrine.repository_service"/>
+        </service>
     </services>
 </container>

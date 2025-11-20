@@ -23,5 +23,10 @@
             <tag name="doctrine.orm.entity_listener" entity="SyliusDigitalProductPlugin\Entity\DigitalFile" method="preRemove"/>
         </service>
 
+        <service id="sylius_digital_product_plugin.event_listener.workflow.order_payment.create_order_item_file" class="SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\CreateOrderItemFileListener">
+            <argument type="service" id="sylius_digital_product_plugin.factory.order_item_file" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_listener" event="workflow.sylius_order_payment.completed.pay" priority="300"/>
+        </service>
     </services>
 </container>

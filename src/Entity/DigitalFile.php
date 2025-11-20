@@ -17,6 +17,8 @@ class DigitalFile implements DigitalFileInterface
 
     protected string $uuid;
 
+    protected ?string $name = null;
+
     protected ?string $type = null;
 
     protected ?int $position = null;
@@ -38,6 +40,16 @@ class DigitalFile implements DigitalFileInterface
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
     }
 
     public function getType(): ?string

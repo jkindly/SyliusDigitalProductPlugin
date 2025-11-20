@@ -1,0 +1,11 @@
+{# <td class="text-end">{{ hookable_metadata.context.file.quantity }}</td> #}
+<td class="text-end">
+    {% set order = hookable_metadata.context.order %}
+    {% set file = hookable_metadata.context.file %}
+    <a class="btn btn-primary {% if file.remainingDownloadCount is same as(0) %}disabled{% endif %}"
+       href="{{ path('sylius_digital_product_shop_download_order_item_file', {'number': order.id, 'uuid': file.uuid}) }}"
+    >
+        {{ ux_icon('material-symbols:download') }}
+        {{ 'sylius_digital_product.ui.download'|trans }}
+    </a>
+</td>

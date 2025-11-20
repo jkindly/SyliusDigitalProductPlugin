@@ -5,19 +5,11 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 
-interface DigitalProductVariantInterface
+interface DigitalProductVariantInterface extends DigitalFilesInterface, ProductVariantInterface
 {
     public function isDigital(): bool;
-
-    /**
-     * @return Collection<int, DigitalFileInterface>
-     */
-    public function getDigitalFiles(): Collection;
-
-    public function addDigitalFile(DigitalFileInterface $file): void;
-
-    public function removeDigitalFile(DigitalFileInterface $file): void;
 
     public function getDigitalProductVariantSettings(): ?DigitalProductVariantSettingsInterface;
 

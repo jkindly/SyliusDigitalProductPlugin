@@ -8,5 +8,5 @@ use SyliusDigitalProductPlugin\Dto\DigitalFileDtoInterface;
 
 interface DigitalFileHandlerInterface
 {
-    public function handle(DigitalFileDtoInterface $digitalFile): void;
+    public function handle(DigitalFileDtoInterface $digitalFileDto): void;
 }

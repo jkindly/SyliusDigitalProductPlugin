@@ -19,7 +19,7 @@ final class ChannelBasedDownloadLimit extends AbstractType
             'entry_type' => DownloadLimitType::class,
             'entry_options' => fn (DigitalProductChannelInterface $channel) => [
                 'label' => $channel->getName(),
-                'default_limit' => $channel->getDigitalProductChannelSettings()?->getUploadedFileDownloadLimit(),
+                'default_limit' => $channel->getDigitalProductChannelSettings()?->getDownloadLimit(),
             ],
         ]);
     }

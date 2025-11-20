@@ -9,3 +9,12 @@ sylius_channel:
         channel:
             classes:
                 model: Tests\SyliusDigitalProductPlugin\Entity\Channel
+
+sylius_order:
+    resources:
+        order:
+            classes:
+                model: Tests\SyliusDigitalProductPlugin\Entity\Order
+        order_item:
+            classes:
+                model: Tests\SyliusDigitalProductPlugin\Entity\OrderItem

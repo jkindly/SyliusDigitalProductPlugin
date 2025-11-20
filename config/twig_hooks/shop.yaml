@@ -11,7 +11,7 @@ sylius_twig_hooks:
         'sylius_admin.product.create.content.form.sections.digital_product':
             settings:
                 template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/settings.html.twig'
-                priority: 10
+                priority: 100
             files:
                 template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/files.html.twig'
                 priority: 0
@@ -27,7 +27,7 @@ sylius_twig_hooks:
         'sylius_admin.product.update.content.form.sections.digital_product':
             settings:
                 template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/settings.html.twig'
-                priority: 10
+                priority: 100
             files:
                 template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/files.html.twig'
                 priority: 0
@@ -43,7 +43,7 @@ sylius_twig_hooks:
         'sylius_admin.product_variant.create.content.form.sections.digital_variant':
             settings:
                 template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant/settings.html.twig'
-                priority: 10
+                priority: 100
             files:
                 template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant/files.html.twig'
                 priority: 0
@@ -59,7 +59,7 @@ sylius_twig_hooks:
         'sylius_admin.product_variant.update.content.form.sections.digital_variant':
             settings:
                 template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant/settings.html.twig'
-                priority: 10
+                priority: 100
             files:
                 template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant/files.html.twig'
                 priority: 0
@@ -89,11 +89,54 @@ sylius_twig_hooks:
         'sylius_admin.channel.update.content.form.sections.digital_product_settings':
             uploaded_file_download_limit:
                 template: '@SyliusDigitalProductPlugin/admin/channel/form/sections/digital_product_settings/uploaded_file_download_limit.html.twig'
-                priority: 20
+                priority: 100
             hidden_quantity:
                 template: '@SyliusDigitalProductPlugin/admin/channel/form/sections/digital_product_settings/hidden_quantity.html.twig'
-                priority: 10
+                priority: 0
         
         'sylius_shop.product.show.content.info.summary.add_to_cart':
             quantity:
                 template: '@SyliusDigitalProductPlugin/shop/product/show/content/info/summary/add_to_cart/quantity.html.twig'
+        
+        'sylius_shop.shared.order.show.summary':
+            table_digital_files:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files.html.twig"
+                priority: -100
+        'sylius_shop.shared.order.show.summary.table_digital_files':
+            header:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/header.html.twig"
+                priority: 200
+            body:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/body.html.twig"
+                priority: 100
+            footer:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/footer.html.twig"
+                priority: 0
+        'sylius_shop.shared.order.show.summary.table_digital_files.header':
+            name:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/header/item.html.twig"
+                configuration:
+                    label: 'name'
+                priority: 200
+            downloads_left:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/header/item.html.twig"
+                configuration:
+                    label: 'downloads_left'
+                    class: 'text-end'
+                priority: 100
+            download:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/header/item.html.twig"
+                configuration:
+                    label: 'download'
+                    class: 'text-end'
+                priority: 0
+        'sylius_shop.shared.order.show.summary.table_digital_files.body':
+            name:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/body/name.html.twig"
+                priority: 200
+            downloads_left:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/body/downloads_left.html.twig"
+                priority: 100
+            download:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/body/download.html.twig"
+                priority: 0

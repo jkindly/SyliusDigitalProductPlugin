@@ -1,0 +1,52 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SyliusDigitalProductPlugin\Controller\Admin\Action;
+
+use Psr\Log\LoggerInterface;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Core\Model\AdminUserInterface;
+use SyliusDigitalProductPlugin\Authorization\DownloadAuthorizationInterface;
+use SyliusDigitalProductPlugin\Enforcement\DownloadLimitEnforcerInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalFile;
+use SyliusDigitalProductPlugin\Factory\DigitalFileResponseFactoryInterface;
+use SyliusDigitalProductPlugin\Finder\CustomerOrderFinderInterface;
+use SyliusDigitalProductPlugin\Repository\DigitalFileRepositoryInterface;
+use SyliusDigitalProductPlugin\Resolver\UploadedFilePathResolverInterface;
+use SyliusDigitalProductPlugin\Tracking\DownloadTrackerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+final readonly class UploadedDigitalFileDownloadAction
+{
+    public function __construct(
+        private DigitalFileRepositoryInterface $digitalFileRepository,
+        private UploadedFilePathResolverInterface $filePathResolver,
+        private DigitalFileResponseFactoryInterface $responseFactory,
+        private Security $security,
+    ) {
+    }
+
+    public function __invoke(int $id, Request $request): Response
+    {
+        $file = $this->digitalFileRepository->find($id);
+        if (!$file instanceof DigitalFile) {
+            throw new NotFoundHttpException('Digital file not found');
+        }
+
+        /** @var AdminUserInterface $user */
+        $user = $this->security->getUser();
+        if (!$user->hasRole(AdminUserInterface::DEFAULT_ADMIN_ROLE)) {
+            throw new AccessDeniedHttpException('Only admins can download this file.');
+        }
+
+
+        $filePath = $this->filePathResolver->resolve($file);
+
+        return $this->responseFactory->createResponse($file, $filePath);
+    }
+}

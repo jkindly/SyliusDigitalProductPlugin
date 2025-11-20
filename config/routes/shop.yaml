@@ -1,13 +1,8 @@
-# Delete these routes and define your own shop routes here
-
-acme_sylius_example_static_welcome:
-    path: /static-welcome/{name}
+sylius_digital_product_shop_download_order_item_file:
+    path: /{_locale}/account/orders/{number}/download/{uuid}
+    methods: [ GET ]
     defaults:
-        _controller: SyliusDigitalProductPlugin\Controller\GreetingController::staticallyGreetAction
-        name: ~
-
-acme_sylius_example_dynamic_welcome:
-    path: /dynamic-welcome/{name}
-    defaults:
-        _controller: SyliusDigitalProductPlugin\Controller\GreetingController::dynamicallyGreetAction
-        name: ~
+        _controller: sylius_digital_product_plugin.controller.shop.action.download_order_item_file
+        _sylius:
+            permission: true
+            redirect: referrer

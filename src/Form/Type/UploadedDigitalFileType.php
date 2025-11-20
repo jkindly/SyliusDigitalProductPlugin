@@ -32,10 +32,6 @@ final class UploadedDigitalFileType extends BaseDigitalFileType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'sylius_digital_product.ui.name',
-                'required' => false,
-            ])
             ->add('uploadedFile', FileType::class, [
                 'label' => 'sylius_digital_product.ui.file',
             ])

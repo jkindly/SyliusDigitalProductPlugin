@@ -7,7 +7,7 @@ namespace SyliusDigitalProductPlugin\Entity;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductVariant;
 
-interface DigitalProductVariantSettingsInterface
+interface DigitalProductVariantSettingsInterface extends SettingsInterface
 {
     public const CONFIGURATION_HIDDEN_QUANTITY = 'hiddenQuantity';
 

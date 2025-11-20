@@ -16,21 +16,20 @@ final readonly class UploadedDigitalFileHandler implements DigitalFileHandlerInt
     }
 
     /**
-     * @param UploadedDigitalFileDto $digitalFile
+     * @param UploadedDigitalFileDto $digitalFileDto
      */
-    public function handle(DigitalFileDtoInterface $digitalFile): void
+    public function handle(DigitalFileDtoInterface $digitalFileDto): void
     {
-        if (null === $uploadedFile = $digitalFile->getUploadedFile()) {
+        if (null === $uploadedFile = $digitalFileDto->getUploadedFile()) {
             return;
         }
 
         $fileData = $this->localDigitalProductFileUploader->upload($uploadedFile);
 
-        $digitalFile->setPath($fileData[DigitalProductFileUploaderInterface::PROPERTY_PATH]);
-        $digitalFile->setSize($fileData[DigitalProductFileUploaderInterface::PROPERTY_SIZE]);
-        $digitalFile->setOriginalFilename($fileData[DigitalProductFileUploaderInterface::PROPERTY_ORIGINAL_FILENAME]);
-        $digitalFile->setExtension($fileData[DigitalProductFileUploaderInterface::PROPERTY_EXTENSION]);
-        $digitalFile->setName($digitalFile->getName() ?? $fileData[DigitalProductFileUploaderInterface::PROPERTY_FILENAME]);
-        $digitalFile->setMimeType($fileData[DigitalProductFileUploaderInterface::PROPERTY_MIME_TYPE]);
+        $digitalFileDto->setPath($fileData[DigitalProductFileUploaderInterface::PROPERTY_PATH]);
+        $digitalFileDto->setSize($fileData[DigitalProductFileUploaderInterface::PROPERTY_SIZE]);
+        $digitalFileDto->setOriginalFilename($fileData[DigitalProductFileUploaderInterface::PROPERTY_ORIGINAL_FILENAME]);
+        $digitalFileDto->setExtension($fileData[DigitalProductFileUploaderInterface::PROPERTY_EXTENSION]);
+        $digitalFileDto->setMimeType($fileData[DigitalProductFileUploaderInterface::PROPERTY_MIME_TYPE]);
     }
 }

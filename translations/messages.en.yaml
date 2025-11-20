@@ -20,6 +20,9 @@ sylius_digital_product:
             title: External URL
             placeholder: 'https://example.com/url'
         name: Name
+        downloads_left: Downloads left
+        download: Download
+        download_unlimited: Unlimited
         add_digital_file: Add digital file
         type: File type
     form:

@@ -1,0 +1,9 @@
+{% set order = hookable_metadata.context.order %}
+
+<tbody>
+    {% for file in order.digitalFiles %}
+        <tr {{ sylius_test_html_attribute('product-row', file.id) }}>
+            {% hook 'body' with { file } %}
+        </tr>
+    {% endfor %}
+</tbody>

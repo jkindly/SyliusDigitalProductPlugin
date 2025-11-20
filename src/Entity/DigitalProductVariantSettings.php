@@ -39,4 +39,14 @@ class DigitalProductVariantSettings implements DigitalProductVariantSettingsInte
     {
         $this->configuration = $configuration;
     }
+
+    public function getDownloadLimit(): ?int
+    {
+        return $this->configuration[DigitalProductChannelSettingsInterface::CONFIGURATION_DOWNLOAD_LIMIT] ?? null;
+    }
+
+    public function isHiddenQuantity(): bool
+    {
+        return $this->configuration[self::CONFIGURATION_HIDDEN_QUANTITY] ?? false;
+    }
 }
