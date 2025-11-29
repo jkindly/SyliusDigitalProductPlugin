@@ -25,7 +25,7 @@ class ProductVariant extends BaseProductVariant implements DigitalProductVariant
     #[ORM\Column(name: 'is_digital', type: 'boolean')]
     protected bool $isDigital = false;
 
-    #[ORM\OneToMany(targetEntity: DigitalProductFile::class, mappedBy: 'productVariant', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: DigitalProductFile::class, mappedBy: 'productVariant', cascade: ['persist', 'remove'], orphanRemoval: true)]
     protected Collection $files;
 
     public function __construct()

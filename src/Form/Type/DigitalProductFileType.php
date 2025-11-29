@@ -107,7 +107,7 @@ final class DigitalProductFileType extends AbstractResourceType
             $data['settings']['daysAvailable'] = $settings->getDaysAvailable();
             $data['settings']['hiddenQuantity'] = $settings->isHiddenQuantity();
         }
-        dump($data);
+
         $event->setData($data);
     }
 }

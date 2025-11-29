@@ -29,9 +29,10 @@
             <gedmo:sortable-group />
         </many-to-one>
 
-        <one-to-one field="settings" target-entity="SyliusDigitalProductPlugin\Entity\DigitalProductFileSettings" mapped-by="file">
+        <one-to-one field="settings" target-entity="SyliusDigitalProductPlugin\Entity\DigitalProductFileSettings" mapped-by="file" orphan-removal="true">
             <cascade>
                 <cascade-persist />
+                <cascade-remove />
             </cascade>
         </one-to-one>
 
