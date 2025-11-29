@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
 use SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
@@ -19,8 +17,7 @@ final readonly class CreateOrderItemFileListener
     public function __construct(
         private OrderItemFileFactoryInterface $orderItemFileFactory,
         private EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function __invoke(CompletedEvent $event): void

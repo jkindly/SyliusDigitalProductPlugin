@@ -20,7 +20,7 @@ final class OrderItemFileFactory implements OrderItemFileFactoryInterface
         ?string $name = null,
         ?string $type = null,
         ?int $downloadLimit = null,
-        array $configuration = []
+        array $configuration = [],
     ): DigitalProductOrderItemFileInterface {
         $orderItemFile = $this->createNew();
         $orderItemFile->setName($name);

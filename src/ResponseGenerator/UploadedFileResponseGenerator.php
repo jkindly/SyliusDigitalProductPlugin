@@ -46,7 +46,7 @@ final readonly class UploadedFileResponseGenerator implements FileResponseGenera
         $response = new BinaryFileResponse($realFilePath);
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $this->sanitizeFilename($file->getName(), $dto)
+            $this->sanitizeFilename($file->getName(), $dto),
         );
 
         return $response;

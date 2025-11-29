@@ -48,6 +48,7 @@ final readonly class ChannelBasedFilesSubscriber implements EventSubscriberInter
 
     /**
      * @param Collection<string, Collection<int, DigitalProductFileInterface>> $groupedFiles
+     *
      * @return DigitalProductFileInterface[]
      */
     private function flattenChannelGroupedFiles(Collection $groupedFiles, DigitalProductVariantInterface $variant): array

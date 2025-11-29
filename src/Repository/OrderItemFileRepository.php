@@ -6,8 +6,6 @@ namespace SyliusDigitalProductPlugin\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Sylius\Component\Core\Model\OrderItemInterface;
-use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\User\Model\UserInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 

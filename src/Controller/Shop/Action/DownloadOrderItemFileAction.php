@@ -24,8 +24,7 @@ final readonly class DownloadOrderItemFileAction
         private EntityManagerInterface $entityManager,
         private FileResponseGeneratorRegistry $responseGeneratorRegistry,
         private FileConfigurationSerializerRegistry $serializerRegistry,
-    )
-    {
+    ) {
     }
 
     public function __invoke(string $uuid): Response

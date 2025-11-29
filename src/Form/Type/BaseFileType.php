@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Form\Type;
 
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
 use SyliusDigitalProductPlugin\Validator\FileDtoValidatorInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
-use Webmozart\Assert\Assert;
 
 abstract class BaseFileType extends AbstractType
 {

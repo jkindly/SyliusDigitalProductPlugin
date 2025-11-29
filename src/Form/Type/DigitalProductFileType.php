@@ -5,21 +5,15 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Form\Type;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
-use SyliusDigitalProductPlugin\Form\DataTransformer\DaysToDateTimeTransformer;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Provider\FileProviderRegistryInterface;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\GreaterThan;
-use Symfony\Component\Validator\Constraints\Valid;
 use Webmozart\Assert\Assert;
 
 final class DigitalProductFileType extends AbstractResourceType
@@ -113,7 +107,7 @@ final class DigitalProductFileType extends AbstractResourceType
             $data['settings']['daysAvailable'] = $settings->getDaysAvailable();
             $data['settings']['hiddenQuantity'] = $settings->isHiddenQuantity();
         }
-dump($data);
+        dump($data);
         $event->setData($data);
     }
 }

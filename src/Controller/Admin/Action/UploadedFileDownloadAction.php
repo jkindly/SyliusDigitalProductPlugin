@@ -4,18 +4,10 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Controller\Admin\Action;
 
-use Psr\Log\LoggerInterface;
-use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\AdminUserInterface;
-use SyliusDigitalProductPlugin\Authorization\DownloadAuthorizationInterface;
-use SyliusDigitalProductPlugin\Enforcement\DownloadLimitEnforcerInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFile;
-use SyliusDigitalProductPlugin\Factory\FileResponseFactoryInterface;
-use SyliusDigitalProductPlugin\Finder\CustomerOrderFinderInterface;
 use SyliusDigitalProductPlugin\Repository\FileRepositoryInterface;
-use SyliusDigitalProductPlugin\Resolver\UploadedFilePathResolverInterface;
 use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
-use SyliusDigitalProductPlugin\Tracking\DownloadTrackerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

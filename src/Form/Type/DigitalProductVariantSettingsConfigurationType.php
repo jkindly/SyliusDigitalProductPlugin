@@ -38,7 +38,7 @@ final class DigitalProductVariantSettingsConfigurationType extends AbstractType
                 $event->setData($data);
             }
         });
-  }
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

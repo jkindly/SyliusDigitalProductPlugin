@@ -7,13 +7,10 @@ namespace SyliusDigitalProductPlugin\Form\Extension;
 use Sylius\Bundle\AdminBundle\Form\Type\AddButtonType;
 use Sylius\Bundle\CoreBundle\Form\Type\ChannelCollectionType;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantType;
-use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
 use SyliusDigitalProductPlugin\Form\EventSubscriber\ChannelBasedFilesSubscriber;
 use SyliusDigitalProductPlugin\Form\Type\DigitalProductFileType;
-use SyliusDigitalProductPlugin\Form\Type\DigitalProductVariantSettingsType;
 use SyliusDigitalProductPlugin\Provider\FileProviderRegistryInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,8 +27,7 @@ final class ProductVariantTypeExtension extends AbstractTypeExtension
     public function __construct(
         private readonly FileProviderRegistryInterface $registry,
         private readonly ChannelBasedFilesSubscriber $channelBasedFilesSubscriber,
-    )
-    {
+    ) {
         foreach ($this->registry->getAll() as $key => $provider) {
             $this->fileTypes[$key] = $provider->getLabel();
         }

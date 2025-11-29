@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Uploader;
 
-use Psr\Log\LoggerInterface;
 use RuntimeException;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;

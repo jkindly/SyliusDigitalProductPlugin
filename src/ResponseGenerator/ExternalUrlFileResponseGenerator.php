@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\ResponseGenerator;
 
-use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
 use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;

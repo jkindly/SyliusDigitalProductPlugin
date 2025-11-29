@@ -5,14 +5,7 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Form\Type;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantDigitalProductSettingsInterface;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class DigitalProductVariantSettingsType extends AbstractResourceType
 {
@@ -20,7 +13,6 @@ final class DigitalProductVariantSettingsType extends AbstractResourceType
     {
         $builder
             ->add('configuration', ChannelBasedDigitalProductVariantSettingsType::class, [
-
             ])
         ;
     }

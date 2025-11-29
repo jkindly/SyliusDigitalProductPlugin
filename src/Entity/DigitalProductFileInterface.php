@@ -7,7 +7,6 @@ namespace SyliusDigitalProductPlugin\Entity;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\PositionAwareInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
-use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Resource\Model\TimestampableInterface;
 
 interface DigitalProductFileInterface extends
