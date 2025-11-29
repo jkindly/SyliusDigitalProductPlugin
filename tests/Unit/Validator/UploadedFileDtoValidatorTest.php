@@ -19,7 +19,7 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-final class BaseFileDtoValidatorTest extends TestCase
+final class UploadedFileDtoValidatorTest extends TestCase
 {
     private MockObject&ClassMetadataFactoryInterface $classMetadataFactory;
     private MockObject&FileConfigurationSerializerInterface $serializer;

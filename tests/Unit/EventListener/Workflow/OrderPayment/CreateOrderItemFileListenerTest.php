@@ -14,7 +14,7 @@ use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantDigitalProductSettingsInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileSettingsInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\CreateOrderItemFileListener;
 use SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
@@ -47,8 +47,16 @@ final class CreateOrderItemFileListenerTest extends TestCase
         $channelSettings = $this->createMock(DigitalProductFileChannelSettingsInterface::class);
 
         $orderItem = $this->createMock(OrderItemInterface::class);
-        $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
+        $variant = $this->getMockForAbstractClass(
+            DigitalProductVariantInterface::class,
+            [],
+            '',
+            false,
+            false,
+            true,
+            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+        );
+        $variantSettings = $this->createMock(DigitalProductFileSettingsInterface::class);
         $file = $this->createMock(DigitalProductFileInterface::class);
         $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
@@ -119,7 +127,15 @@ final class CreateOrderItemFileListenerTest extends TestCase
         $channel = $this->createMock(DigitalProductChannelInterface::class);
 
         $orderItem = $this->createMock(OrderItemInterface::class);
-        $variant = $this->createMock(DigitalProductVariantInterface::class);
+        $variant = $this->getMockForAbstractClass(
+            DigitalProductVariantInterface::class,
+            [],
+            '',
+            false,
+            false,
+            true,
+            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+        );
 
         $workflow = $this->createMock(WorkflowInterface::class);
         $marking = new Marking();
@@ -161,8 +177,16 @@ final class CreateOrderItemFileListenerTest extends TestCase
         $channelSettings = $this->createMock(DigitalProductFileChannelSettingsInterface::class);
 
         $orderItem = $this->createMock(OrderItemInterface::class);
-        $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
+        $variant = $this->getMockForAbstractClass(
+            DigitalProductVariantInterface::class,
+            [],
+            '',
+            false,
+            false,
+            true,
+            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+        );
+        $variantSettings = $this->createMock(DigitalProductFileSettingsInterface::class);
         $file = $this->createMock(DigitalProductFileInterface::class);
         $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
@@ -237,7 +261,15 @@ final class CreateOrderItemFileListenerTest extends TestCase
         $channel = $this->createMock(DigitalProductChannelInterface::class);
 
         $orderItem = $this->createMock(OrderItemInterface::class);
-        $variant = $this->createMock(DigitalProductVariantInterface::class);
+        $variant = $this->getMockForAbstractClass(
+            DigitalProductVariantInterface::class,
+            [],
+            '',
+            false,
+            false,
+            true,
+            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+        );
         $file = $this->createMock(DigitalProductFileInterface::class);
         $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
@@ -305,8 +337,16 @@ final class CreateOrderItemFileListenerTest extends TestCase
         $channelSettings = $this->createMock(DigitalProductFileChannelSettingsInterface::class);
 
         $orderItem = $this->createMock(OrderItemInterface::class);
-        $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
+        $variant = $this->getMockForAbstractClass(
+            DigitalProductVariantInterface::class,
+            [],
+            '',
+            false,
+            false,
+            true,
+            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+        );
+        $variantSettings = $this->createMock(DigitalProductFileSettingsInterface::class);
 
         $file1 = $this->createMock(DigitalProductFileInterface::class);
         $file2 = $this->createMock(DigitalProductFileInterface::class);
@@ -411,10 +451,26 @@ final class CreateOrderItemFileListenerTest extends TestCase
 
         $orderItem1 = $this->createMock(OrderItemInterface::class);
         $orderItem2 = $this->createMock(OrderItemInterface::class);
-        $variant1 = $this->createMock(DigitalProductVariantInterface::class);
-        $variant2 = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings1 = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
-        $variantSettings2 = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
+        $variant1 = $this->getMockForAbstractClass(
+            DigitalProductVariantInterface::class,
+            [],
+            '',
+            false,
+            false,
+            true,
+            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+        );
+        $variant2 = $this->getMockForAbstractClass(
+            DigitalProductVariantInterface::class,
+            [],
+            '',
+            false,
+            false,
+            true,
+            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+        );
+        $variantSettings1 = $this->createMock(DigitalProductFileSettingsInterface::class);
+        $variantSettings2 = $this->createMock(DigitalProductFileSettingsInterface::class);
 
         $file1 = $this->createMock(DigitalProductFileInterface::class);
         $file2 = $this->createMock(DigitalProductFileInterface::class);
@@ -532,9 +588,25 @@ final class CreateOrderItemFileListenerTest extends TestCase
 
         $digitalOrderItem = $this->createMock(OrderItemInterface::class);
         $nonDigitalOrderItem = $this->createMock(OrderItemInterface::class);
-        $digitalVariant = $this->createMock(DigitalProductVariantInterface::class);
-        $nonDigitalVariant = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
+        $digitalVariant = $this->getMockForAbstractClass(
+            DigitalProductVariantInterface::class,
+            [],
+            '',
+            false,
+            false,
+            true,
+            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+        );
+        $nonDigitalVariant = $this->getMockForAbstractClass(
+            DigitalProductVariantInterface::class,
+            [],
+            '',
+            false,
+            false,
+            true,
+            ['isDigital', 'getDigitalProductVariantSettings']
+        );
+        $variantSettings = $this->createMock(DigitalProductFileSettingsInterface::class);
 
         $file = $this->createMock(DigitalProductFileInterface::class);
         $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
@@ -615,8 +687,16 @@ final class CreateOrderItemFileListenerTest extends TestCase
         $channelSettings = $this->createMock(DigitalProductFileChannelSettingsInterface::class);
 
         $orderItem = $this->createMock(OrderItemInterface::class);
-        $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
+        $variant = $this->getMockForAbstractClass(
+            DigitalProductVariantInterface::class,
+            [],
+            '',
+            false,
+            false,
+            true,
+            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+        );
+        $variantSettings = $this->createMock(DigitalProductFileSettingsInterface::class);
 
         $workflow = $this->createMock(WorkflowInterface::class);
         $marking = new Marking();

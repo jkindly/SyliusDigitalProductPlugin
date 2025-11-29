@@ -82,6 +82,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->willReturn(5);
 
         $file->expects($this->once())
+            ->method('isAvailable')
+            ->willReturn(true);
+
+        $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -196,6 +200,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->method('getDownloadCount');
 
         $file->expects($this->once())
+            ->method('isAvailable')
+            ->willReturn(true);
+
+        $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -260,6 +268,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->willReturn(9);
 
         $file->expects($this->once())
+            ->method('isAvailable')
+            ->willReturn(true);
+
+        $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -318,6 +330,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $file->expects($this->once())
             ->method('getDownloadLimit')
             ->willReturn(null);
+
+        $file->expects($this->once())
+            ->method('isAvailable')
+            ->willReturn(true);
 
         $file->expects($this->once())
             ->method('getType')
@@ -383,6 +399,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $file->expects($this->once())
             ->method('getDownloadCount')
             ->willReturn(0);
+
+        $file->expects($this->once())
+            ->method('isAvailable')
+            ->willReturn(true);
 
         $file->expects($this->once())
             ->method('getType')
@@ -485,6 +505,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->willReturn(0);
 
         $file->expects($this->once())
+            ->method('isAvailable')
+            ->willReturn(true);
+
+        $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -543,6 +567,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $file->expects($this->once())
             ->method('getDownloadLimit')
             ->willReturn(null);
+
+        $file->expects($this->once())
+            ->method('isAvailable')
+            ->willReturn(true);
 
         $file->expects($this->once())
             ->method('getType')
