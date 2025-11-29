@@ -10,12 +10,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettingsInterface;
-use SyliusDigitalProductPlugin\Entity\OrderItemFileInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductVariantDigitalProductSettingsInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\CreateOrderItemFileListener;
 use SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
@@ -44,13 +44,13 @@ final class CreateOrderItemFileListenerTest extends TestCase
     {
         $order = $this->createMock(OrderInterface::class);
         $channel = $this->createMock(DigitalProductChannelInterface::class);
-        $channelSettings = $this->createMock(DigitalProductChannelSettingsInterface::class);
+        $channelSettings = $this->createMock(DigitalProductFileChannelSettingsInterface::class);
 
         $orderItem = $this->createMock(OrderItemInterface::class);
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings = $this->createMock(DigitalProductVariantSettingsInterface::class);
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $orderItemFile = $this->createMock(OrderItemFileInterface::class);
+        $variantSettings = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $workflow = $this->createMock(WorkflowInterface::class);
         $marking = new Marking();
@@ -78,22 +78,22 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variantSettings);
 
         $channel->expects($this->once())
-            ->method('getDigitalProductChannelSettings')
+            ->method('getDigitalProductFileChannelSettings')
             ->willReturn($channelSettings);
 
         $variant->expects($this->once())
-            ->method('getDigitalFiles')
-            ->willReturn(new ArrayCollection([$digitalFile]));
+            ->method('getFiles')
+            ->willReturn(new ArrayCollection([$file]));
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getName')
             ->willReturn('Test File');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getConfiguration')
             ->willReturn(['path' => '/test/path']);
 
@@ -158,13 +158,13 @@ final class CreateOrderItemFileListenerTest extends TestCase
     {
         $order = $this->createMock(OrderInterface::class);
         $channel = $this->createMock(DigitalProductChannelInterface::class);
-        $channelSettings = $this->createMock(DigitalProductChannelSettingsInterface::class);
+        $channelSettings = $this->createMock(DigitalProductFileChannelSettingsInterface::class);
 
         $orderItem = $this->createMock(OrderItemInterface::class);
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings = $this->createMock(DigitalProductVariantSettingsInterface::class);
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $orderItemFile = $this->createMock(OrderItemFileInterface::class);
+        $variantSettings = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $workflow = $this->createMock(WorkflowInterface::class);
         $marking = new Marking();
@@ -192,22 +192,22 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variantSettings);
 
         $channel->expects($this->once())
-            ->method('getDigitalProductChannelSettings')
+            ->method('getDigitalProductFileChannelSettings')
             ->willReturn($channelSettings);
 
         $variant->expects($this->once())
-            ->method('getDigitalFiles')
-            ->willReturn(new ArrayCollection([$digitalFile]));
+            ->method('getFiles')
+            ->willReturn(new ArrayCollection([$file]));
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getName')
             ->willReturn('Test File');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getConfiguration')
             ->willReturn(['path' => '/test/path']);
 
@@ -238,8 +238,8 @@ final class CreateOrderItemFileListenerTest extends TestCase
 
         $orderItem = $this->createMock(OrderItemInterface::class);
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $orderItemFile = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $workflow = $this->createMock(WorkflowInterface::class);
         $marking = new Marking();
@@ -267,22 +267,22 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn(null);
 
         $channel->expects($this->once())
-            ->method('getDigitalProductChannelSettings')
+            ->method('getDigitalProductFileChannelSettings')
             ->willReturn(null);
 
         $variant->expects($this->once())
-            ->method('getDigitalFiles')
-            ->willReturn(new ArrayCollection([$digitalFile]));
+            ->method('getFiles')
+            ->willReturn(new ArrayCollection([$file]));
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getName')
             ->willReturn('Test File');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getConfiguration')
             ->willReturn(['path' => '/test/path']);
 
@@ -298,20 +298,20 @@ final class CreateOrderItemFileListenerTest extends TestCase
         ($this->listener)($event);
     }
 
-    public function testInvokeCreatesMultipleOrderItemFilesForMultipleDigitalFiles(): void
+    public function testInvokeCreatesMultipleOrderItemFilesForMultipleFiles(): void
     {
         $order = $this->createMock(OrderInterface::class);
         $channel = $this->createMock(DigitalProductChannelInterface::class);
-        $channelSettings = $this->createMock(DigitalProductChannelSettingsInterface::class);
+        $channelSettings = $this->createMock(DigitalProductFileChannelSettingsInterface::class);
 
         $orderItem = $this->createMock(OrderItemInterface::class);
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings = $this->createMock(DigitalProductVariantSettingsInterface::class);
+        $variantSettings = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
 
-        $digitalFile1 = $this->createMock(DigitalFileInterface::class);
-        $digitalFile2 = $this->createMock(DigitalFileInterface::class);
-        $orderItemFile1 = $this->createMock(OrderItemFileInterface::class);
-        $orderItemFile2 = $this->createMock(OrderItemFileInterface::class);
+        $file1 = $this->createMock(DigitalProductFileInterface::class);
+        $file2 = $this->createMock(DigitalProductFileInterface::class);
+        $orderItemFile1 = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $orderItemFile2 = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $workflow = $this->createMock(WorkflowInterface::class);
         $marking = new Marking();
@@ -339,34 +339,34 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variantSettings);
 
         $channel->expects($this->once())
-            ->method('getDigitalProductChannelSettings')
+            ->method('getDigitalProductFileChannelSettings')
             ->willReturn($channelSettings);
 
         $variant->expects($this->once())
-            ->method('getDigitalFiles')
-            ->willReturn(new ArrayCollection([$digitalFile1, $digitalFile2]));
+            ->method('getFiles')
+            ->willReturn(new ArrayCollection([$file1, $file2]));
 
-        $digitalFile1->expects($this->once())
+        $file1->expects($this->once())
             ->method('getName')
             ->willReturn('File 1');
 
-        $digitalFile1->expects($this->once())
+        $file1->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $digitalFile1->expects($this->once())
+        $file1->expects($this->once())
             ->method('getConfiguration')
             ->willReturn(['path' => '/test/path1']);
 
-        $digitalFile2->expects($this->once())
+        $file2->expects($this->once())
             ->method('getName')
             ->willReturn('File 2');
 
-        $digitalFile2->expects($this->once())
+        $file2->expects($this->once())
             ->method('getType')
             ->willReturn('external_url');
 
-        $digitalFile2->expects($this->once())
+        $file2->expects($this->once())
             ->method('getConfiguration')
             ->willReturn(['url' => 'https://example.com/file']);
 
@@ -407,19 +407,19 @@ final class CreateOrderItemFileListenerTest extends TestCase
     {
         $order = $this->createMock(OrderInterface::class);
         $channel = $this->createMock(DigitalProductChannelInterface::class);
-        $channelSettings = $this->createMock(DigitalProductChannelSettingsInterface::class);
+        $channelSettings = $this->createMock(DigitalProductFileChannelSettingsInterface::class);
 
         $orderItem1 = $this->createMock(OrderItemInterface::class);
         $orderItem2 = $this->createMock(OrderItemInterface::class);
         $variant1 = $this->createMock(DigitalProductVariantInterface::class);
         $variant2 = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings1 = $this->createMock(DigitalProductVariantSettingsInterface::class);
-        $variantSettings2 = $this->createMock(DigitalProductVariantSettingsInterface::class);
+        $variantSettings1 = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
+        $variantSettings2 = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
 
-        $digitalFile1 = $this->createMock(DigitalFileInterface::class);
-        $digitalFile2 = $this->createMock(DigitalFileInterface::class);
-        $orderItemFile1 = $this->createMock(OrderItemFileInterface::class);
-        $orderItemFile2 = $this->createMock(OrderItemFileInterface::class);
+        $file1 = $this->createMock(DigitalProductFileInterface::class);
+        $file2 = $this->createMock(DigitalProductFileInterface::class);
+        $orderItemFile1 = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $orderItemFile2 = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $workflow = $this->createMock(WorkflowInterface::class);
         $marking = new Marking();
@@ -459,38 +459,38 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variantSettings2);
 
         $channel->expects($this->exactly(2))
-            ->method('getDigitalProductChannelSettings')
+            ->method('getDigitalProductFileChannelSettings')
             ->willReturn($channelSettings);
 
         $variant1->expects($this->once())
-            ->method('getDigitalFiles')
-            ->willReturn(new ArrayCollection([$digitalFile1]));
+            ->method('getFiles')
+            ->willReturn(new ArrayCollection([$file1]));
 
         $variant2->expects($this->once())
-            ->method('getDigitalFiles')
-            ->willReturn(new ArrayCollection([$digitalFile2]));
+            ->method('getFiles')
+            ->willReturn(new ArrayCollection([$file2]));
 
-        $digitalFile1->expects($this->once())
+        $file1->expects($this->once())
             ->method('getName')
             ->willReturn('Item 1 File');
 
-        $digitalFile1->expects($this->once())
+        $file1->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $digitalFile1->expects($this->once())
+        $file1->expects($this->once())
             ->method('getConfiguration')
             ->willReturn(['path' => '/item1/path']);
 
-        $digitalFile2->expects($this->once())
+        $file2->expects($this->once())
             ->method('getName')
             ->willReturn('Item 2 File');
 
-        $digitalFile2->expects($this->once())
+        $file2->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $digitalFile2->expects($this->once())
+        $file2->expects($this->once())
             ->method('getConfiguration')
             ->willReturn(['path' => '/item2/path']);
 
@@ -528,16 +528,16 @@ final class CreateOrderItemFileListenerTest extends TestCase
     {
         $order = $this->createMock(OrderInterface::class);
         $channel = $this->createMock(DigitalProductChannelInterface::class);
-        $channelSettings = $this->createMock(DigitalProductChannelSettingsInterface::class);
+        $channelSettings = $this->createMock(DigitalProductFileChannelSettingsInterface::class);
 
         $digitalOrderItem = $this->createMock(OrderItemInterface::class);
         $nonDigitalOrderItem = $this->createMock(OrderItemInterface::class);
         $digitalVariant = $this->createMock(DigitalProductVariantInterface::class);
         $nonDigitalVariant = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings = $this->createMock(DigitalProductVariantSettingsInterface::class);
+        $variantSettings = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
 
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $orderItemFile = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $workflow = $this->createMock(WorkflowInterface::class);
         $marking = new Marking();
@@ -573,22 +573,22 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variantSettings);
 
         $channel->expects($this->once())
-            ->method('getDigitalProductChannelSettings')
+            ->method('getDigitalProductFileChannelSettings')
             ->willReturn($channelSettings);
 
         $digitalVariant->expects($this->once())
-            ->method('getDigitalFiles')
-            ->willReturn(new ArrayCollection([$digitalFile]));
+            ->method('getFiles')
+            ->willReturn(new ArrayCollection([$file]));
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getName')
             ->willReturn('Digital File');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getConfiguration')
             ->willReturn(['path' => '/digital/path']);
 
@@ -608,15 +608,15 @@ final class CreateOrderItemFileListenerTest extends TestCase
         ($this->listener)($event);
     }
 
-    public function testInvokeHandlesEmptyDigitalFilesCollection(): void
+    public function testInvokeHandlesEmptyFilesCollection(): void
     {
         $order = $this->createMock(OrderInterface::class);
         $channel = $this->createMock(DigitalProductChannelInterface::class);
-        $channelSettings = $this->createMock(DigitalProductChannelSettingsInterface::class);
+        $channelSettings = $this->createMock(DigitalProductFileChannelSettingsInterface::class);
 
         $orderItem = $this->createMock(OrderItemInterface::class);
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variantSettings = $this->createMock(DigitalProductVariantSettingsInterface::class);
+        $variantSettings = $this->createMock(DigitalProductVariantDigitalProductSettingsInterface::class);
 
         $workflow = $this->createMock(WorkflowInterface::class);
         $marking = new Marking();
@@ -644,11 +644,11 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variantSettings);
 
         $channel->expects($this->once())
-            ->method('getDigitalProductChannelSettings')
+            ->method('getDigitalProductFileChannelSettings')
             ->willReturn($channelSettings);
 
         $variant->expects($this->once())
-            ->method('getDigitalFiles')
+            ->method('getFiles')
             ->willReturn(new ArrayCollection([]));
 
         $this->orderItemFileFactory->expects($this->never())

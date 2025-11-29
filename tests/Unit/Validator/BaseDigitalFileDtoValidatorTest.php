@@ -6,9 +6,9 @@ namespace Tests\SyliusDigitalProductPlugin\Unit\Validator;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
-use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerInterface;
-use SyliusDigitalProductPlugin\Validator\UploadedDigitalFileDtoValidator;
+use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use SyliusDigitalProductPlugin\Validator\UploadedFileDtoValidator;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Serializer\Mapping\AttributeMetadataInterface;
@@ -19,22 +19,22 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-final class BaseDigitalFileDtoValidatorTest extends TestCase
+final class BaseFileDtoValidatorTest extends TestCase
 {
     private MockObject&ClassMetadataFactoryInterface $classMetadataFactory;
-    private MockObject&DigitalFileConfigurationSerializerInterface $serializer;
+    private MockObject&FileConfigurationSerializerInterface $serializer;
     private MockObject&ExecutionContextInterface $context;
     private MockObject&ValidatorInterface $validator;
-    private UploadedDigitalFileDtoValidator $validatorService;
+    private UploadedFileDtoValidator $validatorService;
 
     protected function setUp(): void
     {
         $this->classMetadataFactory = $this->createMock(ClassMetadataFactoryInterface::class);
-        $this->serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
+        $this->serializer = $this->createMock(FileConfigurationSerializerInterface::class);
         $this->context = $this->createMock(ExecutionContextInterface::class);
         $this->validator = $this->createMock(ValidatorInterface::class);
 
-        $this->validatorService = new UploadedDigitalFileDtoValidator(
+        $this->validatorService = new UploadedFileDtoValidator(
             $this->classMetadataFactory,
             $this->serializer
         );
@@ -59,7 +59,7 @@ final class BaseDigitalFileDtoValidatorTest extends TestCase
     public function testValidateProcessesArrayData(): void
     {
         $data = ['path' => '/test/path'];
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
 
         $form = $this->createMock(FormInterface::class);
         $config = $this->createMock(FormConfigInterface::class);
@@ -67,14 +67,14 @@ final class BaseDigitalFileDtoValidatorTest extends TestCase
 
         $this->context->expects($this->once())->method('getObject')->willReturn($form);
         $form->expects($this->once())->method('getConfig')->willReturn($config);
-        $config->expects($this->once())->method('getDataClass')->willReturn(UploadedDigitalFileDto::class);
+        $config->expects($this->once())->method('getDataClass')->willReturn(UploadedFileDto::class);
         $config->expects($this->once())->method('getOption')->with('validation_groups')->willReturn(null);
 
         $this->serializer->expects($this->once())->method('getDto')->with($data)->willReturn($dto);
 
         $this->classMetadataFactory->expects($this->once())
             ->method('getMetadataFor')
-            ->with(UploadedDigitalFileDto::class)
+            ->with(UploadedFileDto::class)
             ->willReturn($classMetadata);
 
         $classMetadata->expects($this->once())->method('getAttributesMetadata')->willReturn([]);
@@ -95,7 +95,7 @@ final class BaseDigitalFileDtoValidatorTest extends TestCase
     public function testValidateAddsViolationsToContext(): void
     {
         $data = ['path' => '/test/path'];
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
 
         $form = $this->createMock(FormInterface::class);
         $config = $this->createMock(FormConfigInterface::class);
@@ -103,14 +103,14 @@ final class BaseDigitalFileDtoValidatorTest extends TestCase
 
         $this->context->expects($this->once())->method('getObject')->willReturn($form);
         $form->expects($this->once())->method('getConfig')->willReturn($config);
-        $config->expects($this->once())->method('getDataClass')->willReturn(UploadedDigitalFileDto::class);
+        $config->expects($this->once())->method('getDataClass')->willReturn(UploadedFileDto::class);
         $config->expects($this->once())->method('getOption')->with('validation_groups')->willReturn(null);
 
         $this->serializer->expects($this->once())->method('getDto')->with($data)->willReturn($dto);
 
         $this->classMetadataFactory->expects($this->once())
             ->method('getMetadataFor')
-            ->with(UploadedDigitalFileDto::class)
+            ->with(UploadedFileDto::class)
             ->willReturn($classMetadata);
 
         $classMetadata->expects($this->once())->method('getAttributesMetadata')->willReturn([]);
@@ -155,7 +155,7 @@ final class BaseDigitalFileDtoValidatorTest extends TestCase
     public function testValidateWithValidationGroups(): void
     {
         $data = ['path' => '/test/path'];
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $groups = ['Default', 'custom_group'];
 
         $form = $this->createMock(FormInterface::class);
@@ -164,14 +164,14 @@ final class BaseDigitalFileDtoValidatorTest extends TestCase
 
         $this->context->expects($this->once())->method('getObject')->willReturn($form);
         $form->expects($this->once())->method('getConfig')->willReturn($config);
-        $config->expects($this->once())->method('getDataClass')->willReturn(UploadedDigitalFileDto::class);
+        $config->expects($this->once())->method('getDataClass')->willReturn(UploadedFileDto::class);
         $config->expects($this->once())->method('getOption')->with('validation_groups')->willReturn($groups);
 
         $this->serializer->expects($this->once())->method('getDto')->with($data)->willReturn($dto);
 
         $this->classMetadataFactory->expects($this->once())
             ->method('getMetadataFor')
-            ->with(UploadedDigitalFileDto::class)
+            ->with(UploadedFileDto::class)
             ->willReturn($classMetadata);
 
         $classMetadata->expects($this->once())->method('getAttributesMetadata')->willReturn([]);
@@ -192,7 +192,7 @@ final class BaseDigitalFileDtoValidatorTest extends TestCase
     public function testValidateHandlesIgnoredAttributes(): void
     {
         $data = ['path' => '/test/path'];
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
 
         $form = $this->createMock(FormInterface::class);
         $config = $this->createMock(FormConfigInterface::class);
@@ -205,14 +205,14 @@ final class BaseDigitalFileDtoValidatorTest extends TestCase
         $form->expects($this->once())->method('get')->with('uploadedFile')->willReturn($childForm);
         $childForm->expects($this->once())->method('getData')->willReturn(null);
 
-        $config->expects($this->once())->method('getDataClass')->willReturn(UploadedDigitalFileDto::class);
+        $config->expects($this->once())->method('getDataClass')->willReturn(UploadedFileDto::class);
         $config->expects($this->once())->method('getOption')->with('validation_groups')->willReturn(null);
 
         $this->serializer->expects($this->once())->method('getDto')->with($data)->willReturn($dto);
 
         $this->classMetadataFactory->expects($this->once())
             ->method('getMetadataFor')
-            ->with(UploadedDigitalFileDto::class)
+            ->with(UploadedFileDto::class)
             ->willReturn($classMetadata);
 
         $attributeMetadata->expects($this->once())->method('isIgnored')->willReturn(true);
@@ -238,7 +238,7 @@ final class BaseDigitalFileDtoValidatorTest extends TestCase
     public function testValidateAddsMultipleViolations(): void
     {
         $data = ['path' => '/test/path'];
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
 
         $form = $this->createMock(FormInterface::class);
         $config = $this->createMock(FormConfigInterface::class);
@@ -246,14 +246,14 @@ final class BaseDigitalFileDtoValidatorTest extends TestCase
 
         $this->context->expects($this->once())->method('getObject')->willReturn($form);
         $form->expects($this->once())->method('getConfig')->willReturn($config);
-        $config->expects($this->once())->method('getDataClass')->willReturn(UploadedDigitalFileDto::class);
+        $config->expects($this->once())->method('getDataClass')->willReturn(UploadedFileDto::class);
         $config->expects($this->once())->method('getOption')->with('validation_groups')->willReturn(null);
 
         $this->serializer->expects($this->once())->method('getDto')->with($data)->willReturn($dto);
 
         $this->classMetadataFactory->expects($this->once())
             ->method('getMetadataFor')
-            ->with(UploadedDigitalFileDto::class)
+            ->with(UploadedFileDto::class)
             ->willReturn($classMetadata);
 
         $classMetadata->expects($this->once())->method('getAttributesMetadata')->willReturn([]);

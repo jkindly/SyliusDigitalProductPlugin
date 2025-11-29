@@ -7,16 +7,16 @@
 >
     <services>
         <service id="sylius_digital_product_plugin.repository.digital_file"
-                 class="SyliusDigitalProductPlugin\Repository\DigitalFileRepository">
+                 class="SyliusDigitalProductPlugin\Repository\FileRepository">
             <argument type="service" id="doctrine"/>
-            <argument>SyliusDigitalProductPlugin\Entity\DigitalFile</argument>
+            <argument>DigitalProductFile</argument>
             <tag name="doctrine.repository_service"/>
         </service>
 
         <service id="sylius_digital_product_plugin.repository.order_item_file"
                  class="SyliusDigitalProductPlugin\Repository\OrderItemFileRepository">
             <argument type="service" id="doctrine"/>
-            <argument>SyliusDigitalProductPlugin\Entity\OrderItemFile</argument>
+            <argument>DigitalProductOrderItemFile</argument>
             <tag name="doctrine.repository_service"/>
         </service>
     </services>

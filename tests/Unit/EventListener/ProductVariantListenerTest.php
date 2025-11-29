@@ -9,58 +9,58 @@ use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\ProductInterface;
-use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
-use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
+use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
 use SyliusDigitalProductPlugin\EventListener\ProductVariantListener;
-use SyliusDigitalProductPlugin\Handler\DigitalFileHandlerInterface;
-use SyliusDigitalProductPlugin\Provider\UploadedDigitalFileProvider;
-use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerInterface;
+use SyliusDigitalProductPlugin\Handler\FileHandlerInterface;
+use SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class ProductVariantListenerTest extends TestCase
 {
-    private MockObject&DigitalFileHandlerInterface $digitalFileHandler;
-    private MockObject&DigitalFileConfigurationSerializerInterface $serializer;
+    private MockObject&FileHandlerInterface $fileHandler;
+    private MockObject&FileConfigurationSerializerInterface $serializer;
     private MockObject&EntityManagerInterface $entityManager;
     private ProductVariantListener $listener;
 
     protected function setUp(): void
     {
-        $this->digitalFileHandler = $this->createMock(DigitalFileHandlerInterface::class);
-        $this->serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
+        $this->fileHandler = $this->createMock(FileHandlerInterface::class);
+        $this->serializer = $this->createMock(FileConfigurationSerializerInterface::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
 
         $this->listener = new ProductVariantListener(
-            $this->digitalFileHandler,
+            $this->fileHandler,
             $this->serializer,
             $this->entityManager,
-            UploadedDigitalFileProvider::TYPE
+            UploadedFileProvider::TYPE
         );
     }
 
-    public function testHandleProductVariantUpdateProcessesUploadedDigitalFiles(): void
+    public function testHandleProductVariantUpdateProcessesUploadedFiles(): void
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
         $configuration = ['uploadedFile' => $uploadedFile];
         $newConfiguration = ['path' => '/path/to/file'];
 
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $digitalFile->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile->method('getConfiguration')->willReturn($configuration);
-        $digitalFile->expects($this->once())->method('setConfiguration')->with($newConfiguration);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file->method('getConfiguration')->willReturn($configuration);
+        $file->expects($this->once())->method('setConfiguration')->with($newConfiguration);
 
-        $digitalFiles = new ArrayCollection([$digitalFile]);
+        $files = new ArrayCollection([$file]);
 
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variant->method('getDigitalFiles')->willReturn($digitalFiles);
+        $variant->method('getFiles')->willReturn($files);
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $this->serializer->expects($this->once())->method('getDto')->with($configuration)->willReturn($dto);
         $this->serializer->expects($this->once())->method('getConfiguration')->with($dto)->willReturn($newConfiguration);
 
-        $this->digitalFileHandler->expects($this->once())->method('handle')->with($dto);
+        $this->fileHandler->expects($this->once())->method('handle')->with($dto);
 
         $this->entityManager->expects($this->once())->method('flush');
 
@@ -70,15 +70,15 @@ final class ProductVariantListenerTest extends TestCase
 
     public function testHandleProductVariantUpdateSkipsNonUploadedFileTypes(): void
     {
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $digitalFile->method('getType')->willReturn('external_url');
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $file->method('getType')->willReturn('external_url');
 
-        $digitalFiles = new ArrayCollection([$digitalFile]);
+        $files = new ArrayCollection([$file]);
 
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variant->method('getDigitalFiles')->willReturn($digitalFiles);
+        $variant->method('getFiles')->willReturn($files);
 
-        $this->digitalFileHandler->expects($this->never())->method('handle');
+        $this->fileHandler->expects($this->never())->method('handle');
         $this->entityManager->expects($this->once())->method('flush');
 
         $event = new GenericEvent($variant);
@@ -89,16 +89,16 @@ final class ProductVariantListenerTest extends TestCase
     {
         $configuration = ['path' => '/existing/path'];
 
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $digitalFile->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile->method('getConfiguration')->willReturn($configuration);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file->method('getConfiguration')->willReturn($configuration);
 
-        $digitalFiles = new ArrayCollection([$digitalFile]);
+        $files = new ArrayCollection([$file]);
 
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variant->method('getDigitalFiles')->willReturn($digitalFiles);
+        $variant->method('getFiles')->willReturn($files);
 
-        $this->digitalFileHandler->expects($this->never())->method('handle');
+        $this->fileHandler->expects($this->never())->method('handle');
         $this->entityManager->expects($this->once())->method('flush');
 
         $event = new GenericEvent($variant);
@@ -110,26 +110,26 @@ final class ProductVariantListenerTest extends TestCase
         $uploadedFile1 = $this->createMock(UploadedFile::class);
         $uploadedFile2 = $this->createMock(UploadedFile::class);
 
-        $digitalFile1 = $this->createMock(DigitalFileInterface::class);
-        $digitalFile1->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile1->method('getConfiguration')->willReturn(['uploadedFile' => $uploadedFile1]);
-        $digitalFile1->expects($this->once())->method('setConfiguration');
+        $file1 = $this->createMock(DigitalProductFileInterface::class);
+        $file1->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file1->method('getConfiguration')->willReturn(['uploadedFile' => $uploadedFile1]);
+        $file1->expects($this->once())->method('setConfiguration');
 
-        $digitalFile2 = $this->createMock(DigitalFileInterface::class);
-        $digitalFile2->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile2->method('getConfiguration')->willReturn(['uploadedFile' => $uploadedFile2]);
-        $digitalFile2->expects($this->once())->method('setConfiguration');
+        $file2 = $this->createMock(DigitalProductFileInterface::class);
+        $file2->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file2->method('getConfiguration')->willReturn(['uploadedFile' => $uploadedFile2]);
+        $file2->expects($this->once())->method('setConfiguration');
 
-        $digitalFiles = new ArrayCollection([$digitalFile1, $digitalFile2]);
+        $files = new ArrayCollection([$file1, $file2]);
 
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variant->method('getDigitalFiles')->willReturn($digitalFiles);
+        $variant->method('getFiles')->willReturn($files);
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $this->serializer->method('getDto')->willReturn($dto);
         $this->serializer->method('getConfiguration')->willReturn([]);
 
-        $this->digitalFileHandler->expects($this->exactly(2))->method('handle');
+        $this->fileHandler->expects($this->exactly(2))->method('handle');
         $this->entityManager->expects($this->once())->method('flush');
 
         $event = new GenericEvent($variant);
@@ -141,23 +141,23 @@ final class ProductVariantListenerTest extends TestCase
         $uploadedFile = $this->createMock(UploadedFile::class);
         $configuration = ['uploadedFile' => $uploadedFile];
 
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $digitalFile->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile->method('getConfiguration')->willReturn($configuration);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file->method('getConfiguration')->willReturn($configuration);
 
-        $digitalFiles = new ArrayCollection([$digitalFile]);
+        $files = new ArrayCollection([$file]);
 
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variant->method('getDigitalFiles')->willReturn($digitalFiles);
+        $variant->method('getFiles')->willReturn($files);
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $this->serializer->method('getDto')->willReturn($dto);
         $this->serializer->method('getConfiguration')->willReturn([]);
 
-        $this->digitalFileHandler->expects($this->once())
+        $this->fileHandler->expects($this->once())
             ->method('handle')
             ->with($this->callback(function ($arg) use ($uploadedFile) {
-                return $arg instanceof UploadedDigitalFileDto && $arg->getUploadedFile() === $uploadedFile;
+                return $arg instanceof UploadedFileDto && $arg->getUploadedFile() === $uploadedFile;
             }));
 
         $this->entityManager->expects($this->once())->method('flush');
@@ -166,20 +166,20 @@ final class ProductVariantListenerTest extends TestCase
         $this->listener->handleProductVariantUpdate($event);
     }
 
-    public function testHandleSimpleProductUpdateProcessesDigitalFiles(): void
+    public function testHandleSimpleProductUpdateProcessesFiles(): void
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
         $configuration = ['uploadedFile' => $uploadedFile];
 
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $digitalFile->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile->method('getConfiguration')->willReturn($configuration);
-        $digitalFile->expects($this->once())->method('setConfiguration');
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file->method('getConfiguration')->willReturn($configuration);
+        $file->expects($this->once())->method('setConfiguration');
 
-        $digitalFiles = new ArrayCollection([$digitalFile]);
+        $files = new ArrayCollection([$file]);
 
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variant->method('getDigitalFiles')->willReturn($digitalFiles);
+        $variant->method('getFiles')->willReturn($files);
 
         $variants = new ArrayCollection([$variant]);
 
@@ -187,11 +187,11 @@ final class ProductVariantListenerTest extends TestCase
         $product->method('isSimple')->willReturn(true);
         $product->method('getVariants')->willReturn($variants);
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $this->serializer->method('getDto')->willReturn($dto);
         $this->serializer->method('getConfiguration')->willReturn([]);
 
-        $this->digitalFileHandler->expects($this->once())->method('handle');
+        $this->fileHandler->expects($this->once())->method('handle');
         $this->entityManager->expects($this->once())->method('flush');
 
         $event = new GenericEvent($product);
@@ -203,19 +203,19 @@ final class ProductVariantListenerTest extends TestCase
         $product = $this->createMock(ProductInterface::class);
         $product->method('isSimple')->willReturn(false);
 
-        $this->digitalFileHandler->expects($this->never())->method('handle');
+        $this->fileHandler->expects($this->never())->method('handle');
         $this->entityManager->expects($this->never())->method('flush');
 
         $event = new GenericEvent($product);
         $this->listener->handleSimpleProductUpdate($event);
     }
 
-    public function testHandleSimpleProductUpdateWithNoDigitalFiles(): void
+    public function testHandleSimpleProductUpdateWithNoFiles(): void
     {
-        $digitalFiles = new ArrayCollection([]);
+        $files = new ArrayCollection([]);
 
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variant->method('getDigitalFiles')->willReturn($digitalFiles);
+        $variant->method('getFiles')->willReturn($files);
 
         $variants = new ArrayCollection([$variant]);
 
@@ -223,21 +223,21 @@ final class ProductVariantListenerTest extends TestCase
         $product->method('isSimple')->willReturn(true);
         $product->method('getVariants')->willReturn($variants);
 
-        $this->digitalFileHandler->expects($this->never())->method('handle');
+        $this->fileHandler->expects($this->never())->method('handle');
         $this->entityManager->expects($this->once())->method('flush');
 
         $event = new GenericEvent($product);
         $this->listener->handleSimpleProductUpdate($event);
     }
 
-    public function testHandleProductVariantUpdateWithEmptyDigitalFiles(): void
+    public function testHandleProductVariantUpdateWithEmptyFiles(): void
     {
-        $digitalFiles = new ArrayCollection([]);
+        $files = new ArrayCollection([]);
 
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variant->method('getDigitalFiles')->willReturn($digitalFiles);
+        $variant->method('getFiles')->willReturn($files);
 
-        $this->digitalFileHandler->expects($this->never())->method('handle');
+        $this->fileHandler->expects($this->never())->method('handle');
         $this->entityManager->expects($this->once())->method('flush');
 
         $event = new GenericEvent($variant);
@@ -248,27 +248,27 @@ final class ProductVariantListenerTest extends TestCase
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
 
-        $digitalFile1 = $this->createMock(DigitalFileInterface::class);
-        $digitalFile1->method('getType')->willReturn('external_url');
+        $file1 = $this->createMock(DigitalProductFileInterface::class);
+        $file1->method('getType')->willReturn('external_url');
 
-        $digitalFile2 = $this->createMock(DigitalFileInterface::class);
-        $digitalFile2->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile2->method('getConfiguration')->willReturn(['uploadedFile' => $uploadedFile]);
-        $digitalFile2->expects($this->once())->method('setConfiguration');
+        $file2 = $this->createMock(DigitalProductFileInterface::class);
+        $file2->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file2->method('getConfiguration')->willReturn(['uploadedFile' => $uploadedFile]);
+        $file2->expects($this->once())->method('setConfiguration');
 
-        $digitalFile3 = $this->createMock(DigitalFileInterface::class);
-        $digitalFile3->method('getType')->willReturn('external_url');
+        $file3 = $this->createMock(DigitalProductFileInterface::class);
+        $file3->method('getType')->willReturn('external_url');
 
-        $digitalFiles = new ArrayCollection([$digitalFile1, $digitalFile2, $digitalFile3]);
+        $files = new ArrayCollection([$file1, $file2, $file3]);
 
         $variant = $this->createMock(DigitalProductVariantInterface::class);
-        $variant->method('getDigitalFiles')->willReturn($digitalFiles);
+        $variant->method('getFiles')->willReturn($files);
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $this->serializer->method('getDto')->willReturn($dto);
         $this->serializer->method('getConfiguration')->willReturn([]);
 
-        $this->digitalFileHandler->expects($this->once())->method('handle');
+        $this->fileHandler->expects($this->once())->method('handle');
         $this->entityManager->expects($this->once())->method('flush');
 
         $event = new GenericEvent($variant);

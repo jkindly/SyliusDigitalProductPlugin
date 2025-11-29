@@ -7,21 +7,21 @@ namespace SyliusDigitalProductPlugin\EventListener;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
-use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
+use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\Handler\DigitalFileHandlerInterface;
-use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerInterface;
+use SyliusDigitalProductPlugin\Handler\FileHandlerInterface;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 
 final readonly class ProductVariantListener
 {
     public function __construct(
-        private DigitalFileHandlerInterface $uploadedDigitalFileHandler,
-        private DigitalFileConfigurationSerializerInterface $uploadedDigitalFileSerializer,
+        private FileHandlerInterface $uploadedFileHandler,
+        private FileConfigurationSerializerInterface $uploadedFileSerializer,
         private EntityManagerInterface $entityManager,
-        private string $uploadedDigitalFileType,
+        private string $uploadedFileType,
     ) {
     }
 
@@ -30,7 +30,7 @@ final readonly class ProductVariantListener
         $productVariant = $event->getSubject();
         Assert::isInstanceOf($productVariant, DigitalProductVariantInterface::class);
 
-        $this->handleUploadedDigitalFiles($productVariant->getDigitalFiles());
+        $this->handleUploadedFiles($productVariant->getFiles());
     }
 
     public function handleSimpleProductUpdate(GenericEvent $event): void
@@ -45,31 +45,31 @@ final readonly class ProductVariantListener
         $variant = $product->getVariants()->first();
         Assert::isInstanceOf($variant, DigitalProductVariantInterface::class);
 
-        $this->handleUploadedDigitalFiles($variant->getDigitalFiles());
+        $this->handleUploadedFiles($variant->getFiles());
     }
 
     /**
-     * @param Collection<int, DigitalFileInterface> $digitalFiles
+     * @param Collection<int, DigitalProductFileInterface> $files
      */
-    private function handleUploadedDigitalFiles(Collection $digitalFiles): void
+    private function handleUploadedFiles(Collection $files): void
     {
-        foreach ($digitalFiles as $digitalFile) {
-            if ($this->uploadedDigitalFileType !== $digitalFile->getType()) {
+        foreach ($files as $file) {
+            if ($this->uploadedFileType !== $file->getType()) {
                 continue;
             }
 
-            $configuration = $digitalFile->getConfiguration();
+            $configuration = $file->getConfiguration();
             $uploadedFile = $configuration['uploadedFile'] ?? null;
             if (null === $uploadedFile) {
                 continue;
             }
 
-            /** @var UploadedDigitalFileDto $dto */
-            $dto = $this->uploadedDigitalFileSerializer->getDto($configuration);
+            /** @var UploadedFileDto $dto */
+            $dto = $this->uploadedFileSerializer->getDto($configuration);
             $dto->setUploadedFile($uploadedFile);
-            $this->uploadedDigitalFileHandler->handle($dto);
+            $this->uploadedFileHandler->handle($dto);
 
-            $digitalFile->setConfiguration($this->uploadedDigitalFileSerializer->getConfiguration($dto));
+            $file->setConfiguration($this->uploadedFileSerializer->getConfiguration($dto));
         }
 
         $this->entityManager->flush();

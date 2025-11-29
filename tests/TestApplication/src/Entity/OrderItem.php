@@ -8,17 +8,17 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\OrderItem as BaseOrderItem;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemInterface;
-use SyliusDigitalProductPlugin\Entity\OrderItemFile;
-use SyliusDigitalProductPlugin\Entity\Trait\DigitalFilesAwareTrait;
+use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFile;
+use SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFilesAwareTrait;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'sylius_order_item')]
 class OrderItem extends BaseOrderItem implements DigitalProductOrderItemInterface
 {
-    use DigitalFilesAwareTrait;
+    use DigitalProductFilesAwareTrait;
 
-    #[ORM\OneToMany(targetEntity: OrderItemFile::class, mappedBy: 'orderItem', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    protected Collection $digitalFiles;
+    #[ORM\OneToMany(targetEntity: DigitalProductOrderItemFile::class, mappedBy: 'orderItem', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    protected Collection $files;
 
     public function __construct()
     {

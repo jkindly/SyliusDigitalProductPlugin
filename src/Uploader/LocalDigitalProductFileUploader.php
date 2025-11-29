@@ -6,7 +6,7 @@ namespace SyliusDigitalProductPlugin\Uploader;
 
 use Psr\Log\LoggerInterface;
 use RuntimeException;
-use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -19,7 +19,7 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
         private Filesystem $filesystem,
         private PathGeneratorInterface $datePathGenerator,
         private bool $deleteLocalFile,
-        private string $uploadedDigitalFileType,
+        private string $uploadedFileType,
         string $uploadPath,
     ) {
         $this->uploadPath = rtrim($uploadPath, '/');
@@ -70,14 +70,14 @@ final readonly class LocalDigitalProductFileUploader implements DigitalProductFi
         ];
     }
 
-    public function remove(DigitalFileInterface $file): void
+    public function remove(DigitalProductFileInterface $file): void
     {
         if (false === $this->deleteLocalFile) {
             return;
         }
 
         $configuration = $file->getConfiguration();
-        if (empty($configuration['path']) || $this->uploadedDigitalFileType !== $file->getType()) {
+        if (empty($configuration['path']) || $this->uploadedFileType !== $file->getType()) {
             return;
         }
 

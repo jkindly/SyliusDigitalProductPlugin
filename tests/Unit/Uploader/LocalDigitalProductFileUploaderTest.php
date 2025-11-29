@@ -7,9 +7,9 @@ namespace Tests\SyliusDigitalProductPlugin\Unit\Uploader;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
-use SyliusDigitalProductPlugin\Provider\UploadedDigitalFileProvider;
+use SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
 use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 use SyliusDigitalProductPlugin\Uploader\LocalDigitalProductFileUploader;
 use Symfony\Component\Filesystem\Filesystem;
@@ -35,7 +35,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
             $this->filesystem,
             $this->pathGenerator,
             true,
-            UploadedDigitalFileProvider::TYPE,
+            UploadedFileProvider::TYPE,
             $this->uploadPath
         );
     }
@@ -181,7 +181,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
             $this->filesystem,
             $this->pathGenerator,
             true,
-            UploadedDigitalFileProvider::TYPE,
+            UploadedFileProvider::TYPE,
             $this->uploadPath . '/'
         );
 
@@ -217,11 +217,11 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
         $fullPath = $this->uploadPath . '/' . $result[DigitalProductFileUploaderInterface::PROPERTY_PATH];
         $this->assertFileExists($fullPath);
 
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $digitalFile->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile->method('getConfiguration')->willReturn(['path' => $result[DigitalProductFileUploaderInterface::PROPERTY_PATH]]);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file->method('getConfiguration')->willReturn(['path' => $result[DigitalProductFileUploaderInterface::PROPERTY_PATH]]);
 
-        $this->uploader->remove($digitalFile);
+        $this->uploader->remove($file);
 
         $this->assertFileDoesNotExist($fullPath);
     }
@@ -232,7 +232,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
             $this->filesystem,
             $this->pathGenerator,
             false,
-            UploadedDigitalFileProvider::TYPE,
+            UploadedFileProvider::TYPE,
             $this->uploadPath
         );
 
@@ -244,11 +244,11 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
         $fullPath = $this->uploadPath . '/' . $result[DigitalProductFileUploaderInterface::PROPERTY_PATH];
         $this->assertFileExists($fullPath);
 
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $digitalFile->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile->method('getConfiguration')->willReturn(['path' => $result[DigitalProductFileUploaderInterface::PROPERTY_PATH]]);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file->method('getConfiguration')->willReturn(['path' => $result[DigitalProductFileUploaderInterface::PROPERTY_PATH]]);
 
-        $uploaderNoDelete->remove($digitalFile);
+        $uploaderNoDelete->remove($file);
 
         $this->assertFileExists($fullPath);
     }
@@ -263,36 +263,36 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
         $fullPath = $this->uploadPath . '/' . $result[DigitalProductFileUploaderInterface::PROPERTY_PATH];
         $this->assertFileExists($fullPath);
 
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $digitalFile->method('getType')->willReturn('external_url');
-        $digitalFile->method('getConfiguration')->willReturn(['path' => $result[DigitalProductFileUploaderInterface::PROPERTY_PATH]]);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $file->method('getType')->willReturn('external_url');
+        $file->method('getConfiguration')->willReturn(['path' => $result[DigitalProductFileUploaderInterface::PROPERTY_PATH]]);
 
-        $this->uploader->remove($digitalFile);
+        $this->uploader->remove($file);
 
         $this->assertFileExists($fullPath);
     }
 
     public function testRemoveDoesNotDeleteFileWhenPathIsEmpty(): void
     {
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $digitalFile->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile->method('getConfiguration')->willReturn(['path' => '']);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file->method('getConfiguration')->willReturn(['path' => '']);
 
-        $this->uploader->remove($digitalFile);
+        $this->uploader->remove($file);
 
         $this->assertTrue(true);
     }
 
     public function testRemoveThrowsExceptionWhenFileDoesNotExist(): void
     {
-        $digitalFile = $this->createMock(DigitalFileInterface::class);
-        $digitalFile->method('getType')->willReturn(UploadedDigitalFileProvider::TYPE);
-        $digitalFile->method('getConfiguration')->willReturn(['path' => 'non/existent/file.pdf']);
+        $file = $this->createMock(DigitalProductFileInterface::class);
+        $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
+        $file->method('getConfiguration')->willReturn(['path' => 'non/existent/file.pdf']);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Error resolving real path for file deletion');
 
-        $this->uploader->remove($digitalFile);
+        $this->uploader->remove($file);
     }
 
     private function createMockedUploadedFile(

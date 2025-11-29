@@ -6,19 +6,19 @@ namespace Tests\SyliusDigitalProductPlugin\Unit\Form\DataTransformer;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\ExternalUrlDigitalFileDto;
-use SyliusDigitalProductPlugin\Form\DataTransformer\ExternalUrlDigitalFileTransformer;
-use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerInterface;
+use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use SyliusDigitalProductPlugin\Form\DataTransformer\ExternalUrlFileTransformer;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 
-final class ExternalUrlDigitalFileTransformerTest extends TestCase
+final class ExternalUrlFileTransformerTest extends TestCase
 {
-    private MockObject&DigitalFileConfigurationSerializerInterface $serializer;
-    private ExternalUrlDigitalFileTransformer $transformer;
+    private MockObject&FileConfigurationSerializerInterface $serializer;
+    private ExternalUrlFileTransformer $transformer;
 
     protected function setUp(): void
     {
-        $this->serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
-        $this->transformer = new ExternalUrlDigitalFileTransformer($this->serializer);
+        $this->serializer = $this->createMock(FileConfigurationSerializerInterface::class);
+        $this->transformer = new ExternalUrlFileTransformer($this->serializer);
     }
 
     public function testTransformReturnsDto(): void
@@ -27,7 +27,7 @@ final class ExternalUrlDigitalFileTransformerTest extends TestCase
             'url' => 'https://example.com/file.pdf',
         ];
 
-        $dto = new ExternalUrlDigitalFileDto();
+        $dto = new ExternalUrlFileDto();
         $dto->setUrl('https://example.com/file.pdf');
 
         $this->serializer->expects($this->once())
@@ -37,13 +37,13 @@ final class ExternalUrlDigitalFileTransformerTest extends TestCase
 
         $result = $this->transformer->transform($configuration);
 
-        $this->assertInstanceOf(ExternalUrlDigitalFileDto::class, $result);
+        $this->assertInstanceOf(ExternalUrlFileDto::class, $result);
         $this->assertSame('https://example.com/file.pdf', $result->getUrl());
     }
 
     public function testTransformWithNullValue(): void
     {
-        $dto = new ExternalUrlDigitalFileDto();
+        $dto = new ExternalUrlFileDto();
 
         $this->serializer->expects($this->once())
             ->method('getDto')
@@ -52,12 +52,12 @@ final class ExternalUrlDigitalFileTransformerTest extends TestCase
 
         $result = $this->transformer->transform(null);
 
-        $this->assertInstanceOf(ExternalUrlDigitalFileDto::class, $result);
+        $this->assertInstanceOf(ExternalUrlFileDto::class, $result);
     }
 
     public function testTransformWithEmptyArray(): void
     {
-        $dto = new ExternalUrlDigitalFileDto();
+        $dto = new ExternalUrlFileDto();
 
         $this->serializer->expects($this->once())
             ->method('getDto')
@@ -66,12 +66,12 @@ final class ExternalUrlDigitalFileTransformerTest extends TestCase
 
         $result = $this->transformer->transform([]);
 
-        $this->assertInstanceOf(ExternalUrlDigitalFileDto::class, $result);
+        $this->assertInstanceOf(ExternalUrlFileDto::class, $result);
     }
 
     public function testReverseTransformReturnsConfiguration(): void
     {
-        $dto = new ExternalUrlDigitalFileDto();
+        $dto = new ExternalUrlFileDto();
         $dto->setUrl('https://example.com/file.pdf');
 
         $configuration = [
@@ -91,7 +91,7 @@ final class ExternalUrlDigitalFileTransformerTest extends TestCase
 
     public function testReverseTransformWithEmptyDto(): void
     {
-        $dto = new ExternalUrlDigitalFileDto();
+        $dto = new ExternalUrlFileDto();
 
         $configuration = [];
 
@@ -131,7 +131,7 @@ final class ExternalUrlDigitalFileTransformerTest extends TestCase
     {
         $configuration = [];
 
-        $dto = new ExternalUrlDigitalFileDto();
+        $dto = new ExternalUrlFileDto();
 
         $this->serializer->expects($this->once())
             ->method('getDto')
@@ -140,13 +140,13 @@ final class ExternalUrlDigitalFileTransformerTest extends TestCase
 
         $result = $this->transformer->transform($configuration);
 
-        $this->assertInstanceOf(ExternalUrlDigitalFileDto::class, $result);
+        $this->assertInstanceOf(ExternalUrlFileDto::class, $result);
         $this->assertNull($result->getUrl());
     }
 
     public function testReverseTransformWithNullUrl(): void
     {
-        $dto = new ExternalUrlDigitalFileDto();
+        $dto = new ExternalUrlFileDto();
 
         $configuration = ['url' => null];
 
@@ -167,7 +167,7 @@ final class ExternalUrlDigitalFileTransformerTest extends TestCase
         $longUrl = 'https://example.com/very/long/path/to/file.pdf?param1=value1&param2=value2/very/long/path/to/file.pdf?param1=value1&param2=value2/very/long/path/to/file.pdf?param1=value1&param2=value2';
         $configuration = ['url' => $longUrl];
 
-        $dto = new ExternalUrlDigitalFileDto();
+        $dto = new ExternalUrlFileDto();
         $dto->setUrl($longUrl);
 
         $this->serializer->expects($this->once())
@@ -184,7 +184,7 @@ final class ExternalUrlDigitalFileTransformerTest extends TestCase
     {
         $longUrl = 'https://example.com/very/long/path/to/file.pdf?param1=value1&param2=value2/very/long/path/to/file.pdf?param1=value1&param2=value2/very/long/path/to/file.pdf?param1=value1&param2=value2';
 
-        $dto = new ExternalUrlDigitalFileDto();
+        $dto = new ExternalUrlFileDto();
         $dto->setUrl($longUrl);
 
         $configuration = ['url' => $longUrl];

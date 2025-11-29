@@ -6,20 +6,20 @@ namespace Tests\SyliusDigitalProductPlugin\Unit\Form\DataTransformer;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
-use SyliusDigitalProductPlugin\Form\DataTransformer\UploadedDigitalFileTransformer;
-use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerInterface;
+use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use SyliusDigitalProductPlugin\Form\DataTransformer\UploadedFileTransformer;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-final class UploadedDigitalFileTransformerTest extends TestCase
+final class UploadedFileTransformerTest extends TestCase
 {
-    private MockObject&DigitalFileConfigurationSerializerInterface $serializer;
-    private UploadedDigitalFileTransformer $transformer;
+    private MockObject&FileConfigurationSerializerInterface $serializer;
+    private UploadedFileTransformer $transformer;
 
     protected function setUp(): void
     {
-        $this->serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
-        $this->transformer = new UploadedDigitalFileTransformer($this->serializer);
+        $this->serializer = $this->createMock(FileConfigurationSerializerInterface::class);
+        $this->transformer = new UploadedFileTransformer($this->serializer);
     }
 
     public function testTransformReturnsDto(): void
@@ -28,7 +28,7 @@ final class UploadedDigitalFileTransformerTest extends TestCase
             'path' => '/path/to/file',
         ];
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('/path/to/file');
 
         $this->serializer->expects($this->once())
@@ -38,13 +38,13 @@ final class UploadedDigitalFileTransformerTest extends TestCase
 
         $result = $this->transformer->transform($configuration);
 
-        $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
+        $this->assertInstanceOf(UploadedFileDto::class, $result);
         $this->assertSame('/path/to/file', $result->getPath());
     }
 
     public function testTransformWithNullValue(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
 
         $this->serializer->expects($this->once())
             ->method('getDto')
@@ -53,12 +53,12 @@ final class UploadedDigitalFileTransformerTest extends TestCase
 
         $result = $this->transformer->transform(null);
 
-        $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
+        $this->assertInstanceOf(UploadedFileDto::class, $result);
     }
 
     public function testTransformWithEmptyArray(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
 
         $this->serializer->expects($this->once())
             ->method('getDto')
@@ -67,14 +67,14 @@ final class UploadedDigitalFileTransformerTest extends TestCase
 
         $result = $this->transformer->transform([]);
 
-        $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
+        $this->assertInstanceOf(UploadedFileDto::class, $result);
     }
 
     public function testReverseTransformReturnsConfiguration(): void
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('/path/to/file');
         $dto->setUploadedFile($uploadedFile);
 
@@ -98,7 +98,7 @@ final class UploadedDigitalFileTransformerTest extends TestCase
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setUploadedFile($uploadedFile);
 
         $configuration = ['name' => 'test.pdf'];
@@ -116,7 +116,7 @@ final class UploadedDigitalFileTransformerTest extends TestCase
 
     public function testReverseTransformWithNullUploadedFile(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('/path/to/file');
 
         $configuration = ['path' => '/path/to/file'];
@@ -163,7 +163,7 @@ final class UploadedDigitalFileTransformerTest extends TestCase
             'size' => 1024,
         ];
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('/path/to/file');
         $dto->setMimeType('application/pdf');
         $dto->setOriginalFilename('original.pdf');
@@ -188,7 +188,7 @@ final class UploadedDigitalFileTransformerTest extends TestCase
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('/path/to/file');
         $dto->setMimeType('application/pdf');
         $dto->setOriginalFilename('original.pdf');

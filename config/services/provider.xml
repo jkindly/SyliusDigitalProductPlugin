@@ -6,15 +6,15 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="sylius_digital_product_plugin.provider.digital_file_registry" class="SyliusDigitalProductPlugin\Provider\DigitalFileProviderRegistry">
+        <service id="sylius_digital_product_plugin.provider.digital_file_registry" class="SyliusDigitalProductPlugin\Provider\FileProviderRegistry">
             <argument type="tagged_iterator" tag="sylius_digital_product_plugin.digital_file.provider" index-by="key"/>
         </service>
 
-        <service id="sylius_digital_product_plugin.provider.uploaded_digital_file" class="SyliusDigitalProductPlugin\Provider\UploadedDigitalFileProvider">
+        <service id="sylius_digital_product_plugin.provider.uploaded_digital_file" class="SyliusDigitalProductPlugin\Provider\UploadedFileProvider">
             <tag name="sylius_digital_product_plugin.digital_file.provider" key="%sylius_digital_product_plugin.file_type.uploaded%"/>
         </service>
 
-        <service id="sylius_digital_product_plugin.provider.external_url_digital_file" class="SyliusDigitalProductPlugin\Provider\ExternalUrlDigitalFileProvider">
+        <service id="sylius_digital_product_plugin.provider.external_url_digital_file" class="SyliusDigitalProductPlugin\Provider\ExternalUrlFileProvider">
             <tag name="sylius_digital_product_plugin.digital_file.provider" key="%sylius_digital_product_plugin.file_type.external_url%"/>
         </service>
     </services>

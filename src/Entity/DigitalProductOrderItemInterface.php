@@ -6,6 +6,6 @@ namespace SyliusDigitalProductPlugin\Entity;
 
 use Sylius\Component\Core\Model\OrderItemInterface;
 
-interface DigitalProductOrderItemInterface extends OrderItemInterface, DigitalFilesInterface
+interface DigitalProductOrderItemInterface extends OrderItemInterface, DigitalProductFilesInterface
 {
 }

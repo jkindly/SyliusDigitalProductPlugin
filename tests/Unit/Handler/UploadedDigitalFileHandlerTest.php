@@ -6,43 +6,43 @@ namespace Tests\SyliusDigitalProductPlugin\Unit\Handler;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
-use SyliusDigitalProductPlugin\Handler\UploadedDigitalFileHandler;
+use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use SyliusDigitalProductPlugin\Handler\UploadedFileHandler;
 use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-final class UploadedDigitalFileHandlerTest extends TestCase
+final class UploadedFileHandlerTest extends TestCase
 {
     private MockObject&DigitalProductFileUploaderInterface $uploader;
 
-    private UploadedDigitalFileHandler $handler;
+    private UploadedFileHandler $handler;
 
     protected function setUp(): void
     {
         $this->uploader = $this->createMock(DigitalProductFileUploaderInterface::class);
-        $this->handler = new UploadedDigitalFileHandler($this->uploader);
+        $this->handler = new UploadedFileHandler($this->uploader);
     }
 
     public function testHandleDoesNothingWhenUploadedFileIsNull(): void
     {
-        $digitalFile = $this->createMock(UploadedDigitalFileDto::class);
-        $digitalFile->expects($this->once())
+        $file = $this->createMock(UploadedFileDto::class);
+        $file->expects($this->once())
             ->method('getUploadedFile')
             ->willReturn(null);
 
         $this->uploader->expects($this->never())
             ->method('upload');
 
-        $digitalFile->expects($this->never())
+        $file->expects($this->never())
             ->method('setPath');
 
-        $this->handler->handle($digitalFile);
+        $this->handler->handle($file);
     }
 
     public function testHandleUploadsFileAndSetsAllProperties(): void
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
-        $digitalFile = $this->createMock(UploadedDigitalFileDto::class);
+        $file = $this->createMock(UploadedFileDto::class);
 
         $uploadData = [
             DigitalProductFileUploaderInterface::PROPERTY_PATH => '2024/11/13/file.pdf',
@@ -53,7 +53,7 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             DigitalProductFileUploaderInterface::PROPERTY_MIME_TYPE => 'application/pdf',
         ];
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getUploadedFile')
             ->willReturn($uploadedFile);
 
@@ -62,33 +62,33 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             ->with($uploadedFile)
             ->willReturn($uploadData);
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setPath')
             ->with('2024/11/13/file.pdf');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setSize')
             ->with(1024000);
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setOriginalFilename')
             ->with('document.pdf');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setExtension')
             ->with('pdf');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setMimeType')
             ->with('application/pdf');
 
-        $this->handler->handle($digitalFile);
+        $this->handler->handle($file);
     }
 
     public function testHandleUsesFilenameFromUploadDataWhenNameIsNull(): void
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
-        $digitalFile = $this->createMock(UploadedDigitalFileDto::class);
+        $file = $this->createMock(UploadedFileDto::class);
 
         $uploadData = [
             DigitalProductFileUploaderInterface::PROPERTY_PATH => '2024/11/13/file.pdf',
@@ -99,7 +99,7 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             DigitalProductFileUploaderInterface::PROPERTY_MIME_TYPE => 'application/pdf',
         ];
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getUploadedFile')
             ->willReturn($uploadedFile);
 
@@ -108,33 +108,33 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             ->with($uploadedFile)
             ->willReturn($uploadData);
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setPath')
             ->with('2024/11/13/file.pdf');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setSize')
             ->with(500);
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setOriginalFilename')
             ->with('original.pdf');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setExtension')
             ->with('pdf');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setMimeType')
             ->with('application/pdf');
 
-        $this->handler->handle($digitalFile);
+        $this->handler->handle($file);
     }
 
     public function testHandlePreservesEmptyStringName(): void
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
-        $digitalFile = $this->createMock(UploadedDigitalFileDto::class);
+        $file = $this->createMock(UploadedFileDto::class);
 
         $uploadData = [
             DigitalProductFileUploaderInterface::PROPERTY_PATH => '2024/11/13/file.pdf',
@@ -145,7 +145,7 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             DigitalProductFileUploaderInterface::PROPERTY_MIME_TYPE => 'application/pdf',
         ];
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getUploadedFile')
             ->willReturn($uploadedFile);
 
@@ -154,33 +154,33 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             ->with($uploadedFile)
             ->willReturn($uploadData);
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setPath')
             ->with('2024/11/13/file.pdf');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setSize')
             ->with(500);
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setOriginalFilename')
             ->with('original.pdf');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setExtension')
             ->with('pdf');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setMimeType')
             ->with('application/pdf');
 
-        $this->handler->handle($digitalFile);
+        $this->handler->handle($file);
     }
 
     public function testHandleWorksWithDifferentFileTypes(): void
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
-        $digitalFile = $this->createMock(UploadedDigitalFileDto::class);
+        $file = $this->createMock(UploadedFileDto::class);
 
         $uploadData = [
             DigitalProductFileUploaderInterface::PROPERTY_PATH => '2024/11/13/file.pdf',
@@ -191,7 +191,7 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             DigitalProductFileUploaderInterface::PROPERTY_MIME_TYPE => 'image/jpeg',
         ];
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getUploadedFile')
             ->willReturn($uploadedFile);
 
@@ -200,33 +200,33 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             ->with($uploadedFile)
             ->willReturn($uploadData);
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setPath')
             ->with('2024/11/13/file.pdf');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setSize')
             ->with(2048000);
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setOriginalFilename')
             ->with('photo.jpg');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setExtension')
             ->with('jpg');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setMimeType')
             ->with('image/jpeg');
 
-        $this->handler->handle($digitalFile);
+        $this->handler->handle($file);
     }
 
     public function testHandleWorksWithLargeFiles(): void
     {
         $uploadedFile = $this->createMock(UploadedFile::class);
-        $digitalFile = $this->createMock(UploadedDigitalFileDto::class);
+        $file = $this->createMock(UploadedFileDto::class);
 
         $largeFileSize = 5368709120;
 
@@ -239,7 +239,7 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             DigitalProductFileUploaderInterface::PROPERTY_MIME_TYPE => 'application/zip',
         ];
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('getUploadedFile')
             ->willReturn($uploadedFile);
 
@@ -248,26 +248,26 @@ final class UploadedDigitalFileHandlerTest extends TestCase
             ->with($uploadedFile)
             ->willReturn($uploadData);
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setPath')
             ->with('2024/11/13/file.zip');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setSize')
             ->with($largeFileSize);
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setOriginalFilename')
             ->with('large-file.zip');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setExtension')
             ->with('zip');
 
-        $digitalFile->expects($this->once())
+        $file->expects($this->once())
             ->method('setMimeType')
             ->with('application/zip');
 
-        $this->handler->handle($digitalFile);
+        $this->handler->handle($file);
     }
 }

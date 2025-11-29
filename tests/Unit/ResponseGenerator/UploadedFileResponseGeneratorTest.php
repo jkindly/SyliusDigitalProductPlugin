@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\SyliusDigitalProductPlugin\Unit\ResponseGenerator;
 
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
-use SyliusDigitalProductPlugin\Entity\OrderItemFileInterface;
-use SyliusDigitalProductPlugin\Provider\UploadedDigitalFileProvider;
+use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
 use SyliusDigitalProductPlugin\ResponseGenerator\UploadedFileResponseGenerator;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -26,7 +26,7 @@ final class UploadedFileResponseGeneratorTest extends TestCase
         $this->filesystem->mkdir($this->uploadPath);
 
         $this->generator = new UploadedFileResponseGenerator(
-            UploadedDigitalFileProvider::TYPE,
+            UploadedFileProvider::TYPE,
             $this->uploadPath
         );
     }
@@ -43,11 +43,11 @@ final class UploadedFileResponseGeneratorTest extends TestCase
         $filePath = '2024/01/15/test.pdf';
         $this->createTestFile($filePath, 'test content');
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath($filePath);
         $dto->setExtension('pdf');
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
         $file->method('getName')->willReturn('My Document');
 
         $response = $this->generator->generate($file, $dto);
@@ -60,11 +60,11 @@ final class UploadedFileResponseGeneratorTest extends TestCase
         $filePath = '2024/01/15/test.pdf';
         $this->createTestFile($filePath, 'test content');
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath($filePath);
         $dto->setExtension('pdf');
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
         $file->method('getName')->willReturn('My Document');
 
         $response = $this->generator->generate($file, $dto);
@@ -80,11 +80,11 @@ final class UploadedFileResponseGeneratorTest extends TestCase
         $filePath = '2024/01/15/test.pdf';
         $this->createTestFile($filePath, 'test content');
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath($filePath);
         $dto->setExtension('pdf');
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
         $file->method('getName')->willReturn('Important File');
 
         $response = $this->generator->generate($file, $dto);
@@ -99,11 +99,11 @@ final class UploadedFileResponseGeneratorTest extends TestCase
         $filePath = '2024/01/15/test';
         $this->createTestFile($filePath, 'test content');
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath($filePath);
         $dto->setExtension(null);
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
         $file->method('getName')->willReturn('Document');
 
         $response = $this->generator->generate($file, $dto);
@@ -119,11 +119,11 @@ final class UploadedFileResponseGeneratorTest extends TestCase
         $filePath = '2024/01/15/original-file.pdf';
         $this->createTestFile($filePath, 'test content');
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath($filePath);
         $dto->setExtension('pdf');
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
         $file->method('getName')->willReturn(null);
 
         $response = $this->generator->generate($file, $dto);
@@ -138,11 +138,11 @@ final class UploadedFileResponseGeneratorTest extends TestCase
         $filePath = '2024/01/15/document.pdf';
         $this->createTestFile($filePath, 'test content');
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath($filePath);
         $dto->setExtension('pdf');
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
         $file->method('getName')->willReturn('');
 
         $response = $this->generator->generate($file, $dto);
@@ -154,10 +154,10 @@ final class UploadedFileResponseGeneratorTest extends TestCase
 
     public function testGenerateThrowsNotFoundExceptionWhenPathIsNull(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath(null);
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('File path not found in configuration.');
@@ -167,10 +167,10 @@ final class UploadedFileResponseGeneratorTest extends TestCase
 
     public function testGenerateThrowsNotFoundExceptionWhenFileDoesNotExist(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('non/existent/file.pdf');
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
         $file->method('getName')->willReturn('Test');
 
         $this->expectException(NotFoundHttpException::class);
@@ -183,10 +183,10 @@ final class UploadedFileResponseGeneratorTest extends TestCase
     {
         $this->createTestFile('legitimate.pdf', 'test content');
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('../../etc/passwd');
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('File not found or path validation failed.');
@@ -196,10 +196,10 @@ final class UploadedFileResponseGeneratorTest extends TestCase
 
     public function testGeneratePreventDirectoryTraversalAttack(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('../../../sensitive-file.txt');
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $this->expectException(NotFoundHttpException::class);
 
@@ -211,11 +211,11 @@ final class UploadedFileResponseGeneratorTest extends TestCase
         $filePath = '2024/01/15/test.pdf';
         $this->createTestFile($filePath, 'test content');
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('/' . $filePath);
         $dto->setExtension('pdf');
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
         $file->method('getName')->willReturn('Document');
 
         $response = $this->generator->generate($file, $dto);
@@ -228,11 +228,11 @@ final class UploadedFileResponseGeneratorTest extends TestCase
         $filePath = '2024/01/15/archive.zip';
         $this->createTestFile($filePath, 'zip content');
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath($filePath);
         $dto->setExtension('zip');
 
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
         $file->method('getName')->willReturn('My Archive');
 
         $response = $this->generator->generate($file, $dto);
@@ -244,7 +244,7 @@ final class UploadedFileResponseGeneratorTest extends TestCase
 
     public function testSupportsReturnsTrueForUploadedFileType(): void
     {
-        $this->assertTrue($this->generator->supports(UploadedDigitalFileProvider::TYPE));
+        $this->assertTrue($this->generator->supports(UploadedFileProvider::TYPE));
     }
 
     public function testSupportsReturnsFalseForOtherFileTypes(): void

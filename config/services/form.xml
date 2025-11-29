@@ -14,18 +14,23 @@
     <services>
         <service id="sylius_digital_product_plugin.form.type.digital_product_file" class="SyliusDigitalProductPlugin\Form\Type\DigitalProductFileType">
             <argument type="service" id="sylius_digital_product_plugin.provider.digital_file_registry" />
-            <argument>SyliusDigitalProductPlugin\Entity\DigitalFile</argument>
+            <argument>DigitalProductFile</argument>
             <argument>%sylius_digital_product_plugin.form.type.digital_product_file.validation_groups%</argument>
             <tag name="form.type" />
         </service>
 
+        <service id="sylius_digital_product_plugin.form.event_subscriber.channel_based_digital_files" class="SyliusDigitalProductPlugin\Form\EventSubscriber\ChannelBasedFilesSubscriber">
+            <argument type="service" id="sylius.repository.channel" />
+        </service>
+
         <service id="sylius_digital_product_plugin.form.extension.product_variant_type" class="SyliusDigitalProductPlugin\Form\Extension\ProductVariantTypeExtension">
             <argument type="service" id="sylius_digital_product_plugin.provider.digital_file_registry" />
+            <argument type="service" id="sylius_digital_product_plugin.form.event_subscriber.channel_based_digital_files" />
             <tag name="form.type_extension" />
         </service>
 
         <service id="sylius_digital_product_plugin.form.type.digital_product_channel_settings" class="SyliusDigitalProductPlugin\Form\Type\DigitalProductChannelSettingsType">
-            <argument>SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings</argument>
+            <argument>DigitalProductChannelSettingsDigitalProduct</argument>
             <argument>%sylius_digital_product_plugin.form.type.digital_product_file.validation_groups%</argument>
             <tag name="form.type" />
         </service>
@@ -40,28 +45,34 @@
             <tag name="form.type_extension" />
         </service>
 
-        <service id="sylius_digital_product_plugin.form.type.uploaded_digital_file" class="SyliusDigitalProductPlugin\Form\Type\UploadedDigitalFileType">
+        <service id="sylius_digital_product_plugin.form.type.uploaded_digital_file" class="SyliusDigitalProductPlugin\Form\Type\UploadedFileType">
             <argument type="service" id="sylius_digital_product_plugin.form.data_transformer.uploaded_digital_file" />
             <argument type="service" id="sylius_digital_product_plugin.validator.uploaded_digital_file_dto" />
-            <argument>SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto</argument>
+            <argument>SyliusDigitalProductPlugin\Dto\UploadedFileDto</argument>
             <argument>%sylius_digital_product_plugin.form.type.digital_product_file.validation_groups%</argument>
             <tag name="form.type" />
         </service>
 
-        <service id="sylius_digital_product_plugin.form.type.external_url_digital_file" class="SyliusDigitalProductPlugin\Form\Type\ExternalUrlDigitalFileType">
+        <service id="sylius_digital_product_plugin.form.type.external_url_digital_file" class="SyliusDigitalProductPlugin\Form\Type\ExternalUrlFileType">
             <argument type="service" id="sylius_digital_product_plugin.form.data_transformer.external_url_digital_file" />
             <argument type="service" id="sylius_digital_product_plugin.validator.external_url_digital_file_dto" />
-            <argument>SyliusDigitalProductPlugin\Dto\ExternalUrlDigitalFileDto</argument>
+            <argument>SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto</argument>
             <argument>%sylius_digital_product_plugin.form.type.digital_product_file.validation_groups%</argument>
             <tag name="form.type" />
         </service>
 
-        <service id="sylius_digital_product_plugin.form.data_transformer.uploaded_digital_file" class="SyliusDigitalProductPlugin\Form\DataTransformer\UploadedDigitalFileTransformer">
+        <service id="sylius_digital_product_plugin.form.data_transformer.uploaded_digital_file" class="SyliusDigitalProductPlugin\Form\DataTransformer\UploadedFileTransformer">
             <argument type="service" id="sylius_digital_product_plugin.serializer.uploaded_digital_file_configuration" />
         </service>
 
-        <service id="sylius_digital_product_plugin.form.data_transformer.external_url_digital_file" class="SyliusDigitalProductPlugin\Form\DataTransformer\ExternalUrlDigitalFileTransformer">
+        <service id="sylius_digital_product_plugin.form.data_transformer.external_url_digital_file" class="SyliusDigitalProductPlugin\Form\DataTransformer\ExternalUrlFileTransformer">
             <argument type="service" id="sylius_digital_product_plugin.serializer.external_url_digital_file_configuration" />
+        </service>
+
+        <service id="sylius_digital_product_plugin.form.type.digital_product_settings" class="SyliusDigitalProductPlugin\Form\Type\DigitalProductSettingsType">
+            <argument>DigitalProductDigitalProductFileSettings</argument>
+            <argument>%sylius_digital_product_plugin.form.type.digital_product_file.validation_groups%</argument>
+            <tag name="form.type" />
         </service>
     </services>
 </container>

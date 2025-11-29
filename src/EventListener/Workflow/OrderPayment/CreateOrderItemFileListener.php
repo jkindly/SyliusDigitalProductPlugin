@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
 use SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
@@ -39,16 +39,16 @@ final readonly class CreateOrderItemFileListener
             }
 
             $variantSettings = $variant->getDigitalProductVariantSettings();
-            $channelSettings = $channel->getDigitalProductChannelSettings();
+            $channelSettings = $channel->getDigitalProductFileChannelSettings();
 
-            $digitalFiles = $variant->getDigitalFiles();
-            foreach ($digitalFiles as $digitalFile) {
+            $files = $variant->getFiles();
+            foreach ($files as $file) {
                 $orderItemFile = $this->orderItemFileFactory->createWithData(
                     $item,
-                    $digitalFile->getName(),
-                    $digitalFile->getType(),
+                    $file->getName(),
+                    $file->getType(),
                     $variantSettings?->getDownloadLimit() ?? $channelSettings?->getDownloadLimit(),
-                    $digitalFile->getConfiguration(),
+                    $file->getConfiguration(),
                 );
                 $this->entityManager->persist($orderItemFile);
             }

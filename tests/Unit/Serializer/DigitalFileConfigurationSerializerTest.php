@@ -6,14 +6,14 @@ namespace Tests\SyliusDigitalProductPlugin\Unit\Serializer;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\ExternalUrlDigitalFileDto;
-use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
-use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializer;
+use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializer;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-final class DigitalFileConfigurationSerializerTest extends TestCase
+final class FileConfigurationSerializerTest extends TestCase
 {
     private MockObject&SerializerStub $serializer;
 
@@ -24,27 +24,27 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
     public function testGetDtoReturnsEmptyDtoForNullConfiguration(): void
     {
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $result = $serializerService->getDto(null);
 
-        $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
+        $this->assertInstanceOf(UploadedFileDto::class, $result);
         $this->assertNull($result->getPath());
     }
 
     public function testGetDtoReturnsEmptyDtoForEmptyConfiguration(): void
     {
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $result = $serializerService->getDto([]);
 
-        $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
+        $this->assertInstanceOf(UploadedFileDto::class, $result);
         $this->assertNull($result->getPath());
     }
 
@@ -54,55 +54,55 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
             'path' => '/path/to/file',
         ];
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('/path/to/file');
 
         $this->serializer->expects($this->once())
             ->method('denormalize')
-            ->with($configuration, UploadedDigitalFileDto::class)
+            ->with($configuration, UploadedFileDto::class)
             ->willReturn($dto);
 
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $result = $serializerService->getDto($configuration);
 
-        $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
+        $this->assertInstanceOf(UploadedFileDto::class, $result);
         $this->assertSame('/path/to/file', $result->getPath());
     }
 
-    public function testGetDtoWithExternalUrlDigitalFileDto(): void
+    public function testGetDtoWithExternalUrlFileDto(): void
     {
         $configuration = [
             'url' => 'https://example.com/file.pdf',
         ];
 
-        $dto = new ExternalUrlDigitalFileDto();
+        $dto = new ExternalUrlFileDto();
         $dto->setUrl('https://example.com/file.pdf');
 
         $this->serializer->expects($this->once())
             ->method('denormalize')
-            ->with($configuration, ExternalUrlDigitalFileDto::class)
+            ->with($configuration, ExternalUrlFileDto::class)
             ->willReturn($dto);
 
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            ExternalUrlDigitalFileDto::class
+            ExternalUrlFileDto::class
         );
 
         $result = $serializerService->getDto($configuration);
 
-        $this->assertInstanceOf(ExternalUrlDigitalFileDto::class, $result);
+        $this->assertInstanceOf(ExternalUrlFileDto::class, $result);
         $this->assertSame('https://example.com/file.pdf', $result->getUrl());
     }
 
     public function testGetConfigurationReturnsEmptyArrayForNullDto(): void
     {
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $result = $serializerService->getConfiguration(null);
@@ -113,7 +113,7 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
     public function testGetConfigurationNormalizesDto(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('/path/to/file');
 
         $normalizedData = [
@@ -125,9 +125,9 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
             ->with($dto)
             ->willReturn($normalizedData);
 
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $result = $serializerService->getConfiguration($dto);
@@ -138,16 +138,16 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
     public function testGetConfigurationThrowsExceptionWhenNormalizeReturnsNonArray(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
 
         $this->serializer->expects($this->once())
             ->method('normalize')
             ->with($dto)
             ->willReturn('invalid');
 
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $this->expectException(TransformationFailedException::class);
@@ -158,16 +158,16 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
     public function testGetConfigurationThrowsExceptionWhenNormalizeReturnsNull(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
 
         $this->serializer->expects($this->once())
             ->method('normalize')
             ->with($dto)
             ->willReturn(null);
 
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $this->expectException(TransformationFailedException::class);
@@ -178,16 +178,16 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
     public function testGetConfigurationThrowsExceptionWhenNormalizeReturnsInteger(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
 
         $this->serializer->expects($this->once())
             ->method('normalize')
             ->with($dto)
             ->willReturn(123);
 
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $this->expectException(TransformationFailedException::class);
@@ -207,7 +207,7 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
             'size' => 1024,
         ];
 
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('/path/to/file');
         $dto->setMimeType('application/pdf');
         $dto->setOriginalFilename('original.pdf');
@@ -216,17 +216,17 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
         $this->serializer->expects($this->once())
             ->method('denormalize')
-            ->with($configuration, UploadedDigitalFileDto::class)
+            ->with($configuration, UploadedFileDto::class)
             ->willReturn($dto);
 
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $result = $serializerService->getDto($configuration);
 
-        $this->assertInstanceOf(UploadedDigitalFileDto::class, $result);
+        $this->assertInstanceOf(UploadedFileDto::class, $result);
         $this->assertSame('/path/to/file', $result->getPath());
         $this->assertSame('application/pdf', $result->getMimeType());
         $this->assertSame('original.pdf', $result->getOriginalFilename());
@@ -236,7 +236,7 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
     public function testGetConfigurationWithComplexDto(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
         $dto->setPath('/path/to/file');
         $dto->setMimeType('application/pdf');
         $dto->setOriginalFilename('original.pdf');
@@ -256,9 +256,9 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
             ->with($dto)
             ->willReturn($normalizedData);
 
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $result = $serializerService->getConfiguration($dto);
@@ -273,16 +273,16 @@ final class DigitalFileConfigurationSerializerTest extends TestCase
 
     public function testGetConfigurationReturnsEmptyArrayWhenNormalizeReturnsEmptyArray(): void
     {
-        $dto = new UploadedDigitalFileDto();
+        $dto = new UploadedFileDto();
 
         $this->serializer->expects($this->once())
             ->method('normalize')
             ->with($dto)
             ->willReturn([]);
 
-        $serializerService = new DigitalFileConfigurationSerializer(
+        $serializerService = new FileConfigurationSerializer(
             $this->serializer,
-            UploadedDigitalFileDto::class
+            UploadedFileDto::class
         );
 
         $result = $serializerService->getConfiguration($dto);

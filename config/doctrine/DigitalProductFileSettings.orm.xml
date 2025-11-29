@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="SyliusDigitalProductPlugin\Entity\DigitalProductFileSettings" table="sylius_digital_product_file_settings">
+        <id name="id" type="integer" column="id">
+            <generator/>
+        </id>
+
+        <one-to-one field="file" target-entity="SyliusDigitalProductPlugin\Entity\DigitalProductFile" inversed-by="settings">
+            <join-column name="file_id" referenced-column-name="id" nullable="false" unique="true" />
+        </one-to-one>
+    </entity>
+</doctrine-mapping>

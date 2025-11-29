@@ -6,24 +6,24 @@ namespace Tests\SyliusDigitalProductPlugin\Unit\EventListener;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
-use SyliusDigitalProductPlugin\EventListener\RemoveUploadedDigitalFileListener;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
+use SyliusDigitalProductPlugin\EventListener\RemoveUploadedFileListener;
 use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 
-final class RemoveUploadedDigitalFileListenerTest extends TestCase
+final class RemoveUploadedFileListenerTest extends TestCase
 {
     private MockObject&DigitalProductFileUploaderInterface $uploader;
-    private RemoveUploadedDigitalFileListener $listener;
+    private RemoveUploadedFileListener $listener;
 
     protected function setUp(): void
     {
         $this->uploader = $this->createMock(DigitalProductFileUploaderInterface::class);
-        $this->listener = new RemoveUploadedDigitalFileListener($this->uploader);
+        $this->listener = new RemoveUploadedFileListener($this->uploader);
     }
 
     public function testPreRemoveCallsUploaderRemove(): void
     {
-        $file = $this->createMock(DigitalFileInterface::class);
+        $file = $this->createMock(DigitalProductFileInterface::class);
 
         $this->uploader->expects($this->once())
             ->method('remove')
@@ -34,7 +34,7 @@ final class RemoveUploadedDigitalFileListenerTest extends TestCase
 
     public function testPreRemovePassesCorrectFileInstance(): void
     {
-        $file = $this->createMock(DigitalFileInterface::class);
+        $file = $this->createMock(DigitalProductFileInterface::class);
 
         $this->uploader->expects($this->once())
             ->method('remove')

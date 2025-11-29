@@ -1,9 +1,10 @@
 {% set order = hookable_metadata.context.order %}
 
-{% if order.hasAnyDigitalFile %}
+{% if order.hasAnyFile %}
     <div class="table-responsive border-bottom mb-6" style="--bs-border-style: dashed">
         <table
             class="table table-borderless table-space align-middle mb-0" {{ sylius_test_html_attribute('order-table-digital-files') }}>
+            <caption class="caption-top ps-2 fs-4">{{ 'sylius_digital_product.ui.files'|trans }}</caption>
             {% hook 'table_digital_files' %}
         </table>
     </div>

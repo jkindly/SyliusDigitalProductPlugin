@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="sylius_digital_product_plugin.controller.admin.action.uploaded_digital_file_download" class="SyliusDigitalProductPlugin\Controller\Admin\Action\UploadedDigitalFileDownloadAction">
+        <service id="sylius_digital_product_plugin.controller.admin.action.uploaded_digital_file_download" class="SyliusDigitalProductPlugin\Controller\Admin\Action\UploadedFileDownloadAction">
             <argument type="service" id="sylius_digital_product_plugin.repository.digital_file"/>
             <argument type="service" id="sylius_digital_product_plugin.serializer.uploaded_digital_file_configuration"/>
             <argument>%sylius_digital_product_plugin.uploaded_file.directory%</argument>

@@ -4,7 +4,7 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
 >
-    <class name="SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto">
+    <class name="SyliusDigitalProductPlugin\Dto\UploadedFileDto">
         <attribute name="uploadedFile" ignore="true"/>
     </class>
 </serializer>

@@ -26,6 +26,8 @@
 
         <field name="configuration" column="configuration" type="json" nullable="true" />
 
+        <field name="availableUntil" column="available_until" type="datetime" nullable="true"/>
+
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
         </field>

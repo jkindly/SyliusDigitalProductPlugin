@@ -5,22 +5,29 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Form\Type;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
-use SyliusDigitalProductPlugin\Provider\DigitalFileProviderRegistryInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
+use SyliusDigitalProductPlugin\Form\DataTransformer\DaysToDateTimeTransformer;
+use SyliusDigitalProductPlugin\Provider\FileProviderRegistryInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Valid;
+use Webmozart\Assert\Assert;
 
 final class DigitalProductFileType extends AbstractResourceType
 {
     private array $fileTypes = [];
 
     public function __construct(
-        private readonly DigitalFileProviderRegistryInterface $registry,
+        private readonly FileProviderRegistryInterface $registry,
         protected string $dataClass,
         protected array $validationGroups = [],
     ) {
@@ -38,6 +45,9 @@ final class DigitalProductFileType extends AbstractResourceType
             ->add('name', TextType::class, [
                 'label' => 'sylius_digital_product.ui.name',
             ])
+            ->add('settings', DigitalProductSettingsType::class, [
+                'required' => false,
+            ])
         ;
 
         $builder
@@ -46,7 +56,18 @@ final class DigitalProductFileType extends AbstractResourceType
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
                 $this->addFileTypeToForm($event);
+                $this->applySettings($event);
             })
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver
+            ->setDefined('channel_settings')
+            ->setAllowedTypes('channel_settings', [DigitalProductFileChannelSettingsInterface::class, 'null'])
         ;
     }
 
@@ -58,18 +79,41 @@ final class DigitalProductFileType extends AbstractResourceType
     private function addFileTypeToForm(FormEvent $event): void
     {
         $data = $event->getData();
-
-        if ($data === null) {
+        if (null === $data) {
             return;
         }
 
-        if (!is_array($data) && !$data instanceof DigitalFileInterface) {
+        if (!is_array($data) && !$data instanceof DigitalProductFileInterface) {
             return;
         }
 
-        $dataType = $data instanceof DigitalFileInterface ? $data->getType() : $data['type'];
-        $formType = $this->fileTypes[$dataType];
         $form = $event->getForm();
+
+        $dataType = $data instanceof DigitalProductFileInterface ? $data->getType() : $data['type'];
+        $formType = $this->fileTypes[$dataType];
+
         $form->add('configuration', $formType);
+    }
+
+    private function applySettings(FormEvent $event): void
+    {
+        /** @var DigitalProductFileChannelSettingsInterface|null $settings */
+        $settings = $event->getForm()->getConfig()->getOption('channel_settings');
+        if (null === $settings) {
+            return;
+        }
+
+        Assert::isInstanceOf($settings, DigitalProductFileChannelSettingsInterface::class);
+
+        $data = $event->getData();
+        Assert::isArray($data);
+
+        if (!isset($data['settings'])) {
+            $data['settings']['downloadLimit'] = $settings->getDownloadLimit();
+            $data['settings']['daysAvailable'] = $settings->getDaysAvailable();
+            $data['settings']['hiddenQuantity'] = $settings->isHiddenQuantity();
+        }
+dump($data);
+        $event->setData($data);
     }
 }

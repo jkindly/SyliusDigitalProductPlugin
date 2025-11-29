@@ -10,8 +10,8 @@
     </imports>
 
     <parameters>
-        <parameter key="sylius_digital_product_plugin.file_type.uploaded" type="constant">SyliusDigitalProductPlugin\Provider\UploadedDigitalFileProvider::TYPE</parameter>
-        <parameter key="sylius_digital_product_plugin.file_type.external_url" type="constant">SyliusDigitalProductPlugin\Provider\ExternalUrlDigitalFileProvider::TYPE</parameter>
+        <parameter key="sylius_digital_product_plugin.file_type.uploaded" type="constant">SyliusDigitalProductPlugin\Provider\UploadedFileProvider::TYPE</parameter>
+        <parameter key="sylius_digital_product_plugin.file_type.external_url" type="constant">SyliusDigitalProductPlugin\Provider\ExternalUrlFileProvider::TYPE</parameter>
     </parameters>
 
     <services>

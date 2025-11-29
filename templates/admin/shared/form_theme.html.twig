@@ -26,6 +26,9 @@
                 </div>
                 <div class="flex-grow-1">
                     {{- form_row(form.name) -}}
+                    {{- form_row(form.settings.daysAvailable) -}}
+                    {{- form_row(form.settings.downloadLimit) -}}
+                    {{- form_row(form.settings.hiddenQuantity) -}}
                     {{- form_row(form.configuration, {'label': false}) -}}
                 </div>
             </div>
@@ -70,8 +73,6 @@
             </div>
         {% endif %}
     {% endif %}
-
-    {{ form_row(form.downloadLimitPerChannel) }}
 {% endblock %}
 
 {% block sylius_admin_digital_product_variant_settings_row %}

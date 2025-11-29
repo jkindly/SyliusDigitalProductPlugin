@@ -1,7 +1,7 @@
 {% set order = hookable_metadata.context.order %}
 
 <tbody>
-    {% for file in order.digitalFiles %}
+    {% for file in order.files %}
         <tr {{ sylius_test_html_attribute('product-row', file.id) }}>
             {% hook 'body' with { file } %}
         </tr>

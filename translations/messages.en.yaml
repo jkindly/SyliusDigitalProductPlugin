@@ -29,5 +29,7 @@ sylius_digital_product:
         digital_product_settings:
             download_limit_per_customer: Download limit per customer
             hidden_quantity: Hide quantity on product page
+            hidden_quantity_help: Helpful when selling always one piece of item and don't want to confuse customers.
             show_digital_files_name: Show digital files name on product page
-            
+            days_available: Days available after purchase
+            days_available_help: Default days available after purchase can be set in Channel settings. Leave empty for unlimited availability.

@@ -9,5 +9,5 @@ use Sylius\Component\Core\Model\OrderItemInterface;
 
 interface DigitalProductOrderInterface extends OrderInterface
 {
-    public function hasAnyDigitalFile(): bool;
+    public function hasAnyFile(): bool;
 }

@@ -7,14 +7,14 @@
 >
     <services>
         <service id="sylius_digital_product_plugin.validator.uploaded_digital_file_dto"
-                 class="SyliusDigitalProductPlugin\Validator\UploadedDigitalFileDtoValidator"
+                 class="SyliusDigitalProductPlugin\Validator\UploadedFileDtoValidator"
         >
             <argument type="service" id="serializer.mapping.class_metadata_factory" />
             <argument type="service" id="sylius_digital_product_plugin.serializer.uploaded_digital_file_configuration" />
         </service>
 
         <service id="sylius_digital_product_plugin.validator.external_url_digital_file_dto"
-                 class="SyliusDigitalProductPlugin\Validator\ExternalUrlDigitalFileDtoValidator"
+                 class="SyliusDigitalProductPlugin\Validator\ExternalUrlFileDtoValidator"
         >
             <argument type="service" id="serializer.mapping.class_metadata_factory" />
             <argument type="service" id="sylius_digital_product_plugin.serializer.external_url_digital_file_configuration" />

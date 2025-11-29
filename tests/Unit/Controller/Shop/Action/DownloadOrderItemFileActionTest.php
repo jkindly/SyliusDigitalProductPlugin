@@ -9,15 +9,15 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\User\Model\UserInterface;
 use SyliusDigitalProductPlugin\Controller\Shop\Action\DownloadOrderItemFileAction;
-use SyliusDigitalProductPlugin\Dto\DigitalFileDtoInterface;
-use SyliusDigitalProductPlugin\Dto\ExternalUrlDigitalFileDto;
-use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
-use SyliusDigitalProductPlugin\Entity\OrderItemFileInterface;
+use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
+use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use SyliusDigitalProductPlugin\Repository\OrderItemFileRepositoryInterface;
 use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
 use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
-use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerInterface;
-use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerRegistry;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,7 +41,7 @@ final class DownloadOrderItemFileActionTest extends TestCase
         array $serializers = []
     ): DownloadOrderItemFileAction {
         $responseGeneratorRegistry = new FileResponseGeneratorRegistry($generators);
-        $serializerRegistry = new DigitalFileConfigurationSerializerRegistry($serializers);
+        $serializerRegistry = new FileConfigurationSerializerRegistry($serializers);
 
         return new DownloadOrderItemFileAction(
             $this->orderItemFileRepository,
@@ -56,9 +56,9 @@ final class DownloadOrderItemFileActionTest extends TestCase
     {
         $uuid = 'test-uuid-123';
         $user = $this->createMock(UserInterface::class);
-        $file = $this->createMock(OrderItemFileInterface::class);
-        $serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(UploadedDigitalFileDto::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
+        $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
@@ -141,7 +141,7 @@ final class DownloadOrderItemFileActionTest extends TestCase
     {
         $uuid = 'test-uuid-123';
         $user = $this->createMock(UserInterface::class);
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $this->security->expects($this->once())
             ->method('getUser')
@@ -171,9 +171,9 @@ final class DownloadOrderItemFileActionTest extends TestCase
     {
         $uuid = 'test-uuid-123';
         $user = $this->createMock(UserInterface::class);
-        $file = $this->createMock(OrderItemFileInterface::class);
-        $serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(UploadedDigitalFileDto::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
+        $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
@@ -234,9 +234,9 @@ final class DownloadOrderItemFileActionTest extends TestCase
     {
         $uuid = 'test-uuid-123';
         $user = $this->createMock(UserInterface::class);
-        $file = $this->createMock(OrderItemFileInterface::class);
-        $serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(UploadedDigitalFileDto::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
+        $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
@@ -298,9 +298,9 @@ final class DownloadOrderItemFileActionTest extends TestCase
     {
         $uuid = 'test-uuid-123';
         $user = $this->createMock(UserInterface::class);
-        $file = $this->createMock(OrderItemFileInterface::class);
-        $serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(ExternalUrlDigitalFileDto::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
+        $dto = $this->createMock(ExternalUrlFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
@@ -358,9 +358,9 @@ final class DownloadOrderItemFileActionTest extends TestCase
     {
         $uuid = 'test-uuid-123';
         $user = $this->createMock(UserInterface::class);
-        $file = $this->createMock(OrderItemFileInterface::class);
-        $serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(UploadedDigitalFileDto::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
+        $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
@@ -429,7 +429,7 @@ final class DownloadOrderItemFileActionTest extends TestCase
     {
         $uuid = 'test-uuid-123';
         $user = $this->createMock(UserInterface::class);
-        $file = $this->createMock(OrderItemFileInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
         $this->security->expects($this->once())
             ->method('getUser')
@@ -459,9 +459,9 @@ final class DownloadOrderItemFileActionTest extends TestCase
     {
         $uuid = 'test-uuid-123';
         $user = $this->createMock(UserInterface::class);
-        $file = $this->createMock(OrderItemFileInterface::class);
-        $serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(UploadedDigitalFileDto::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
+        $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
@@ -523,9 +523,9 @@ final class DownloadOrderItemFileActionTest extends TestCase
     {
         $uuid = 'test-uuid-123';
         $user = $this->createMock(UserInterface::class);
-        $file = $this->createMock(OrderItemFileInterface::class);
-        $serializer = $this->createMock(DigitalFileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(DigitalFileDtoInterface::class);
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
+        $dto = $this->createMock(FileDtoInterface::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 

@@ -7,7 +7,7 @@ namespace SyliusDigitalProductPlugin\Form\Extension;
 use Sylius\Bundle\AdminBundle\Form\Type\AddButtonType;
 use Sylius\Bundle\AdminBundle\Form\Type\ProductType;
 use SyliusDigitalProductPlugin\Form\Type\DigitalProductFileType;
-use SyliusDigitalProductPlugin\Provider\DigitalFileProviderRegistryInterface;
+use SyliusDigitalProductPlugin\Provider\FileProviderRegistryInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
@@ -16,7 +16,7 @@ final class ProductTypeExtension extends AbstractTypeExtension
 {
     private array $fileTypes = [];
 
-    public function __construct(private readonly DigitalFileProviderRegistryInterface $registry)
+    public function __construct(private readonly FileProviderRegistryInterface $registry)
     {
         foreach ($this->registry->getAll() as $key => $provider) {
             $this->fileTypes[$key] = $provider->getLabel();
@@ -26,7 +26,7 @@ final class ProductTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('digitalFiles', LiveCollectionType::class, [
+            ->add('files', LiveCollectionType::class, [
                 'entry_type' => DigitalProductFileType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

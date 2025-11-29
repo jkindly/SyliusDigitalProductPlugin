@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\ResponseGenerator;
 
-use SyliusDigitalProductPlugin\Dto\DigitalFileDtoInterface;
-use SyliusDigitalProductPlugin\Dto\ExternalUrlDigitalFileDto;
-use SyliusDigitalProductPlugin\Entity\OrderItemFileInterface;
+use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
+use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,9 +19,9 @@ final readonly class ExternalUrlFileResponseGenerator implements FileResponseGen
     ) {
     }
 
-    public function generate(OrderItemFileInterface $file, DigitalFileDtoInterface $dto): Response
+    public function generate(DigitalProductOrderItemFileInterface $file, FileDtoInterface $dto): Response
     {
-        Assert::isInstanceOf($dto, ExternalUrlDigitalFileDto::class);
+        Assert::isInstanceOf($dto, ExternalUrlFileDto::class);
 
         $url = $dto->getUrl();
         if (null === $url) {

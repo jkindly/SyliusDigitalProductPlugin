@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\ResponseGenerator;
 
-use SyliusDigitalProductPlugin\Dto\DigitalFileDtoInterface;
-use SyliusDigitalProductPlugin\Dto\UploadedDigitalFileDto;
-use SyliusDigitalProductPlugin\Entity\OrderItemFileInterface;
+use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
+use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -21,9 +21,9 @@ final readonly class UploadedFileResponseGenerator implements FileResponseGenera
     ) {
     }
 
-    public function generate(OrderItemFileInterface $file, DigitalFileDtoInterface $dto): Response
+    public function generate(DigitalProductOrderItemFileInterface $file, FileDtoInterface $dto): Response
     {
-        Assert::isInstanceOf($dto, UploadedDigitalFileDto::class);
+        Assert::isInstanceOf($dto, UploadedFileDto::class);
 
         $path = $dto->getPath();
         if (null === $path) {
@@ -57,7 +57,7 @@ final readonly class UploadedFileResponseGenerator implements FileResponseGenera
         return $this->uploadedFileType === $fileType;
     }
 
-    private function sanitizeFilename(?string $name, UploadedDigitalFileDto $dto): string
+    private function sanitizeFilename(?string $name, UploadedFileDto $dto): string
     {
         $name = !empty($name) ? $name : $dto->getPath();
 

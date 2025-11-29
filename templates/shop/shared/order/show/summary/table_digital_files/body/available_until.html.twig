@@ -1,0 +1,9 @@
+{% set file = hookable_metadata.context.file %}
+
+<td class="text-end">
+    {% if file.availableUntil is not null %}
+        <span {% if not file.isAvailable() %}class="text-danger"{% endif %}>{{ file.availableUntil|format_datetime }}</span>
+    {% else %}
+        -
+    {% endif %}
+</td>

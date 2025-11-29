@@ -12,14 +12,14 @@ use Webmozart\Assert\Assert;
 
 trait DigitalProductOrderAwareTrait
 {
-    public function hasAnyDigitalFile(): bool
+    public function hasAnyFile(): bool
     {
         Assert::isInstanceOf($this, DigitalProductOrderInterface::class);
 
         foreach ($this->getItems() as $item) {
             Assert::isInstanceOf($item, DigitalProductOrderItemInterface::class);
 
-            if ($item->getDigitalFiles()->count() > 0) {
+            if ($item->getFiles()->count() > 0) {
                 return true;
             }
         }
@@ -27,20 +27,20 @@ trait DigitalProductOrderAwareTrait
         return false;
     }
 
-    public function getDigitalFiles(): Collection
+    public function getFiles(): Collection
     {
         Assert::isInstanceOf($this, DigitalProductOrderInterface::class);
 
-        $digitalFiles = new ArrayCollection();
+        $files = new ArrayCollection();
 
         foreach ($this->getItems() as $item) {
             Assert::isInstanceOf($item, DigitalProductOrderItemInterface::class);
 
-            foreach ($item->getDigitalFiles() as $digitalFile) {
-                $digitalFiles->add($digitalFile);
+            foreach ($item->getFiles() as $file) {
+                $files->add($file);
             }
         }
 
-        return $digitalFiles;
+        return $files;
     }
 }

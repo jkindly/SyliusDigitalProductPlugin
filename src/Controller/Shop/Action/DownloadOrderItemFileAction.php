@@ -6,10 +6,10 @@ namespace SyliusDigitalProductPlugin\Controller\Shop\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\User\Model\UserInterface;
-use SyliusDigitalProductPlugin\Entity\OrderItemFileInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use SyliusDigitalProductPlugin\Repository\OrderItemFileRepositoryInterface;
 use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
-use SyliusDigitalProductPlugin\Serializer\DigitalFileConfigurationSerializerRegistry;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ final readonly class DownloadOrderItemFileAction
         private Security $security,
         private EntityManagerInterface $entityManager,
         private FileResponseGeneratorRegistry $responseGeneratorRegistry,
-        private DigitalFileConfigurationSerializerRegistry $serializerRegistry,
+        private FileConfigurationSerializerRegistry $serializerRegistry,
     )
     {
     }
@@ -33,7 +33,7 @@ final readonly class DownloadOrderItemFileAction
         $user = $this->security->getUser();
         Assert::isInstanceOf($user, UserInterface::class);
 
-        /** @var OrderItemFileInterface|null $file */
+        /** @var DigitalProductOrderItemFileInterface|null $file */
         $file = $this->orderItemFileRepository->findOneByUuidAndUser($uuid, $user);
         if (null === $file) {
             throw new NotFoundHttpException('Order item file not found.');
@@ -42,6 +42,10 @@ final readonly class DownloadOrderItemFileAction
         $downloadLimit = $file->getDownloadLimit();
         if (null !== $downloadLimit && $file->getDownloadCount() >= $downloadLimit) {
             throw new AccessDeniedException('Download limit exceeded for this file.');
+        }
+
+        if (false === $file->isAvailable()) {
+            throw new AccessDeniedException('This file is no longer available for download.');
         }
 
         $fileType = $file->getType();

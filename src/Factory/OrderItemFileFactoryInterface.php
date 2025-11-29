@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Factory;
 
 use Sylius\Component\Core\Model\OrderItemInterface;
-use SyliusDigitalProductPlugin\Entity\OrderItemFileInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 
 interface OrderItemFileFactoryInterface
 {
-    public function createNew(): OrderItemFileInterface;
+    public function createNew(): DigitalProductOrderItemFileInterface;
 
     public function createWithData(
         OrderItemInterface $orderItem,
@@ -17,5 +17,5 @@ interface OrderItemFileFactoryInterface
         ?string $type = null,
         ?int $downloadLimit = null,
         array $configuration = [],
-    ): OrderItemFileInterface;
+    ): DigitalProductOrderItemFileInterface;
 }

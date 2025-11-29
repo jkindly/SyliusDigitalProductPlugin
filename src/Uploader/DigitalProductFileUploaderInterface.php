@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Uploader;
 
-use SyliusDigitalProductPlugin\Entity\DigitalFileInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface DigitalProductFileUploaderInterface
@@ -23,5 +23,5 @@ interface DigitalProductFileUploaderInterface
 
     public function upload(UploadedFile $uploadedFile): array;
 
-    public function remove(DigitalFileInterface $file): void;
+    public function remove(DigitalProductFileInterface $file): void;
 }
