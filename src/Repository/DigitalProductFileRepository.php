@@ -7,7 +7,7 @@ namespace SyliusDigitalProductPlugin\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class FileRepository extends ServiceEntityRepository implements FileRepositoryInterface
+class DigitalProductFileRepository extends ServiceEntityRepository implements DigitalProductFileRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry, string $entityClass)
     {

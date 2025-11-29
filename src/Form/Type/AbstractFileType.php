@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 
-abstract class BaseFileType extends AbstractType
+abstract class AbstractFileType extends AbstractType
 {
     public function __construct(
         protected readonly DataTransformerInterface $dataTransformer,

@@ -27,9 +27,9 @@ class DigitalProductFile implements DigitalProductFileInterface
 
     protected ?ProductVariantInterface $productVariant = null;
 
-    protected array $configuration = [];
-
     protected ?DigitalProductFileSettingsInterface $settings = null;
+
+    protected array $configuration = [];
 
     public function __construct()
     {
@@ -96,16 +96,6 @@ class DigitalProductFile implements DigitalProductFileInterface
         $this->productVariant = $productVariant;
     }
 
-    public function getConfiguration(): array
-    {
-        return $this->configuration;
-    }
-
-    public function setConfiguration(array $configuration): void
-    {
-        $this->configuration = $configuration;
-    }
-
     public function getSettings(): ?DigitalProductFileSettingsInterface
     {
         return $this->settings;
@@ -118,5 +108,15 @@ class DigitalProductFile implements DigitalProductFileInterface
         if (null !== $settings && $settings->getFile() !== $this) {
             $settings->setFile($this);
         }
+    }
+
+    public function getConfiguration(): array
+    {
+        return $this->configuration;
+    }
+
+    public function setConfiguration(array $configuration): void
+    {
+        $this->configuration = $configuration;
     }
 }

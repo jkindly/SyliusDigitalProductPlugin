@@ -6,7 +6,7 @@ namespace SyliusDigitalProductPlugin\Controller\Admin\Action;
 
 use Sylius\Component\Core\Model\AdminUserInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFile;
-use SyliusDigitalProductPlugin\Repository\FileRepositoryInterface;
+use SyliusDigitalProductPlugin\Repository\DigitalProductFileRepositoryInterface;
 use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 final readonly class UploadedFileDownloadAction
 {
     public function __construct(
-        private FileRepositoryInterface $fileRepository,
+        private DigitalProductFileRepositoryInterface $fileRepository,
         private Security $security,
         private FileResponseGeneratorInterface $uploadedFileResponseGenerator,
     ) {

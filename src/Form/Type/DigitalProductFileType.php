@@ -39,7 +39,7 @@ final class DigitalProductFileType extends AbstractResourceType
             ->add('name', TextType::class, [
                 'label' => 'sylius_digital_product.ui.name',
             ])
-            ->add('settings', DigitalProductSettingsType::class, [
+            ->add('settings', DigitalProductFileSettingsType::class, [
                 'required' => false,
             ])
         ;

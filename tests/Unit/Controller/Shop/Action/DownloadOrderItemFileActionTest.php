@@ -13,7 +13,7 @@ use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
 use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
 use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
-use SyliusDigitalProductPlugin\Repository\OrderItemFileRepositoryInterface;
+use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
 use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
 use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
@@ -25,13 +25,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class DownloadOrderItemFileActionTest extends TestCase
 {
-    private MockObject&OrderItemFileRepositoryInterface $orderItemFileRepository;
+    private MockObject&DigitalProductOrderItemFileRepositoryInterface $orderItemFileRepository;
     private MockObject&Security $security;
     private MockObject&EntityManagerInterface $entityManager;
 
     protected function setUp(): void
     {
-        $this->orderItemFileRepository = $this->createMock(OrderItemFileRepositoryInterface::class);
+        $this->orderItemFileRepository = $this->createMock(DigitalProductOrderItemFileRepositoryInterface::class);
         $this->security = $this->createMock(Security::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
     }

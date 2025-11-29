@@ -2,7 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
 
-    <entity name="SyliusDigitalProductPlugin\Entity\OrderItemFile" table="sylius_digital_product_order_item_file">
+    <entity name="SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFile" table="sylius_digital_product_order_item_file">
         <id name="id" type="integer" column="id">
             <generator/>
         </id>

@@ -10,7 +10,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-final class ExternalUrlFileType extends BaseFileType
+final class ExternalUrlFileType extends AbstractFileType
 {
     /**
      * @param DataTransformerInterface<array, ExternalUrlFileDto> $dataTransformer

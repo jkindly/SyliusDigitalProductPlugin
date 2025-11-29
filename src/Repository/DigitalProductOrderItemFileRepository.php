@@ -9,7 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\User\Model\UserInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 
-class OrderItemFileRepository extends ServiceEntityRepository implements OrderItemFileRepositoryInterface
+class DigitalProductOrderItemFileRepository extends ServiceEntityRepository implements DigitalProductOrderItemFileRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry, string $entityClass)
     {

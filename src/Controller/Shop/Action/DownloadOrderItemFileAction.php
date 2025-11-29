@@ -7,7 +7,7 @@ namespace SyliusDigitalProductPlugin\Controller\Shop\Action;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\User\Model\UserInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
-use SyliusDigitalProductPlugin\Repository\OrderItemFileRepositoryInterface;
+use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
 use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -19,7 +19,7 @@ use Webmozart\Assert\Assert;
 final readonly class DownloadOrderItemFileAction
 {
     public function __construct(
-        private OrderItemFileRepositoryInterface $orderItemFileRepository,
+        private DigitalProductOrderItemFileRepositoryInterface $orderItemFileRepository,
         private Security $security,
         private EntityManagerInterface $entityManager,
         private FileResponseGeneratorRegistry $responseGeneratorRegistry,

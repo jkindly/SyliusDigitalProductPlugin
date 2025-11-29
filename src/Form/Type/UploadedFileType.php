@@ -10,7 +10,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-final class UploadedFileType extends BaseFileType
+final class UploadedFileType extends AbstractFileType
 {
     /**
      * @param DataTransformerInterface<array, UploadedFileDto> $dataTransformer
