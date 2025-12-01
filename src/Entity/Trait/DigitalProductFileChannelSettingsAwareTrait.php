@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Entity\Trait;
 
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
 
 trait DigitalProductFileChannelSettingsAwareTrait
 {
-    protected ?DigitalProductFileChannelSettingsInterface $digitalProductFileChannelSettings = null;
+    protected ?DigitalProductChannelSettingsInterface $digitalProductFileChannelSettings = null;
 
-    public function getDigitalProductFileChannelSettings(): ?DigitalProductFileChannelSettingsInterface
+    public function getDigitalProductFileChannelSettings(): ?DigitalProductChannelSettingsInterface
     {
         return $this->digitalProductFileChannelSettings;
     }
 
-    public function setDigitalProductFileChannelSettings(?DigitalProductFileChannelSettingsInterface $digitalProductFileChannelSettings): void
+    public function setDigitalProductFileChannelSettings(?DigitalProductChannelSettingsInterface $digitalProductFileChannelSettings): void
     {
         $this->digitalProductFileChannelSettings = $digitalProductFileChannelSettings;
 

@@ -7,8 +7,8 @@ namespace Tests\SyliusDigitalProductPlugin\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Channel as BaseChannel;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettings;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings;
+use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
 use SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFileChannelSettingsAwareTrait;
 
 #[ORM\Entity]
@@ -17,6 +17,6 @@ class Channel extends BaseChannel implements DigitalProductChannelInterface
 {
     use DigitalProductFileChannelSettingsAwareTrait;
 
-    #[ORM\OneToOne(targetEntity: DigitalProductFileChannelSettings::class, mappedBy: 'channel', cascade: ['persist', 'remove'])]
-    protected ?DigitalProductFileChannelSettingsInterface $digitalProductFileChannelSettings = null;
+    #[ORM\OneToOne(targetEntity: DigitalProductChannelSettings::class, mappedBy: 'channel', cascade: ['persist', 'remove'])]
+    protected ?DigitalProductChannelSettingsInterface $digitalProductFileChannelSettings = null;
 }

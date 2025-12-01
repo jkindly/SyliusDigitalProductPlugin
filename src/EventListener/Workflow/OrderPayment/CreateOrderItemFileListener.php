@@ -31,7 +31,7 @@ final readonly class CreateOrderItemFileListener
         foreach ($order->getItems() as $item) {
             /** @var DigitalProductVariantInterface $variant */
             $variant = $item->getVariant();
-            if (!$variant->isDigital()) {
+            if (!$variant->hasAnyFile()) {
                 continue;
             }
 

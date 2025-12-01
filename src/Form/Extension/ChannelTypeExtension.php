@@ -13,7 +13,7 @@ final class ChannelTypeExtension extends AbstractTypeExtension
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('digitalProductChannelSettings', DigitalProductFileChannelSettingsType::class, [
+        $builder->add('digitalProductFileChannelSettings', DigitalProductFileChannelSettingsType::class, [
             'label' => false,
             'required' => false,
         ]);

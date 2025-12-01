@@ -9,9 +9,7 @@ use Sylius\Component\Core\Model\PositionAwareInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Resource\Model\TimestampableInterface;
 
-interface DigitalProductFileInterface extends
-    PositionAwareInterface,
-    TimestampableInterface
+interface DigitalProductFileInterface extends TimestampableInterface
 {
     public function getId(): ?int;
 

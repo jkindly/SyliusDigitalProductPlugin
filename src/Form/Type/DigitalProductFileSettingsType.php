@@ -24,11 +24,6 @@ class DigitalProductFileSettingsType extends AbstractResourceType
                 'help' => 'sylius_digital_product.form.digital_product_settings.days_available_help',
                 'required' => false,
             ])
-            ->add('hiddenQuantity', CheckboxType::class, [
-                'label' => 'sylius_digital_product.form.digital_product_settings.hidden_quantity',
-                'help' => 'sylius_digital_product.form.digital_product_settings.hidden_quantity_help',
-                'required' => false,
-            ])
         ;
     }
 }

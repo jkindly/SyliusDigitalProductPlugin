@@ -6,7 +6,7 @@ namespace SyliusDigitalProductPlugin\Entity;
 
 use Sylius\Resource\Model\ResourceInterface;
 
-class DigitalProductFileSettings extends AbstractDigitalProductFileSettings implements
+class DigitalProductFileSettings extends AbstractDigitalProductSettings implements
     DigitalProductFileSettingsInterface,
     DigitalProductFileAwareInterface,
     ResourceInterface

@@ -8,6 +8,7 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Resource\Model\TimestampableTrait;
 use Symfony\Component\Uid\Uuid;
+use Webmozart\Assert\Assert;
 
 class DigitalProductFile implements DigitalProductFileInterface
 {
@@ -20,8 +21,6 @@ class DigitalProductFile implements DigitalProductFileInterface
     protected ?string $name = null;
 
     protected ?string $type = null;
-
-    protected ?int $position = null;
 
     protected ?ChannelInterface $channel = null;
 
@@ -66,16 +65,6 @@ class DigitalProductFile implements DigitalProductFileInterface
         $this->type = $type;
     }
 
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(?int $position): void
-    {
-        $this->position = $position;
-    }
-
     public function getChannel(): ?ChannelInterface
     {
         return $this->channel;
@@ -103,8 +92,13 @@ class DigitalProductFile implements DigitalProductFileInterface
 
     public function setSettings(?DigitalProductFileSettingsInterface $settings): void
     {
+        Assert::nullOrIsInstanceOf($settings, DigitalProductFileAwareInterface::class);
+
         $this->settings = $settings;
 
+        /**
+         * @var DigitalProductFileAwareInterface|null $settings
+         */
         if (null !== $settings && $settings->getFile() !== $this) {
             $settings->setFile($this);
         }

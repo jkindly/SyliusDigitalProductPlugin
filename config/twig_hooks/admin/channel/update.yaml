@@ -1,0 +1,16 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.channel.update.content.form.sections':
+            digital_product_settings:
+                template: '@SyliusDigitalProductPlugin/admin/channel/form/sections/digital_product_settings.html.twig'
+                priority: 10
+        'sylius_admin.channel.update.content.form.sections.digital_product_settings':
+            uploaded_file_download_limit:
+                template: '@SyliusDigitalProductPlugin/admin/channel/form/sections/digital_product_settings/download_limit.html.twig'
+                priority: 200
+            days_available:
+                template: '@SyliusDigitalProductPlugin/admin/channel/form/sections/digital_product_settings/days_available.html.twig'
+                priority: 100
+            hidden_quantity:
+                template: '@SyliusDigitalProductPlugin/admin/channel/form/sections/digital_product_settings/hidden_quantity.html.twig'
+                priority: 0

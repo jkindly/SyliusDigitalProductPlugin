@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Form\Type;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Provider\FileProviderRegistryInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -61,7 +61,7 @@ final class DigitalProductFileType extends AbstractResourceType
 
         $resolver
             ->setDefined('channel_settings')
-            ->setAllowedTypes('channel_settings', [DigitalProductFileChannelSettingsInterface::class, 'null'])
+            ->setAllowedTypes('channel_settings', [DigitalProductChannelSettingsInterface::class, 'null'])
         ;
     }
 
@@ -91,13 +91,13 @@ final class DigitalProductFileType extends AbstractResourceType
 
     private function applySettings(FormEvent $event): void
     {
-        /** @var DigitalProductFileChannelSettingsInterface|null $settings */
+        /** @var DigitalProductChannelSettingsInterface|null $settings */
         $settings = $event->getForm()->getConfig()->getOption('channel_settings');
         if (null === $settings) {
             return;
         }
 
-        Assert::isInstanceOf($settings, DigitalProductFileChannelSettingsInterface::class);
+        Assert::isInstanceOf($settings, DigitalProductChannelSettingsInterface::class);
 
         $data = $event->getData();
         Assert::isArray($data);

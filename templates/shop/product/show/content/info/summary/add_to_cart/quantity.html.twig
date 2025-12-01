@@ -1,10 +1,12 @@
 {% set variant = hookable_metadata.context.variant %}
 {% set channel = sylius.channel %}
-{% set channel_settings = channel.digitalProductChannelSettings %}
-{% set settings = variant.configurationForChannel(channel)|default(channel_settings ? channel_settings.configuration : null) %}
-{% set hidden_quantity = constant('SyliusDigitalProductPlugin\\Entity\\DigitalProductVariantSettingsInterface::CONFIGURATION_HIDDEN_QUANTITY') %}
+{% set channel_settings = channel.digitalProductFileChannelSettings %}
+{% set settings = variant.digitalProductVariantSettings %}
+{% if settings is null or not settings.isEnabled %}
+    {% set settings = channel_settings %}
+{% endif %}
 
-{% if settings is null or not settings[hidden_quantity] %}
+{% if settings is null or not settings.hiddenQuantity %}
     <div class="mb-4">
         {{ form_row(hookable_metadata.context.form.cartItem.quantity, sylius_test_form_attribute('quantity')) }}
     </div>

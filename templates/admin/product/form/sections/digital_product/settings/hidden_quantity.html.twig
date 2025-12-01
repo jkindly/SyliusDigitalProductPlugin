@@ -1,0 +1,4 @@
+{% set form = hookable_metadata.context.form.variant.digitalProductVariantSettings %}
+{% form_theme form '@SyliusDigitalProductPlugin/admin/shared/form_theme.html.twig' %}
+
+{{ form_row(form.hiddenQuantity, sylius_test_form_attribute('hidden-quantity')) }}

@@ -43,4 +43,9 @@ trait DigitalProductFilesAwareTrait
             $file->setProductVariant(null);
         }
     }
+
+    public function hasAnyFile(): bool
+    {
+        return !$this->files->isEmpty();
+    }
 }

@@ -28,7 +28,6 @@
                     {{- form_row(form.name) -}}
                     {{- form_row(form.settings.daysAvailable) -}}
                     {{- form_row(form.settings.downloadLimit) -}}
-                    {{- form_row(form.settings.hiddenQuantity) -}}
                     {{- form_row(form.configuration, {'label': false}) -}}
                 </div>
             </div>
@@ -77,8 +76,18 @@
 
 {% block sylius_admin_digital_product_variant_settings_row %}
     <fieldset class="field">
-        {{ form_label(form) }}
+        {{ form_row(form) }}
         {{ form_widget(form) }}
         {{ form_errors(form) }}
     </fieldset>
 {% endblock %}
+
+{% block sylius_digital_product_override_channel_settings_row %}
+  <div class="field">
+      {{ form_label(form) }}
+      {{ form_widget(form) }}
+      {{ form_errors(form) }}
+  </div>
+{% endblock %}
+
+

@@ -1,0 +1,21 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.product.create.content.form.side_navigation':
+            digital_section:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/side_navigation/digital_section.html.twig'
+                priority: 810
+        'sylius_admin.product.create.content.form.sections':
+            digital_product:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product.html.twig'
+                priority: 810
+        'sylius_admin.product.create.content.form.sections.digital_product':
+            settings:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/settings.html.twig'
+                priority: 100
+            files:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/files.html.twig'
+                priority: 0
+        'sylius_admin.product.create.content.form.sections.digital_product.settings':
+            hidden_quantity:
+                template: '@SyliusDigitalProductPlugin/admin/product/form/sections/digital_product/settings/hidden_quantity.html.twig'
+                priority: 0

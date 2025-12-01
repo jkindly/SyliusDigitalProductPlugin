@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Entity;
 
-abstract class AbstractDigitalProductFileSettings
+abstract class AbstractDigitalProductSettings
 {
     protected ?int $downloadLimit = null;
 
     protected ?int $daysAvailable = null;
-
-    protected bool $hiddenQuantity = false;
 
     public function getDownloadLimit(): ?int
     {
@@ -30,15 +28,5 @@ abstract class AbstractDigitalProductFileSettings
     public function setDaysAvailable(?int $daysAvailable): void
     {
         $this->daysAvailable = $daysAvailable;
-    }
-
-    public function isHiddenQuantity(): bool
-    {
-        return $this->hiddenQuantity;
-    }
-
-    public function setHiddenQuantity(bool $hiddenQuantity): void
-    {
-        $this->hiddenQuantity = $hiddenQuantity;
     }
 }

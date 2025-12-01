@@ -6,11 +6,13 @@ namespace SyliusDigitalProductPlugin\Entity;
 
 use Sylius\Component\Core\Model\ChannelInterface;
 
-class DigitalProductFileChannelSettings extends AbstractDigitalProductFileSettings implements DigitalProductFileChannelSettingsInterface
+class DigitalProductChannelSettings extends AbstractDigitalProductSettings implements DigitalProductChannelSettingsInterface
 {
     protected ?int $id = null;
 
     protected ?ChannelInterface $channel = null;
+
+    protected bool $hiddenQuantity = false;
 
     public function getId(): ?int
     {
@@ -25,5 +27,15 @@ class DigitalProductFileChannelSettings extends AbstractDigitalProductFileSettin
     public function setChannel(?ChannelInterface $channel): void
     {
         $this->channel = $channel;
+    }
+
+    public function isHiddenQuantity(): bool
+    {
+        return $this->hiddenQuantity;
+    }
+
+    public function setHiddenQuantity(bool $hiddenQuantity): void
+    {
+        $this->hiddenQuantity = $hiddenQuantity;
     }
 }

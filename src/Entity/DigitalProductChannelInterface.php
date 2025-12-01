@@ -8,7 +8,7 @@ use Sylius\Component\Core\Model\ChannelInterface;
 
 interface DigitalProductChannelInterface extends ChannelInterface
 {
-    public function getDigitalProductFileChannelSettings(): ?DigitalProductFileChannelSettingsInterface;
+    public function getDigitalProductFileChannelSettings(): ?DigitalProductChannelSettingsInterface;
 
-    public function setDigitalProductFileChannelSettings(?DigitalProductFileChannelSettingsInterface $digitalProductChannelSettings): void;
+    public function setDigitalProductFileChannelSettings(?DigitalProductChannelSettingsInterface $digitalProductFileChannelSettings): void;
 }

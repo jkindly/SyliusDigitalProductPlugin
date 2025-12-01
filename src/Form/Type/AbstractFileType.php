@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Form\Type;
 
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettingsInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
 use SyliusDigitalProductPlugin\Validator\FileDtoValidatorInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -33,7 +33,7 @@ abstract class AbstractFileType extends AbstractType
 
         $resolver
             ->setDefined('channel_settings')
-            ->setAllowedTypes('channel_settings', [DigitalProductFileChannelSettingsInterface::class, 'null'])
+            ->setAllowedTypes('channel_settings', [DigitalProductChannelSettingsInterface::class, 'null'])
             ->setDefaults([
                 'data_class' => $this->dataClass,
                 'validation_groups' => $this->validationGroups,

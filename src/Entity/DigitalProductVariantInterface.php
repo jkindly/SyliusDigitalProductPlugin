@@ -8,5 +8,9 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 
 interface DigitalProductVariantInterface extends DigitalProductFilesInterface, ProductVariantInterface
 {
-    public function isDigital(): bool;
+    public function hasAnyFile(): bool;
+
+    public function getDigitalProductVariantSettings(): ?DigitalProductVariantSettingsInterface;
+
+    public function setDigitalProductVariantSettings(?DigitalProductVariantSettingsInterface $digitalProductVariantSettings): void;
 }

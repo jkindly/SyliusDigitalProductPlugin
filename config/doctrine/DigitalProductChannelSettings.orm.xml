@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
 
-    <entity name="SyliusDigitalProductPlugin\Entity\DigitalProductFileChannelSettings" table="sylius_digital_product_file_channel_settings">
+    <entity name="SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings" table="sylius_digital_product_channel_settings">
         <id name="id" type="integer" column="id">
             <generator/>
         </id>
 
-        <one-to-one field="channel" target-entity="Sylius\Component\Core\Model\ChannelInterface" inversed-by="digitalProductChannelSettings">
+        <one-to-one field="channel" target-entity="Sylius\Component\Core\Model\ChannelInterface" inversed-by="digitalProductFileChannelSettings">
             <join-column name="channel_id" referenced-column-name="id" nullable="false" unique="true" />
         </one-to-one>
+
+        <field name="hiddenQuantity" column="hidden_quantity" type="boolean" nullable="true" />
     </entity>
 </doctrine-mapping>

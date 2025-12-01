@@ -1,0 +1,53 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_shop.shared.order.show.summary':
+            table_digital_files:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files.html.twig"
+                priority: -100
+        'sylius_shop.shared.order.show.summary.table_digital_files':
+            header:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/header.html.twig"
+                priority: 200
+            body:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/body.html.twig"
+                priority: 100
+            footer:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/footer.html.twig"
+                priority: 0
+        'sylius_shop.shared.order.show.summary.table_digital_files.header':
+            name:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/header/item.html.twig"
+                configuration:
+                    label: 'name'
+                priority: 200
+            available_until:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/header/item.html.twig"
+                configuration:
+                    label: 'available_until'
+                    class: 'text-end'
+                priority: 200
+            downloads_left:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/header/item.html.twig"
+                configuration:
+                    label: 'downloads_left'
+                    class: 'text-end'
+                priority: 100
+            download:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/header/item.html.twig"
+                configuration:
+                    label: 'download'
+                    class: 'text-end'
+                priority: 0
+        'sylius_shop.shared.order.show.summary.table_digital_files.body':
+            name:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/body/name.html.twig"
+                priority: 300
+            available_until:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/body/available_until.html.twig"
+                priority: 200
+            downloads_left:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/body/downloads_left.html.twig"
+                priority: 100
+            download:
+                template: "@SyliusDigitalProductPlugin/shop/shared/order/show/summary/table_digital_files/body/download.html.twig"
+                priority: 0

@@ -10,10 +10,6 @@ interface DigitalProductFileSettingsInterface
 
     public function setDownloadLimit(?int $downloadLimit): void;
 
-    public function isHiddenQuantity(): bool;
-
-    public function setHiddenQuantity(bool $hiddenQuantity): void;
-
     public function getDaysAvailable(): ?int;
 
     public function setDaysAvailable(?int $daysAvailable): void;

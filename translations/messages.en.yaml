@@ -3,6 +3,7 @@ sylius_digital_product:
         digital_product_settings:
             title: Digital Product Settings
         settings: Settings
+        settings_help: If enabled, configuration below will override Channel settings.
         is_digital_variant: Digital variant?
         is_digital_product: Digital product?
         digital_files: Digital files

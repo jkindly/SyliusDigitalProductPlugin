@@ -11,6 +11,7 @@ use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
 use SyliusDigitalProductPlugin\Form\EventSubscriber\ChannelBasedFilesSubscriber;
 use SyliusDigitalProductPlugin\Form\Type\DigitalProductFileType;
+use SyliusDigitalProductPlugin\Form\Type\DigitalProductVariantSettingsType;
 use SyliusDigitalProductPlugin\Provider\FileProviderRegistryInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,9 +37,8 @@ final class ProductVariantTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('isDigital', null, [
+            ->add('digitalProductVariantSettings', DigitalProductVariantSettingsType::class, [
                 'required' => false,
-                'label' => false,
             ])
         ;
 
