@@ -1,0 +1,11 @@
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="true" />
+
+        <service id="tests.sylius_digital_product_plugin.behat.context.ui.admin.managing_channels" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext">
+            <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.admin.channel.create" />
+            <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.admin.channel.update" />
+            <argument type="service" id="sylius.behat.current_page_resolver" />
+        </service>
+    </services>
+</container>

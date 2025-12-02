@@ -1,0 +1,2 @@
+imports:
+    - config/suites/ui/admin/sylius_digital_product_managing_channels.yaml

@@ -6,8 +6,9 @@ namespace SyliusDigitalProductPlugin\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DigitalProductFileChannelSettingsType extends DigitalProductFileSettingsType
+class DigitalProductChannelSettingsType extends DigitalProductFileSettingsType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
