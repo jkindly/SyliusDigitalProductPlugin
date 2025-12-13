@@ -13,6 +13,7 @@
             <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
             <tag name="kernel.event_listener" event="sylius.product_variant.post_create" method="handleProductVariantUpdate"/>
             <tag name="kernel.event_listener" event="sylius.product_variant.post_update" method="handleProductVariantUpdate"/>
+            <tag name="kernel.event_listener" event="sylius.product.post_create" method="handleSimpleProductUpdate"/>
             <tag name="kernel.event_listener" event="sylius.product.post_update" method="handleSimpleProductUpdate"/>
         </service>
 

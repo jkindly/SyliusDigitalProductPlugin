@@ -1,2 +1,4 @@
 imports:
     - config/suites/ui/admin/sylius_digital_product_managing_channels.yaml
+    - config/suites/ui/admin/sylius_digital_product_managing_products.yaml
+    - config/suites/ui/admin/sylius_digital_product_managing_product_variants.yaml

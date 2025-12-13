@@ -11,11 +11,6 @@
         <property name="uploadedFile">
             <constraint name="File">
                 <option name="maxSize">1M</option>
-                <option name="extensions">
-                    <value>jpg</value>
-                    <value>png</value>
-                    <value>gif</value>
-                </option>
                 <option name="groups">
                     <value>sylius_digital_file</value>
                 </option>
