@@ -28,5 +28,9 @@
             <argument type="service" id="sylius.behat.page.shop.product.index" />
             <argument type="service" id="sylius.behat.element.admin.product.channel_pricing_form" />
         </service>
+
+        <service id="tests.sylius_digital_product_plugin.behat.context.ui.shop.account" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop\AccountContext">
+            <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.shop.account.order.show" />
+        </service>
     </services>
 </container>
