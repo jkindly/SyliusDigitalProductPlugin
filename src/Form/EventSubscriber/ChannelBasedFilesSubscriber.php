@@ -29,6 +29,7 @@ final readonly class ChannelBasedFilesSubscriber implements EventSubscriberInter
     {
         return [
             FormEvents::SUBMIT => 'onSubmit',
+            FormEvents::POST_SUBMIT => 'onPostSubmit',
         ];
     }
 
@@ -41,9 +42,22 @@ final readonly class ChannelBasedFilesSubscriber implements EventSubscriberInter
         $groupedFiles = $form->get('files')->getData();
         Assert::isInstanceOf($groupedFiles, Collection::class);
 
-        $flattenedFiles = $this->flattenChannelGroupedFiles($groupedFiles, $variant);
+        $this->syncFilesFromGrouped($variant, $groupedFiles);
+    }
 
-        $variant->setFiles(new ArrayCollection($flattenedFiles));
+    public function onPostSubmit(FormEvent $event): void
+    {
+        $variant = $event->getData();
+        Assert::isInstanceOf($variant, DigitalProductVariantInterface::class);
+
+        $cleanedFiles = [];
+        foreach ($variant->getFiles() as $file) {
+            if ($file instanceof DigitalProductFileInterface) {
+                $cleanedFiles[] = $file;
+            }
+        }
+
+        $variant->setFiles(new ArrayCollection($cleanedFiles));
     }
 
     /**
@@ -84,5 +98,32 @@ final readonly class ChannelBasedFilesSubscriber implements EventSubscriberInter
         }
 
         return $flattened;
+    }
+
+    /**
+     * @param Collection<string, Collection<int, DigitalProductFileInterface>> $groupedFiles
+     */
+    private function syncFilesFromGrouped(DigitalProductVariantInterface $variant, Collection $groupedFiles): void
+    {
+        $newFiles = $this->flattenChannelGroupedFiles($groupedFiles, $variant);
+
+        $existingFiles = [];
+        foreach ($variant->getFiles() as $file) {
+            if ($file instanceof DigitalProductFileInterface) {
+                $existingFiles[] = $file;
+            }
+        }
+
+        foreach ($existingFiles as $existingFile) {
+            if (!in_array($existingFile, $newFiles, true)) {
+                $variant->removeFile($existingFile);
+            }
+        }
+
+        foreach ($newFiles as $newFile) {
+            if (!in_array($newFile, $existingFiles, true)) {
+                $variant->addFile($newFile);
+            }
+        }
     }
 }

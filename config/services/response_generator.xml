@@ -12,7 +12,6 @@
 
         <service id="sylius_digital_product_plugin.response_generator.uploaded_file" class="SyliusDigitalProductPlugin\ResponseGenerator\UploadedFileResponseGenerator">
             <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
-            <argument>%sylius_digital_product_plugin.uploaded_file.directory%</argument>
             <tag name="sylius_digital_product_plugin.file_response_generator"/>
         </service>
 

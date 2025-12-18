@@ -23,7 +23,6 @@ final class SyliusDigitalProductExtension extends AbstractResourceExtension impl
 
         $uploadedFile = $config['uploaded_file'] ?? [];
 
-        $container->setParameter('sylius_digital_product_plugin.uploaded_file.directory', $uploadedFile['directory']);
         $container->setParameter('sylius_digital_product_plugin.uploaded_file.delete_from_storage_on_remove', $uploadedFile['delete_from_storage_on_remove']);
 
         $loader->load('services.xml');

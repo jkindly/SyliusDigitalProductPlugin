@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\ResponseGenerator;
 
+use League\Flysystem\FilesystemOperator;
 use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
 use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Webmozart\Assert\Assert;
 
 final readonly class UploadedFileResponseGenerator implements FileResponseGeneratorInterface
 {
     public function __construct(
+        private FilesystemOperator $localStorage,
         private string $uploadedFileType,
-        private string $uploadDirectory,
     ) {
     }
 
@@ -30,24 +31,35 @@ final readonly class UploadedFileResponseGenerator implements FileResponseGenera
             throw new NotFoundHttpException('File path not found in configuration.');
         }
 
-        $absolutePath = sprintf('%s/%s', rtrim($this->uploadDirectory, '/'), ltrim($path, '/'));
-
-        $realUploadPath = realpath($this->uploadDirectory);
-        $realFilePath = realpath($absolutePath);
-
-        if (false === $realFilePath || false === $realUploadPath || !str_starts_with($realFilePath, $realUploadPath)) {
-            throw new NotFoundHttpException('File not found or path validation failed.');
+        if (false === $this->localStorage->fileExists($path)) {
+            throw new NotFoundHttpException('File not found.');
         }
 
-        if (!file_exists($realFilePath)) {
-            throw new NotFoundHttpException(sprintf('File does not exist: %s', $path));
-        }
+        $response = new StreamedResponse(function () use ($path) {
+            $stream = $this->localStorage->readStream($path);
+            fpassthru($stream);
 
-        $response = new BinaryFileResponse($realFilePath);
-        $response->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $this->sanitizeFilename($file->getName(), $dto),
+            if (is_resource($stream)) {
+                fclose($stream);
+            }
+        });
+
+        $response->headers->set(
+            'Content-Type',
+            $dto->getMimeType() ?? 'application/octet-stream',
         );
+
+        $response->headers->set(
+            'Content-Disposition',
+            $response->headers->makeDisposition(
+                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                $this->sanitizeFilename($file->getName(), $dto),
+            )
+        );
+
+        if (null !== $size = $dto->getSize()) {
+            $response->headers->set('Content-Length', (string) $size);
+        }
 
         return $response;
     }

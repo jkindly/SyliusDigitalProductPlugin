@@ -9,11 +9,9 @@
         <service id="sylius_digital_product_plugin.uploader.local_digital_product_file"
                  class="SyliusDigitalProductPlugin\Uploader\LocalDigitalProductFileUploader"
         >
-            <argument type="service" id="filesystem"/>
+            <argument type="service" id="sylius_digital_product.storage.local"/>
             <argument type="service" id="sylius_digital_product_plugin.generator.date_path"/>
-            <argument>%sylius_digital_product_plugin.uploaded_file.delete_from_storage_on_remove%</argument>
             <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
-            <argument>%sylius_digital_product_plugin.uploaded_file.directory%</argument>
         </service>
     </services>
 </container>

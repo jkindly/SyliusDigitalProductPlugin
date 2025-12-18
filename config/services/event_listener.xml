@@ -17,11 +17,12 @@
             <tag name="kernel.event_listener" event="sylius.product.post_update" method="handleSimpleProductUpdate"/>
         </service>
 
-        <service id="sylius_digital_product_plugin.event_listener.remove_uploaded_digital_file"
+        <service id="sylius_digital_product_plugin.event_listener.remove_uploaded_file"
                  class="SyliusDigitalProductPlugin\EventListener\RemoveUploadedFileListener"
         >
             <argument type="service" id="sylius_digital_product_plugin.uploader.local_digital_product_file"/>
-            <tag name="doctrine.orm.entity_listener" entity="SyliusDigitalProductPlugin\Entity\DigitalProductFile" method="preRemove"/>
+            <argument>%sylius_digital_product_plugin.uploaded_file.delete_from_storage_on_remove%</argument>
+            <tag name="doctrine.orm.entity_listener" event="preRemove" entity="SyliusDigitalProductPlugin\Entity\DigitalProductFile"/>
         </service>
 
         <service id="sylius_digital_product_plugin.event_listener.workflow.order_payment.create_order_item_file" class="SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\CreateOrderItemFileListener">
