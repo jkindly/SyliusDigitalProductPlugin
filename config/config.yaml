@@ -5,4 +5,5 @@ framework:
 
 imports:
     - { resource: "twig_hooks/**/*.yaml" }
+    - { resource: "packages/*.yaml" }
 

@@ -34,6 +34,8 @@
                             </h2>
                             <div id="digital-files-{{ channel_code }}"
                                  class="accordion-collapse collapse {% if loop.first %}show{% endif %}"
+                                 data-uppy-chunked-upload-path="{{ path('sylius_admin_digital_product_chunked_upload') }}"
+                                 data-uppy-chunk-size="{{ options.chunk_size }}"
                                  data-bs-parent="#digital-product-files">
                                 <div
                                     class="accordion-body" {{ sylius_test_html_attribute('digital-product-channel-files-accordion-body') }}>

@@ -63,6 +63,7 @@ final class ProductVariantTypeExtension extends AbstractTypeExtension
         $groupedFiles = $this->groupFilesByChannel($variant);
 
         $form->add('files', ChannelCollectionType::class, [
+            'mapped' => false,
             'entry_type' => LiveCollectionType::class,
             'entry_options' => fn (DigitalProductChannelInterface $channel) => [
                 'entry_type' => DigitalProductFileType::class,

@@ -1,4 +1,6 @@
 {% from '@SyliusDigitalProductPlugin/admin/shared/helper/channel_based_digital_files.html.twig' import channel_based_digital_files %}
 
-{{ channel_based_digital_files(hookable_metadata.context.form.files) }}
+{{ channel_based_digital_files(hookable_metadata.context.form.files, {
+    chunk_size: hookable_metadata.configuration.chunk_size,
+}) }}
 

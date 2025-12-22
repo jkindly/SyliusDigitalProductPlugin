@@ -1,0 +1,9 @@
+{
+    "name": "sylius-digital-product-plugin",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "@uppy/core": "^5.2",
+        "@uppy/dashboard": "^5.1"
+    }
+}

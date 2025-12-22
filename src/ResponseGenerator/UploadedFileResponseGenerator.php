@@ -54,7 +54,7 @@ final readonly class UploadedFileResponseGenerator implements FileResponseGenera
             $response->headers->makeDisposition(
                 ResponseHeaderBag::DISPOSITION_ATTACHMENT,
                 $this->sanitizeFilename($file->getName(), $dto),
-            )
+            ),
         );
 
         if (null !== $size = $dto->getSize()) {

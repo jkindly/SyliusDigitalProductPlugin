@@ -1,4 +1,4 @@
-sylius_admin_product_digital_download:
+sylius_admin_digital_product_download:
     path: /products/digital/uploaded/download/{id}
     methods: [ GET ]
     defaults:
@@ -7,3 +7,12 @@ sylius_admin_product_digital_download:
             section: admin
             permission: true
             redirect: referrer
+
+sylius_admin_digital_product_chunked_upload:
+    path: /ajax/upload/chunk
+    methods: [ POST ]
+    defaults:
+        _controller: sylius_digital_product_plugin.controller.action.chunked_upload
+        _sylius:
+            section: admin
+            permission: true

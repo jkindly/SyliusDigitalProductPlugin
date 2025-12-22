@@ -9,9 +9,33 @@
         <service id="sylius_digital_product_plugin.uploader.local_digital_product_file"
                  class="SyliusDigitalProductPlugin\Uploader\LocalDigitalProductFileUploader"
         >
-            <argument type="service" id="sylius_digital_product.storage.local"/>
+            <argument type="service" id="sylius_digital_product.storage.uploaded_file"/>
             <argument type="service" id="sylius_digital_product_plugin.generator.date_path"/>
             <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
         </service>
+
+        <service id="sylius_digital_product_plugin.uploader.chunked_upload_handler"
+                 class="SyliusDigitalProductPlugin\Uploader\FilesystemChunkedUploadHandler"
+        >
+            <argument type="service" id="sylius_digital_product.storage.chunks"/>
+            <argument type="service" id="sylius_digital_product.storage.uploaded_file"/>
+            <argument type="service" id="sylius_digital_product_plugin.generator.date_path"/>
+        </service>
+
+        <service id="SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface"
+                 alias="sylius_digital_product_plugin.uploader.chunked_upload_handler"
+        />
+
+        <service id="sylius_digital_product_plugin.factory.chunked_uploaded_file"
+                 class="SyliusDigitalProductPlugin\Factory\ChunkedUploadedFileFactory"
+        >
+            <argument type="service" id="sylius_digital_product.storage.chunks"/>
+            <argument type="service" id="sylius_digital_product_plugin.uploader.chunked_upload_handler"/>
+            <argument>%sylius_digital_product_plugin.uploaded_file.chunks_path%</argument>
+        </service>
+
+        <service id="SyliusDigitalProductPlugin\Factory\ChunkedUploadedFileFactory"
+                 alias="sylius_digital_product_plugin.factory.chunked_uploaded_file"
+        />
     </services>
 </container>

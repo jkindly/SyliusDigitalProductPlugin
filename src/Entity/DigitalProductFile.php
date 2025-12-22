@@ -8,7 +8,6 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Resource\Model\TimestampableTrait;
 use Symfony\Component\Uid\Uuid;
-use Webmozart\Assert\Assert;
 
 class DigitalProductFile implements DigitalProductFileInterface
 {
@@ -26,7 +25,7 @@ class DigitalProductFile implements DigitalProductFileInterface
 
     protected ?ProductVariantInterface $productVariant = null;
 
-    protected ?DigitalProductFileSettingsInterface $settings = null;
+    protected ?DigitalProductFileOwnedSettingsInterface $settings = null;
 
     protected array $configuration = [];
 
@@ -85,20 +84,15 @@ class DigitalProductFile implements DigitalProductFileInterface
         $this->productVariant = $productVariant;
     }
 
-    public function getSettings(): ?DigitalProductFileSettingsInterface
+    public function getSettings(): ?DigitalProductFileOwnedSettingsInterface
     {
         return $this->settings;
     }
 
-    public function setSettings(?DigitalProductFileSettingsInterface $settings): void
+    public function setSettings(?DigitalProductFileOwnedSettingsInterface $settings): void
     {
-        Assert::nullOrIsInstanceOf($settings, DigitalProductFileAwareInterface::class);
-
         $this->settings = $settings;
 
-        /**
-         * @var DigitalProductFileAwareInterface|null $settings
-         */
         if (null !== $settings && $settings->getFile() !== $this) {
             $settings->setFile($this);
         }

@@ -1,14 +1,7 @@
 sylius_digital_product:
     uploaded_file:
         delete_from_storage_on_remove: true
-
-flysystem:
-    storages:
-        sylius_digital_product.storage.local:
-            adapter: 'local'
-            options:
-                directory: '%kernel.project_dir%/var/uploads/product_files'
-        sylius_digital_product.storage.order_file:
-            adapter: 'local'
-            options:
-                directory: '%kernel.project_dir%/var/uploads/order_files'
+        chunk_size: 10485760 # 10 MB
+        product_files_path: '%kernel.project_dir%/var/uploads/product_files'
+        order_files_path: '%kernel.project_dir%/var/uploads/order_files'
+        chunks_path: '%kernel.project_dir%/var/uploads/tmp/chunks'

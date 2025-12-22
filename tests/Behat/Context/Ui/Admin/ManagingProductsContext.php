@@ -6,7 +6,6 @@ namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Behat\Mink\Exception\ElementNotFoundException;
-use Behat\Step\Given;
 use Behat\Step\Then;
 use Behat\Step\When;
 use Sylius\Behat\Page\Shop\Product\ShowPageInterface;
@@ -30,7 +29,7 @@ final class ManagingProductsContext implements Context
     }
 
     #[When('I open the Digital section')]
-    public function iOpenTheDigitalSection():  void
+    public function iOpenTheDigitalSection(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
@@ -133,4 +132,5 @@ final class ManagingProductsContext implements Context
             '_channel_code' => $channel->getCode(),
             '_locale' => $locale,
         ]);
-    }}
+    }
+}

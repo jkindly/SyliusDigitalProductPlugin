@@ -8,7 +8,6 @@ use League\Flysystem\FilesystemOperator;
 use RuntimeException;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class LocalDigitalProductFileUploader implements DigitalProductFileUploaderInterface

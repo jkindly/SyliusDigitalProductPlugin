@@ -8,6 +8,7 @@ use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
 use SyliusDigitalProductPlugin\Validator\FileDtoValidatorInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 final class UploadedFileType extends AbstractFileType
@@ -29,6 +30,12 @@ final class UploadedFileType extends AbstractFileType
         $builder
             ->add('uploadedFile', FileType::class, [
                 'label' => 'sylius_digital_product.ui.file',
+            ])
+            ->add('chunkFileId', HiddenType::class, [
+                'required' => false,
+            ])
+            ->add('chunkOriginalFilename', HiddenType::class, [
+                'required' => false,
             ])
         ;
 

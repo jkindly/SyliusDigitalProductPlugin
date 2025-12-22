@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Entity\Trait;
 
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettingsInterface;
 
 trait DigitalProductVariantSettingsAwareTrait

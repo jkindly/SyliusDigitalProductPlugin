@@ -1,6 +1,6 @@
 imports:
-    - { resource: "packages/*.yaml" }
     - { resource: "@SyliusDigitalProductPlugin/config/config.yaml" }
+    - { resource: "packages/*.yaml" }
     - { resource: "services_test.php" }
 
 twig:

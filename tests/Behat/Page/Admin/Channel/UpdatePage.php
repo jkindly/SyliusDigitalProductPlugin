@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel;
 
 use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\FormTrait;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\UpdatePageInterface;
 
 class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {

@@ -21,5 +21,13 @@
             <argument type="service" id="sylius_digital_product_plugin.serializer.registry"/>
             <tag name="controller.service_arguments" />
         </service>
+
+        <service id="sylius_digital_product_plugin.controller.action.chunked_upload"
+                 class="SyliusDigitalProductPlugin\Controller\Admin\Action\ChunkedUploadAction"
+        >
+            <argument type="service" id="sylius_digital_product_plugin.uploader.chunked_upload_handler"/>
+            <argument type="service" id="sylius_digital_product.storage.chunks"/>
+            <tag name="controller.service_arguments" />
+        </service>
     </services>
 </container>

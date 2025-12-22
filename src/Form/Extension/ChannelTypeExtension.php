@@ -19,7 +19,7 @@ final class ChannelTypeExtension extends AbstractTypeExtension
             'required' => false,
             'constraints' => [
                 new Valid(),
-            ]
+            ],
         ]);
     }
 

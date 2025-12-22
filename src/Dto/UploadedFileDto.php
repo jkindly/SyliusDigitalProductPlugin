@@ -21,6 +21,10 @@ class UploadedFileDto implements FileDtoInterface
 
     protected ?UploadedFile $uploadedFile = null;
 
+    protected ?string $chunkFileId = null;
+
+    protected ?string $chunkOriginalFilename = null;
+
     public function getPath(): ?string
     {
         return $this->path;
@@ -81,9 +85,33 @@ class UploadedFileDto implements FileDtoInterface
         $this->uploadedFile = $uploadedFile;
     }
 
-    public function validateFileIfPresent(ExecutionContextInterface $context, mixed $payload): void
+    public function getChunkFileId(): ?string
     {
-        if (empty($this->size) && null === $this->uploadedFile) {
+        return $this->chunkFileId;
+    }
+
+    public function setChunkFileId(?string $chunkFileId): void
+    {
+        $this->chunkFileId = $chunkFileId;
+    }
+
+    public function getChunkOriginalFilename(): ?string
+    {
+        return $this->chunkOriginalFilename;
+    }
+
+    public function setChunkOriginalFilename(?string $chunkOriginalFilename): void
+    {
+        $this->chunkOriginalFilename = $chunkOriginalFilename;
+    }
+
+    public function validateFileSource(ExecutionContextInterface $context, mixed $payload): void
+    {
+        $hasUploadedFile = null !== $this->uploadedFile;
+        $hasChunkFile = null !== $this->chunkFileId && null !== $this->chunkOriginalFilename;
+        $hasExistingFile = null !== $this->size && null !== $this->path;
+
+        if (!$hasUploadedFile && !$hasChunkFile && !$hasExistingFile) {
             $context->buildViolation('sylius.digital_product.file.uploaded_file.not_blank')
                 ->atPath('uploadedFile')
                 ->addViolation()

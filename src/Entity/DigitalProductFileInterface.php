@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Entity;
 
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\PositionAwareInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Resource\Model\TimestampableInterface;
 
@@ -35,7 +34,7 @@ interface DigitalProductFileInterface extends TimestampableInterface
 
     public function setConfiguration(array $configuration): void;
 
-    public function getSettings(): ?DigitalProductFileSettingsInterface;
+    public function getSettings(): ?DigitalProductFileOwnedSettingsInterface;
 
-    public function setSettings(?DigitalProductFileSettingsInterface $settings): void;
+    public function setSettings(?DigitalProductFileOwnedSettingsInterface $settings): void;
 }

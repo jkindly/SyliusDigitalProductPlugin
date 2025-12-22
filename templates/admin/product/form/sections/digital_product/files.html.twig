@@ -2,5 +2,7 @@
 {% set product = hookable_metadata.context.resource %}
 
 {% if product.isSimple %}
-    {{ channel_based_digital_files(hookable_metadata.context.form.variant.files) }}
+    {{ channel_based_digital_files(hookable_metadata.context.form.variant.files, {
+        chunk_size: hookable_metadata.configuration.chunk_size,
+    }) }}
 {% endif %}

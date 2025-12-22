@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Entity;
 
-use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Model\ToggleableInterface;
 

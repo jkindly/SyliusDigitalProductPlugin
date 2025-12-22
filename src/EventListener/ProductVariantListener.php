@@ -10,8 +10,10 @@ use Sylius\Component\Core\Model\ProductInterface;
 use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
+use SyliusDigitalProductPlugin\Factory\ChunkedUploadedFileFactoryInterface;
 use SyliusDigitalProductPlugin\Handler\FileHandlerInterface;
 use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 
@@ -22,6 +24,8 @@ final readonly class ProductVariantListener
         private FileConfigurationSerializerInterface $uploadedFileSerializer,
         private EntityManagerInterface $entityManager,
         private string $uploadedFileType,
+        private ChunkedUploadedFileFactoryInterface $chunkedUploadedFileFactory,
+        private ChunkedUploadHandlerInterface $chunkedUploadHandler,
     ) {
     }
 
@@ -60,14 +64,29 @@ final readonly class ProductVariantListener
 
             $configuration = $file->getConfiguration();
             $uploadedFile = $configuration['uploadedFile'] ?? null;
-            if (null === $uploadedFile) {
+            $chunkFileId = $configuration['chunkFileId'] ?? null;
+            $chunkOriginalFilename = $configuration['chunkOriginalFilename'] ?? null;
+
+            if (null === $uploadedFile && null === $chunkFileId) {
                 continue;
             }
 
             /** @var UploadedFileDto $dto */
             $dto = $this->uploadedFileSerializer->getDto($configuration);
-            $dto->setUploadedFile($uploadedFile);
+
+            if (null !== $chunkFileId && null !== $chunkOriginalFilename) {
+                $dto->setUploadedFile($this->chunkedUploadedFileFactory->createFromChunk($chunkFileId, $chunkOriginalFilename));
+            } elseif (null !== $uploadedFile) {
+                $dto->setUploadedFile($uploadedFile);
+            }
+
             $this->uploadedFileHandler->handle($dto);
+
+            if (null !== $chunkFileId) {
+                $this->chunkedUploadHandler->deleteChunks($chunkFileId);
+                $dto->setChunkFileId(null);
+                $dto->setChunkOriginalFilename(null);
+            }
 
             $file->setConfiguration($this->uploadedFileSerializer->getConfiguration($dto));
         }

@@ -14,7 +14,7 @@ final readonly class FileConfigurationSerializerRegistry
     public function get(string $fileType): FileConfigurationSerializerInterface
     {
         foreach ($this->serializers as $key => $serializer) {
-            if ($key === $fileType) {
+            if ($fileType === $key) {
                 return $serializer;
             }
         }

@@ -57,22 +57,32 @@
 {%- block sylius_admin_digital_product_uploaded_file_row -%}
     {% set path = form.parent.vars.data.configuration.path|default(null) %}
 
-    <div class="field {% if path is null %}mb-3{% endif %}">
-        {{ form_label(form.uploadedFile) }}
-        {{ form_widget(form.uploadedFile, sylius_test_form_attribute('uploaded-file')) }}
-        {{ form_errors(form.uploadedFile) }}
-    </div>
-
-    {% if path is not null %}
+    {% if path is null %}
+        <div class="field mb-3">
+            {{ form_label(form.uploadedFile) }}
+            {{ form_widget(form.uploadedFile, sylius_test_form_attribute('uploaded-file')) }}
+            {{ form_errors(form.uploadedFile) }}
+            {{ form_widget(form.chunkFileId) }}
+            {{ form_widget(form.chunkOriginalFilename) }}
+        </div>
+    {% else %}
         {% set id = form.parent.vars.data.id|default(null) %}
         {% if id is not null %}
-            <div class="mb-3 form-text help-text" {{ sylius_test_html_attribute('uploaded-file-download-link') }}>
-                {{ path }}
-                <a class="text-decoration-none" href="{{ path('sylius_admin_product_digital_download', { id }) }}">
-                    [{{ 'sylius_digital_product.ui.uploaded_file.download'|trans }}]
-                </a>
+            <div class="mb-3">
+                <label class="form-label">{{ 'sylius_digital_product.ui.file'|trans }}</label>
+                <div class="form-text help-text" {{ sylius_test_html_attribute('uploaded-file-download-link') }}>
+                    {{ path }}
+                    <a class="text-decoration-none" href="{{ path('sylius_admin_digital_product_download', { id }) }}">
+                        [{{ 'sylius_digital_product.ui.uploaded_file.download'|trans }}]
+                    </a>
+                </div>
             </div>
         {% endif %}
+        <div class="d-none">
+            {{ form_widget(form.uploadedFile) }}
+            {{ form_widget(form.chunkFileId) }}
+            {{ form_widget(form.chunkOriginalFilename) }}
+        </div>
     {% endif %}
 {% endblock %}
 

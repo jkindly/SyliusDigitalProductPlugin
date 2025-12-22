@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Form\EventSubscriber;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
@@ -29,7 +27,6 @@ final readonly class ChannelBasedFilesSubscriber implements EventSubscriberInter
     {
         return [
             FormEvents::SUBMIT => 'onSubmit',
-            FormEvents::POST_SUBMIT => 'onPostSubmit',
         ];
     }
 
@@ -40,47 +37,76 @@ final readonly class ChannelBasedFilesSubscriber implements EventSubscriberInter
 
         $form = $event->getForm();
         $groupedFiles = $form->get('files')->getData();
-        Assert::isInstanceOf($groupedFiles, Collection::class);
+        Assert::isArray($groupedFiles);
 
         $this->syncFilesFromGrouped($variant, $groupedFiles);
     }
 
-    public function onPostSubmit(FormEvent $event): void
+    /**
+     * @param array<string, mixed> $groupedFiles
+     */
+    private function syncFilesFromGrouped(DigitalProductVariantInterface $variant, array $groupedFiles): void
     {
-        $variant = $event->getData();
-        Assert::isInstanceOf($variant, DigitalProductVariantInterface::class);
+        $submittedFilesById = [];
+        $newFiles = [];
 
-        $cleanedFiles = [];
-        foreach ($variant->getFiles() as $file) {
-            if ($file instanceof DigitalProductFileInterface) {
-                $cleanedFiles[] = $file;
+        $submittedFiles = $this->flattenChannelGroupedFiles($groupedFiles, $variant);
+        foreach ($submittedFiles as $file) {
+            if ($file->getId() !== null) {
+                $submittedFilesById[$file->getId()] = $file;
+            } else {
+                $newFiles[] = $file;
             }
         }
 
-        $variant->setFiles(new ArrayCollection($cleanedFiles));
+        $currentFiles = $variant->getFiles()->toArray();
+        foreach ($currentFiles as $existingFile) {
+            if (!$existingFile instanceof DigitalProductFileInterface) {
+                continue;
+            }
+
+            $existingFileId = $existingFile->getId();
+            if (null === $existingFileId) {
+                continue;
+            }
+
+            if (!array_key_exists($existingFileId, $submittedFilesById)) {
+                $variant->removeFile($existingFile);
+
+                continue;
+            }
+
+            $submittedVersion = $submittedFilesById[$existingFileId];
+            if ($existingFile->getChannel() !== $submittedVersion->getChannel()) {
+                $existingFile->setChannel($submittedVersion->getChannel());
+            }
+        }
+
+        foreach ($newFiles as $newFile) {
+            if (!$variant->getFiles()->contains($newFile)) {
+                $variant->addFile($newFile);
+            }
+        }
     }
 
     /**
-     * @param Collection<string, Collection<int, DigitalProductFileInterface>> $groupedFiles
+     * @param array<string, mixed> $groupedFiles
      *
      * @return DigitalProductFileInterface[]
      */
-    private function flattenChannelGroupedFiles(Collection $groupedFiles, DigitalProductVariantInterface $variant): array
+    private function flattenChannelGroupedFiles(array $groupedFiles, DigitalProductVariantInterface $variant): array
     {
         /** @var ChannelInterface[] $channels */
         $channels = $this->channelRepository->findAll();
         $channelsByCode = [];
-
-        foreach ($channels as $channel) {
-            $channelCode = $channel->getCode();
-            Assert::notNull($channelCode);
-            $channelsByCode[$channelCode] = $channel;
-        }
-
         $flattened = [];
 
+        foreach ($channels as $channel) {
+            $channelsByCode[$channel->getCode()] = $channel;
+        }
+
         foreach ($groupedFiles as $channelCode => $files) {
-            if (!isset($channelsByCode[$channelCode])) {
+            if (!isset($channelsByCode[$channelCode]) || !is_iterable($files)) {
                 continue;
             }
 
@@ -98,32 +124,5 @@ final readonly class ChannelBasedFilesSubscriber implements EventSubscriberInter
         }
 
         return $flattened;
-    }
-
-    /**
-     * @param Collection<string, Collection<int, DigitalProductFileInterface>> $groupedFiles
-     */
-    private function syncFilesFromGrouped(DigitalProductVariantInterface $variant, Collection $groupedFiles): void
-    {
-        $newFiles = $this->flattenChannelGroupedFiles($groupedFiles, $variant);
-
-        $existingFiles = [];
-        foreach ($variant->getFiles() as $file) {
-            if ($file instanceof DigitalProductFileInterface) {
-                $existingFiles[] = $file;
-            }
-        }
-
-        foreach ($existingFiles as $existingFile) {
-            if (!in_array($existingFile, $newFiles, true)) {
-                $variant->removeFile($existingFile);
-            }
-        }
-
-        foreach ($newFiles as $newFile) {
-            if (!in_array($newFile, $existingFiles, true)) {
-                $variant->addFile($newFile);
-            }
-        }
     }
 }
