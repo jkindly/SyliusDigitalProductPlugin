@@ -17,6 +17,8 @@ use SyliusDigitalProductPlugin\Handler\FileHandlerInterface;
 use SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
 use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use SyliusDigitalProductPlugin\Factory\ChunkedUploadedFileFactoryInterface;
+use SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class ProductVariantListenerTest extends TestCase
@@ -24,6 +26,8 @@ final class ProductVariantListenerTest extends TestCase
     private MockObject&FileHandlerInterface $fileHandler;
     private MockObject&FileConfigurationSerializerInterface $serializer;
     private MockObject&EntityManagerInterface $entityManager;
+    private MockObject&ChunkedUploadedFileFactoryInterface $chunkedUploadedFileFactory;
+    private MockObject&ChunkedUploadHandlerInterface $chunkedUploadHandler;
     private ProductVariantListener $listener;
 
     protected function setUp(): void
@@ -31,12 +35,16 @@ final class ProductVariantListenerTest extends TestCase
         $this->fileHandler = $this->createMock(FileHandlerInterface::class);
         $this->serializer = $this->createMock(FileConfigurationSerializerInterface::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
+        $this->chunkedUploadedFileFactory = $this->createMock(ChunkedUploadedFileFactoryInterface::class);
+        $this->chunkedUploadHandler = $this->createMock(ChunkedUploadHandlerInterface::class);
 
         $this->listener = new ProductVariantListener(
             $this->fileHandler,
             $this->serializer,
             $this->entityManager,
-            UploadedFileProvider::TYPE
+            UploadedFileProvider::TYPE,
+            $this->chunkedUploadedFileFactory,
+            $this->chunkedUploadHandler
         );
     }
 

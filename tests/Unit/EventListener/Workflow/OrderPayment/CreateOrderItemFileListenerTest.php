@@ -14,7 +14,7 @@ use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileSettingsInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettingsInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\CreateOrderItemFileListener;
 use SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
@@ -54,9 +54,9 @@ final class CreateOrderItemFileListenerTest extends TestCase
             false,
             false,
             true,
-            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+            ['hasAnyFile', 'getFiles', 'getDigitalProductVariantSettings']
         );
-        $variantSettings = $this->createMock(DigitalProductFileSettingsInterface::class);
+        $variantSettings = $this->createMock(DigitalProductVariantSettingsInterface::class);
         $file = $this->createMock(DigitalProductFileInterface::class);
         $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
@@ -78,7 +78,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variant);
 
         $variant->expects($this->once())
-            ->method('isDigital')
+            ->method('hasAnyFile')
             ->willReturn(true);
 
         $variant->expects($this->once())
@@ -134,7 +134,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             false,
             false,
             true,
-            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+            ['hasAnyFile', 'getFiles', 'getDigitalProductVariantSettings']
         );
 
         $workflow = $this->createMock(WorkflowInterface::class);
@@ -155,7 +155,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variant);
 
         $variant->expects($this->once())
-            ->method('isDigital')
+            ->method('hasAnyFile')
             ->willReturn(false);
 
         $variant->expects($this->never())
@@ -184,9 +184,9 @@ final class CreateOrderItemFileListenerTest extends TestCase
             false,
             false,
             true,
-            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+            ['hasAnyFile', 'getFiles', 'getDigitalProductVariantSettings']
         );
-        $variantSettings = $this->createMock(DigitalProductFileSettingsInterface::class);
+        $variantSettings = $this->createMock(DigitalProductVariantSettingsInterface::class);
         $file = $this->createMock(DigitalProductFileInterface::class);
         $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
@@ -208,7 +208,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variant);
 
         $variant->expects($this->once())
-            ->method('isDigital')
+            ->method('hasAnyFile')
             ->willReturn(true);
 
         $variant->expects($this->once())
@@ -268,7 +268,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             false,
             false,
             true,
-            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+            ['hasAnyFile', 'getFiles', 'getDigitalProductVariantSettings']
         );
         $file = $this->createMock(DigitalProductFileInterface::class);
         $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
@@ -291,7 +291,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variant);
 
         $variant->expects($this->once())
-            ->method('isDigital')
+            ->method('hasAnyFile')
             ->willReturn(true);
 
         $variant->expects($this->once())
@@ -344,9 +344,9 @@ final class CreateOrderItemFileListenerTest extends TestCase
             false,
             false,
             true,
-            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+            ['hasAnyFile', 'getFiles', 'getDigitalProductVariantSettings']
         );
-        $variantSettings = $this->createMock(DigitalProductFileSettingsInterface::class);
+        $variantSettings = $this->createMock(DigitalProductVariantSettingsInterface::class);
 
         $file1 = $this->createMock(DigitalProductFileInterface::class);
         $file2 = $this->createMock(DigitalProductFileInterface::class);
@@ -371,7 +371,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variant);
 
         $variant->expects($this->once())
-            ->method('isDigital')
+            ->method('hasAnyFile')
             ->willReturn(true);
 
         $variant->expects($this->once())
@@ -458,7 +458,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             false,
             false,
             true,
-            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+            ['hasAnyFile', 'getFiles', 'getDigitalProductVariantSettings']
         );
         $variant2 = $this->getMockForAbstractClass(
             DigitalProductVariantInterface::class,
@@ -467,10 +467,10 @@ final class CreateOrderItemFileListenerTest extends TestCase
             false,
             false,
             true,
-            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+            ['hasAnyFile', 'getFiles', 'getDigitalProductVariantSettings']
         );
-        $variantSettings1 = $this->createMock(DigitalProductFileSettingsInterface::class);
-        $variantSettings2 = $this->createMock(DigitalProductFileSettingsInterface::class);
+        $variantSettings1 = $this->createMock(DigitalProductVariantSettingsInterface::class);
+        $variantSettings2 = $this->createMock(DigitalProductVariantSettingsInterface::class);
 
         $file1 = $this->createMock(DigitalProductFileInterface::class);
         $file2 = $this->createMock(DigitalProductFileInterface::class);
@@ -499,11 +499,11 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variant2);
 
         $variant1->expects($this->once())
-            ->method('isDigital')
+            ->method('hasAnyFile')
             ->willReturn(true);
 
         $variant2->expects($this->once())
-            ->method('isDigital')
+            ->method('hasAnyFile')
             ->willReturn(true);
 
         $variant1->expects($this->once())
@@ -595,7 +595,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             false,
             false,
             true,
-            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+            ['hasAnyFile', 'getFiles', 'getDigitalProductVariantSettings']
         );
         $nonDigitalVariant = $this->getMockForAbstractClass(
             DigitalProductVariantInterface::class,
@@ -606,7 +606,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             true,
             ['isDigital', 'getDigitalProductVariantSettings']
         );
-        $variantSettings = $this->createMock(DigitalProductFileSettingsInterface::class);
+        $variantSettings = $this->createMock(DigitalProductVariantSettingsInterface::class);
 
         $file = $this->createMock(DigitalProductFileInterface::class);
         $orderItemFile = $this->createMock(DigitalProductOrderItemFileInterface::class);
@@ -633,11 +633,11 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($nonDigitalVariant);
 
         $digitalVariant->expects($this->once())
-            ->method('isDigital')
+            ->method('hasAnyFile')
             ->willReturn(true);
 
         $nonDigitalVariant->expects($this->once())
-            ->method('isDigital')
+            ->method('hasAnyFile')
             ->willReturn(false);
 
         $digitalVariant->expects($this->once())
@@ -694,9 +694,9 @@ final class CreateOrderItemFileListenerTest extends TestCase
             false,
             false,
             true,
-            ['isDigital', 'getFiles', 'getDigitalProductVariantSettings']
+            ['hasAnyFile', 'getFiles', 'getDigitalProductVariantSettings']
         );
-        $variantSettings = $this->createMock(DigitalProductFileSettingsInterface::class);
+        $variantSettings = $this->createMock(DigitalProductVariantSettingsInterface::class);
 
         $workflow = $this->createMock(WorkflowInterface::class);
         $marking = new Marking();
@@ -716,7 +716,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->willReturn($variant);
 
         $variant->expects($this->once())
-            ->method('isDigital')
+            ->method('hasAnyFile')
             ->willReturn(true);
 
         $variant->expects($this->once())

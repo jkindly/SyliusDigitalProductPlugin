@@ -7,7 +7,7 @@ namespace SyliusDigitalProductPlugin\Entity;
 use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Model\ToggleableInterface;
 
-class DigitalProductVariantSettings implements
+class DigitalProductVariantSettings extends AbstractDigitalProductSettings implements
     DigitalProductVariantSettingsInterface,
     DigitalProductVariantAwareInterface,
     ResourceInterface,

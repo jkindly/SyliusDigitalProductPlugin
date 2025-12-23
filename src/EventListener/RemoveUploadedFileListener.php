@@ -7,7 +7,7 @@ namespace SyliusDigitalProductPlugin\EventListener;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 
-final class RemoveUploadedFileListener
+final readonly class RemoveUploadedFileListener
 {
     public function __construct(
         private DigitalProductFileUploaderInterface $localDigitalProductFileUploader,

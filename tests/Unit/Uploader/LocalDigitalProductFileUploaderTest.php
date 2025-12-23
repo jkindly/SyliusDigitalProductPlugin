@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\SyliusDigitalProductPlugin\Unit\Uploader;
 
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -12,55 +13,34 @@ use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
 use SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
 use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 use SyliusDigitalProductPlugin\Uploader\LocalDigitalProductFileUploader;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class LocalDigitalProductFileUploaderTest extends TestCase
 {
-    private string $uploadPath;
-    private Filesystem $filesystem;
+    private MockObject&FilesystemOperator $localStorage;
     private MockObject&PathGeneratorInterface $pathGenerator;
     private LocalDigitalProductFileUploader $uploader;
 
     protected function setUp(): void
     {
-        $this->uploadPath = sys_get_temp_dir() . '/sylius_test_uploads_' . uniqid('', true);
-        $this->filesystem = new Filesystem();
+        $this->localStorage = $this->createMock(FilesystemOperator::class);
         $this->pathGenerator = $this->createMock(PathGeneratorInterface::class);
 
-        $this->filesystem->mkdir($this->uploadPath);
-
         $this->uploader = new LocalDigitalProductFileUploader(
-            $this->filesystem,
+            $this->localStorage,
             $this->pathGenerator,
-            true,
-            UploadedFileProvider::TYPE,
-            $this->uploadPath
+            UploadedFileProvider::TYPE
         );
-    }
-
-    protected function tearDown(): void
-    {
-        if ($this->filesystem->exists($this->uploadPath)) {
-            $this->filesystem->remove($this->uploadPath);
-        }
-    }
-
-    public function testUploadCreatesDirectoryStructure(): void
-    {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
-
-        $uploadedFile = $this->createMockedUploadedFile('test.pdf', 'application/pdf', 'pdf');
-
-        $this->uploader->upload($uploadedFile);
-
-        $this->assertDirectoryExists($this->uploadPath . '/2024/01/15');
     }
 
     public function testUploadReturnsCorrectArrayStructure(): void
     {
         $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->localStorage->method('writeStream');
+        $this->localStorage->method('fileExists')->willReturn(true);
+        $this->localStorage->method('fileSize')->willReturn(1024);
+        $this->localStorage->method('mimeType')->willReturn('application/pdf');
 
         $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
 
@@ -77,6 +57,10 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
     public function testUploadStoresOriginalFilename(): void
     {
         $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->localStorage->method('writeStream');
+        $this->localStorage->method('fileExists')->willReturn(true);
+        $this->localStorage->method('fileSize')->willReturn(1024);
+        $this->localStorage->method('mimeType')->willReturn('application/pdf');
 
         $uploadedFile = $this->createMockedUploadedFile('my-document.pdf', 'application/pdf', 'pdf');
 
@@ -88,6 +72,10 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
     public function testUploadStoresExtension(): void
     {
         $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->localStorage->method('writeStream');
+        $this->localStorage->method('fileExists')->willReturn(true);
+        $this->localStorage->method('fileSize')->willReturn(1024);
+        $this->localStorage->method('mimeType')->willReturn('application/pdf');
 
         $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
 
@@ -99,6 +87,10 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
     public function testUploadStoresMimeType(): void
     {
         $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->localStorage->method('writeStream');
+        $this->localStorage->method('fileExists')->willReturn(true);
+        $this->localStorage->method('fileSize')->willReturn(1024);
+        $this->localStorage->method('mimeType')->willReturn('application/pdf');
 
         $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
 
@@ -110,30 +102,38 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
     public function testUploadStoresFileSize(): void
     {
         $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->localStorage->method('writeStream');
+        $this->localStorage->method('fileExists')->willReturn(true);
+        $this->localStorage->method('fileSize')->willReturn(1024);
+        $this->localStorage->method('mimeType')->willReturn('application/pdf');
 
-        $content = str_repeat('a', 1024);
-        $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf', $content);
+        $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
 
         $result = $this->uploader->upload($uploadedFile);
 
         $this->assertSame(1024, $result[DigitalProductFileUploaderInterface::PROPERTY_SIZE]);
     }
 
-    public function testUploadCreatesPhysicalFile(): void
+    public function testUploadCallsFlysystemWriteStream(): void
     {
         $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->localStorage->expects($this->once())->method('writeStream');
+        $this->localStorage->method('fileExists')->willReturn(true);
+        $this->localStorage->method('fileSize')->willReturn(1024);
+        $this->localStorage->method('mimeType')->willReturn('application/pdf');
 
         $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
 
-        $result = $this->uploader->upload($uploadedFile);
-
-        $fullPath = $this->uploadPath . '/' . $result[DigitalProductFileUploaderInterface::PROPERTY_PATH];
-        $this->assertFileExists($fullPath);
+        $this->uploader->upload($uploadedFile);
     }
 
     public function testUploadGeneratesUniqueFilename(): void
     {
         $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->localStorage->method('writeStream');
+        $this->localStorage->method('fileExists')->willReturn(true);
+        $this->localStorage->method('fileSize')->willReturn(1024);
+        $this->localStorage->method('mimeType')->willReturn('application/pdf');
 
         $uploadedFile1 = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
         $uploadedFile2 = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
@@ -150,6 +150,10 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
     public function testUploadHandlesFileWithoutExtension(): void
     {
         $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->localStorage->method('writeStream');
+        $this->localStorage->method('fileExists')->willReturn(true);
+        $this->localStorage->method('fileSize')->willReturn(1024);
+        $this->localStorage->method('mimeType')->willReturn('application/octet-stream');
 
         $uploadedFile = $this->createMockedUploadedFile('document', 'application/octet-stream', null);
 
@@ -159,15 +163,13 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
         $this->assertStringEndsNotWith('.', $result[DigitalProductFileUploaderInterface::PROPERTY_PATH]);
     }
 
-    public function testUploadThrowsExceptionWhenFileMoveFailsAndFileDoesNotExist(): void
+    public function testUploadThrowsExceptionWhenFileDoesNotExist(): void
     {
         $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->localStorage->method('writeStream');
+        $this->localStorage->method('fileExists')->willReturn(false);
 
-        $uploadedFile = $this->createMock(UploadedFile::class);
-        $uploadedFile->method('getClientOriginalName')->willReturn('document.pdf');
-        $uploadedFile->method('guessExtension')->willReturn('pdf');
-        $uploadedFile->method('getMimeType')->willReturn('application/pdf');
-        $uploadedFile->method('move')->willReturn($this->createMock(File::class));
+        $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Failed to move uploaded file.');
@@ -175,30 +177,13 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
         $this->uploader->upload($uploadedFile);
     }
 
-    public function testUploadTrimsUploadPathSlashes(): void
-    {
-        $uploaderWithTrailingSlash = new LocalDigitalProductFileUploader(
-            $this->filesystem,
-            $this->pathGenerator,
-            true,
-            UploadedFileProvider::TYPE,
-            $this->uploadPath . '/'
-        );
-
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
-
-        $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
-
-        $result = $uploaderWithTrailingSlash->upload($uploadedFile);
-
-        $fullPath = $this->uploadPath . '/' . $result[DigitalProductFileUploaderInterface::PROPERTY_PATH];
-        $this->assertFileExists($fullPath);
-        $this->assertStringNotContainsString('//', $fullPath);
-    }
-
     public function testUploadUsesClientOriginalExtensionWhenGuessExtensionFails(): void
     {
         $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->localStorage->method('writeStream');
+        $this->localStorage->method('fileExists')->willReturn(true);
+        $this->localStorage->method('fileSize')->willReturn(1024);
+        $this->localStorage->method('mimeType')->willReturn('application/octet-stream');
 
         $uploadedFile = $this->createMockedUploadedFile('document.custom', 'application/octet-stream', null);
 
@@ -207,90 +192,37 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
         $this->assertSame('custom', $result[DigitalProductFileUploaderInterface::PROPERTY_EXTENSION]);
     }
 
-    public function testRemoveDeletesFileWhenDeleteLocalFileIsTrue(): void
+    public function testRemoveDeletesFile(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
-
-        $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
-        $result = $this->uploader->upload($uploadedFile);
-
-        $fullPath = $this->uploadPath . '/' . $result[DigitalProductFileUploaderInterface::PROPERTY_PATH];
-        $this->assertFileExists($fullPath);
+        $this->localStorage->expects($this->once())
+            ->method('delete')
+            ->with('2024/01/15/test.pdf');
 
         $file = $this->createMock(DigitalProductFileInterface::class);
         $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
-        $file->method('getConfiguration')->willReturn(['path' => $result[DigitalProductFileUploaderInterface::PROPERTY_PATH]]);
+        $file->method('getConfiguration')->willReturn(['path' => '2024/01/15/test.pdf']);
 
         $this->uploader->remove($file);
-
-        $this->assertFileDoesNotExist($fullPath);
-    }
-
-    public function testRemoveDoesNotDeleteFileWhenDeleteLocalFileIsFalse(): void
-    {
-        $uploaderNoDelete = new LocalDigitalProductFileUploader(
-            $this->filesystem,
-            $this->pathGenerator,
-            false,
-            UploadedFileProvider::TYPE,
-            $this->uploadPath
-        );
-
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
-
-        $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
-        $result = $uploaderNoDelete->upload($uploadedFile);
-
-        $fullPath = $this->uploadPath . '/' . $result[DigitalProductFileUploaderInterface::PROPERTY_PATH];
-        $this->assertFileExists($fullPath);
-
-        $file = $this->createMock(DigitalProductFileInterface::class);
-        $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
-        $file->method('getConfiguration')->willReturn(['path' => $result[DigitalProductFileUploaderInterface::PROPERTY_PATH]]);
-
-        $uploaderNoDelete->remove($file);
-
-        $this->assertFileExists($fullPath);
     }
 
     public function testRemoveDoesNotDeleteFileWhenTypeDoesNotMatch(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
-
-        $uploadedFile = $this->createMockedUploadedFile('document.pdf', 'application/pdf', 'pdf');
-        $result = $this->uploader->upload($uploadedFile);
-
-        $fullPath = $this->uploadPath . '/' . $result[DigitalProductFileUploaderInterface::PROPERTY_PATH];
-        $this->assertFileExists($fullPath);
+        $this->localStorage->expects($this->never())->method('delete');
 
         $file = $this->createMock(DigitalProductFileInterface::class);
         $file->method('getType')->willReturn('external_url');
-        $file->method('getConfiguration')->willReturn(['path' => $result[DigitalProductFileUploaderInterface::PROPERTY_PATH]]);
+        $file->method('getConfiguration')->willReturn(['path' => '2024/01/15/test.pdf']);
 
         $this->uploader->remove($file);
-
-        $this->assertFileExists($fullPath);
     }
 
     public function testRemoveDoesNotDeleteFileWhenPathIsEmpty(): void
     {
+        $this->localStorage->expects($this->never())->method('delete');
+
         $file = $this->createMock(DigitalProductFileInterface::class);
         $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
         $file->method('getConfiguration')->willReturn(['path' => '']);
-
-        $this->uploader->remove($file);
-
-        $this->assertTrue(true);
-    }
-
-    public function testRemoveThrowsExceptionWhenFileDoesNotExist(): void
-    {
-        $file = $this->createMock(DigitalProductFileInterface::class);
-        $file->method('getType')->willReturn(UploadedFileProvider::TYPE);
-        $file->method('getConfiguration')->willReturn(['path' => 'non/existent/file.pdf']);
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Error resolving real path for file deletion');
 
         $this->uploader->remove($file);
     }
@@ -298,24 +230,17 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
     private function createMockedUploadedFile(
         string $filename,
         string $mimeType,
-        ?string $guessedExtension,
-        string $content = 'test content'
+        ?string $guessedExtension
     ): UploadedFile {
         $tempFile = sys_get_temp_dir() . '/' . uniqid() . '.tmp';
-        file_put_contents($tempFile, $content);
+        file_put_contents($tempFile, 'test content');
 
         $uploadedFile = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([$tempFile, $filename, $mimeType, null, true])
-            ->onlyMethods(['guessExtension', 'getMimeType', 'move'])
+            ->onlyMethods(['guessExtension'])
             ->getMock();
 
         $uploadedFile->method('guessExtension')->willReturn($guessedExtension);
-        $uploadedFile->method('getMimeType')->willReturn($mimeType);
-        $uploadedFile->method('move')->willReturnCallback(function ($directory, $name) use ($tempFile) {
-            $targetPath = $directory . '/' . $name;
-            copy($tempFile, $targetPath);
-            return new File($targetPath);
-        });
 
         return $uploadedFile;
     }

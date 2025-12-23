@@ -18,7 +18,7 @@ final class RemoveUploadedFileListenerTest extends TestCase
     protected function setUp(): void
     {
         $this->uploader = $this->createMock(DigitalProductFileUploaderInterface::class);
-        $this->listener = new RemoveUploadedFileListener($this->uploader);
+        $this->listener = new RemoveUploadedFileListener($this->uploader, true);
     }
 
     public function testPreRemoveCallsUploaderRemove(): void
