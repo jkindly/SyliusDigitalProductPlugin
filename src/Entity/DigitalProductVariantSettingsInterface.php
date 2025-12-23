@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SyliusDigitalProductPlugin\Entity;
 
-interface DigitalProductVariantSettingsInterface extends DigitalProductFileSettingsInterface
+interface DigitalProductVariantSettingsInterface
 {
     public function isHiddenQuantity(): bool;
 

@@ -14,6 +14,8 @@ sylius_twig_hooks:
                 priority: 100
             files:
                 template: '@SyliusDigitalProductPlugin/admin/product_variant/form/sections/digital_variant/files.html.twig'
+                configuration:
+                    chunk_size: '%sylius_digital_product_plugin.uploaded_file.chunk_size%'
                 priority: 0
         'sylius_admin.product_variant.create.content.form.sections.digital_variant.settings':
             hidden_quantity:

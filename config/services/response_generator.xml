@@ -11,11 +11,19 @@
         </service>
 
         <service id="sylius_digital_product_plugin.response_generator.uploaded_file" class="SyliusDigitalProductPlugin\ResponseGenerator\UploadedFileResponseGenerator">
+            <argument type="service" id="sylius_digital_product.storage.uploaded_file"/>
+            <argument type="service" id="sylius_digital_product_plugin.serializer.registry"/>
+        </service>
+
+        <service id="sylius_digital_product_plugin.response_generator.order.uploaded_file" class="SyliusDigitalProductPlugin\ResponseGenerator\UploadedFileResponseGenerator">
+            <argument type="service" id="sylius_digital_product.storage.order_file"/>
+            <argument type="service" id="sylius_digital_product_plugin.serializer.registry"/>
             <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
             <tag name="sylius_digital_product_plugin.file_response_generator"/>
         </service>
 
         <service id="sylius_digital_product_plugin.response_generator.external_url" class="SyliusDigitalProductPlugin\ResponseGenerator\ExternalUrlFileResponseGenerator">
+            <argument type="service" id="sylius_digital_product_plugin.serializer.registry"/>
             <argument>%sylius_digital_product_plugin.file_type.external_url%</argument>
             <tag name="sylius_digital_product_plugin.file_response_generator"/>
         </service>

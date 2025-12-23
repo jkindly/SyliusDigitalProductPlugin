@@ -6,6 +6,9 @@ namespace SyliusDigitalProductPlugin\ResponseGenerator;
 
 final readonly class FileResponseGeneratorRegistry
 {
+    /**
+     * @param iterable<FileResponseGeneratorInterface> $generators
+     */
     public function __construct(
         private iterable $generators,
     ) {

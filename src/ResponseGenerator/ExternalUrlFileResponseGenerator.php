@@ -6,7 +6,9 @@ namespace SyliusDigitalProductPlugin\ResponseGenerator;
 
 use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
 use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileBaseInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -15,12 +17,19 @@ use Webmozart\Assert\Assert;
 final readonly class ExternalUrlFileResponseGenerator implements FileResponseGeneratorInterface
 {
     public function __construct(
+        private FileConfigurationSerializerRegistry $serializerRegistry,
         private string $externalUrlType,
     ) {
     }
 
-    public function generate(DigitalProductOrderItemFileInterface $file, FileDtoInterface $dto): Response
+    public function generate(DigitalProductFileBaseInterface $file): Response
     {
+        $fileType = $file->getType();
+        Assert::notNull($fileType);
+
+        $serializer = $this->serializerRegistry->get($fileType);
+        $dto = $serializer->getDto($file->getConfiguration());
+
         Assert::isInstanceOf($dto, ExternalUrlFileDto::class);
 
         $url = $dto->getUrl();

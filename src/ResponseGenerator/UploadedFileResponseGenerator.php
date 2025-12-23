@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\ResponseGenerator;
 
 use League\Flysystem\FilesystemOperator;
-use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
 use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductFileBaseInterface;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -17,13 +17,20 @@ use Webmozart\Assert\Assert;
 final readonly class UploadedFileResponseGenerator implements FileResponseGeneratorInterface
 {
     public function __construct(
-        private FilesystemOperator $localStorage,
-        private string $uploadedFileType,
+        private FilesystemOperator $storage,
+        private FileConfigurationSerializerRegistry $serializerRegistry,
+        private ?string $uploadedFileType = null,
     ) {
     }
 
-    public function generate(DigitalProductOrderItemFileInterface $file, FileDtoInterface $dto): Response
+    public function generate(DigitalProductFileBaseInterface $file): Response
     {
+        $fileType = $file->getType();
+        Assert::notNull($fileType);
+
+        $serializer = $this->serializerRegistry->get($fileType);
+        $dto = $serializer->getDto($file->getConfiguration());
+
         Assert::isInstanceOf($dto, UploadedFileDto::class);
 
         $path = $dto->getPath();
@@ -31,17 +38,14 @@ final readonly class UploadedFileResponseGenerator implements FileResponseGenera
             throw new NotFoundHttpException('File path not found in configuration.');
         }
 
-        if (false === $this->localStorage->fileExists($path)) {
+        if (false === $this->storage->fileExists($path)) {
             throw new NotFoundHttpException('File not found.');
         }
 
         $response = new StreamedResponse(function () use ($path) {
-            $stream = $this->localStorage->readStream($path);
+            $stream = $this->storage->readStream($path);
             fpassthru($stream);
-
-            if (is_resource($stream)) {
-                fclose($stream);
-            }
+            fclose($stream);
         });
 
         $response->headers->set(
@@ -66,7 +70,7 @@ final readonly class UploadedFileResponseGenerator implements FileResponseGenera
 
     public function supports(string $fileType): bool
     {
-        return $this->uploadedFileType === $fileType;
+        return null === $this->uploadedFileType || $this->uploadedFileType === $fileType;
     }
 
     private function sanitizeFilename(?string $name, UploadedFileDto $dto): string

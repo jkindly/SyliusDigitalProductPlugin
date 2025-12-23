@@ -36,6 +36,6 @@ final readonly class UploadedFileDownloadAction
             throw new AccessDeniedHttpException('Only admins can download this file.');
         }
 
-//        return $this->uploadedFileResponseGenerator->
+        return $this->uploadedFileResponseGenerator->generate($file);
     }
 }

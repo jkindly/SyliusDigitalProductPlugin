@@ -23,7 +23,6 @@ final readonly class DownloadOrderItemFileAction
         private Security $security,
         private EntityManagerInterface $entityManager,
         private FileResponseGeneratorRegistry $responseGeneratorRegistry,
-        private FileConfigurationSerializerRegistry $serializerRegistry,
     ) {
     }
 
@@ -50,12 +49,9 @@ final readonly class DownloadOrderItemFileAction
         $fileType = $file->getType();
         Assert::notNull($fileType, 'File type must not be null.');
 
-        $serializer = $this->serializerRegistry->get($fileType);
-        $configurationDto = $serializer->getDto($file->getConfiguration());
-
         $file->incrementDownloadCount();
         $this->entityManager->flush();
 
-        return $this->responseGeneratorRegistry->get($fileType)->generate($file, $configurationDto);
+        return $this->responseGeneratorRegistry->get($fileType)->generate($file);
     }
 }

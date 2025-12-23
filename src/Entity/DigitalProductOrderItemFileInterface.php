@@ -6,22 +6,8 @@ namespace SyliusDigitalProductPlugin\Entity;
 
 use Sylius\Component\Core\Model\OrderItemInterface;
 
-interface DigitalProductOrderItemFileInterface
+interface DigitalProductOrderItemFileInterface extends DigitalProductFileBaseInterface
 {
-    public function getId(): ?int;
-
-    public function setId(?int $id): void;
-
-    public function getUuid(): string;
-
-    public function getName(): ?string;
-
-    public function setName(?string $name): void;
-
-    public function getType(): ?string;
-
-    public function setType(?string $type): void;
-
     public function getDownloadCount(): int;
 
     public function setDownloadCount(int $downloadCount): void;
@@ -37,10 +23,6 @@ interface DigitalProductOrderItemFileInterface
     public function getOrderItem(): ?OrderItemInterface;
 
     public function setOrderItem(?OrderItemInterface $orderItem): void;
-
-    public function getConfiguration(): array;
-
-    public function setConfiguration(array $configuration): void;
 
     public function getAvailableUntil(): ?\DateTimeInterface;
 
