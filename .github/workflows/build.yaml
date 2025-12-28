@@ -152,16 +152,24 @@ jobs:
 
             -
                 name: Run Chrome Headless
-                run: google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --disable-dev-shm-usage --disable-gpu --headless=new --remote-debugging-port=9222 --window-size=1920,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1 > /dev/null 2>&1 &
+                run: |
+                    google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --disable-dev-shm-usage --disable-gpu --disable-software-rasterizer --headless=new --remote-debugging-port=9222 --remote-debugging-address=0.0.0.0 --window-size=1920,1800 --user-data-dir=/tmp/chrome-test-profile --proxy-server='direct://' --proxy-bypass-list='*' > /tmp/chrome.log 2>&1 &
+                    echo $! > /tmp/chrome.pid
 
             -
                 name: Run webserver
                 run: symfony server:start --port=8099 --daemon
 
             -
-                name: Wait for Chrome to be ready
+                name: Wait for Chrome and webserver to be ready
                 run: |
-                    timeout 30 bash -c 'until curl -s http://127.0.0.1:9222/json/version > /dev/null; do sleep 1; done' || echo "Chrome may not be ready"
+                    echo "Waiting for Chrome..."
+                    timeout 30 bash -c 'until curl -s http://127.0.0.1:9222/json/version > /dev/null; do echo "Chrome not ready yet..."; sleep 2; done' || (echo "Chrome failed to start"; cat /tmp/chrome.log; exit 1)
+                    echo "Chrome is ready!"
+                    curl -s http://127.0.0.1:9222/json/version
+                    echo "Waiting for webserver..."
+                    timeout 30 bash -c 'until curl -s -k https://127.0.0.1:8099 > /dev/null; do echo "Webserver not ready yet..."; sleep 2; done' || echo "Webserver may not be ready"
+                    echo "Both services ready!"
 
             -
                 name: Run Behat
@@ -177,3 +185,12 @@ jobs:
                     if-no-files-found: ignore
                     compression-level: 6
                     overwrite: true
+
+            -
+                name: Upload Chrome logs
+                uses: actions/upload-artifact@v4
+                if: failure()
+                with:
+                    name: "Chrome logs - ${{ matrix.sylius }}-${{ github.run_id }}-${{ github.run_number }}"
+                    path: /tmp/chrome.log
+                    if-no-files-found: ignore
