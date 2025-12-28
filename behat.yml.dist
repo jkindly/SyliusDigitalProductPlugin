@@ -30,10 +30,12 @@ default:
                     chrome:
                         api_url: http://127.0.0.1:9222
                         validate_certificate: false
+                        socket_timeout: 60
+                        dom_wait_timeout: 10000
                 panther:
                     panther:
                         manager_options:
-                            connection_timeout_in_ms: 5000
+                            connection_timeout_in_ms: 10000
                             request_timeout_in_ms: 120000
                             chromedriver_arguments:
                                 - --log-path=etc/build/chromedriver.log
