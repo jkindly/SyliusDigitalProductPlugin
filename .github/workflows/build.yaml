@@ -152,11 +152,16 @@ jobs:
 
             -
                 name: Run Chrome Headless
-                run: google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1 > /dev/null 2>&1 &
+                run: google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --disable-dev-shm-usage --disable-gpu --headless=new --remote-debugging-port=9222 --window-size=1920,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1 > /dev/null 2>&1 &
 
             -
                 name: Run webserver
                 run: symfony server:start --port=8099 --daemon
+
+            -
+                name: Wait for Chrome to be ready
+                run: |
+                    timeout 30 bash -c 'until curl -s http://127.0.0.1:9222/json/version > /dev/null; do sleep 1; done' || echo "Chrome may not be ready"
 
             -
                 name: Run Behat
