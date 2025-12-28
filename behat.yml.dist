@@ -30,7 +30,8 @@ default:
                     chrome:
                         api_url: http://127.0.0.1:9222
                         validate_certificate: false
-                        wait_timeout: 30000
+                        socket_timeout: 60
+                        dom_wait_timeout: 30000
                 panther:
                     panther:
                         manager_options:
