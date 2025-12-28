@@ -151,6 +151,14 @@ jobs:
                 run: vendor/bin/phpunit --colors=always --testsuite=non-unit
 
             -
+                name: Prepare test fixtures
+                run: |
+                    echo "Current directory: $(pwd)"
+                    chmod -R 755 vendor/sylius/sylius/src/Sylius/Behat/Resources/fixtures/
+                    ls -la vendor/sylius/sylius/src/Sylius/Behat/Resources/fixtures/
+                    realpath vendor/sylius/sylius/src/Sylius/Behat/Resources/fixtures/funky_cat.png || echo "File not found"
+
+            -
                 name: Run Chrome Headless
                 run: |
                     google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --disable-dev-shm-usage --disable-gpu --disable-software-rasterizer --headless=new --remote-debugging-port=9222 --remote-debugging-address=0.0.0.0 --window-size=1920,1800 --user-data-dir=/tmp/chrome-test-profile --proxy-server='direct://' --proxy-bypass-list='*' > /tmp/chrome.log 2>&1 &
