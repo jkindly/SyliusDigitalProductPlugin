@@ -158,7 +158,9 @@ jobs:
 
             -
                 name: Run webserver
-                run: symfony server:start --port=8099 --daemon
+                run: |
+                    symfony server:start --port=8099 --daemon --no-tls
+                    sleep 2
 
             -
                 name: Wait for Chrome and webserver to be ready
@@ -168,8 +170,9 @@ jobs:
                     echo "Chrome is ready!"
                     curl -s http://127.0.0.1:9222/json/version
                     echo "Waiting for webserver..."
-                    timeout 30 bash -c 'until curl -s -k https://127.0.0.1:8099 > /dev/null; do echo "Webserver not ready yet..."; sleep 2; done' || echo "Webserver may not be ready"
+                    timeout 30 bash -c 'until curl -s http://127.0.0.1:8099 > /dev/null; do echo "Webserver not ready yet..."; sleep 2; done' || (echo "Webserver failed to start"; symfony server:log; exit 1)
                     echo "Both services ready!"
+                    symfony server:status
 
             -
                 name: Run Behat
