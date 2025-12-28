@@ -4,23 +4,43 @@ declare(strict_types=1);
 
 namespace Tests\SyliusDigitalProductPlugin\Unit\ResponseGenerator;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use SyliusDigitalProductPlugin\Provider\ExternalUrlFileProvider;
 use SyliusDigitalProductPlugin\ResponseGenerator\ExternalUrlFileResponseGenerator;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class ExternalUrlFileResponseGeneratorTest extends TestCase
 {
     private ExternalUrlFileResponseGenerator $generator;
+    private FileConfigurationSerializerInterface&MockObject $serializer;
 
     protected function setUp(): void
     {
+        $this->serializer = $this->createMock(FileConfigurationSerializerInterface::class);
+        $serializerRegistry = new FileConfigurationSerializerRegistry([
+            ExternalUrlFileProvider::TYPE => $this->serializer,
+        ]);
+
         $this->generator = new ExternalUrlFileResponseGenerator(
+            $serializerRegistry,
             ExternalUrlFileProvider::TYPE
         );
+    }
+
+    private function createFileWithDto(ExternalUrlFileDto $dto): DigitalProductOrderItemFileInterface&MockObject
+    {
+        $configuration = ['url' => $dto->getUrl()];
+        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file->method('getType')->willReturn(ExternalUrlFileProvider::TYPE);
+        $file->method('getConfiguration')->willReturn($configuration);
+        $this->serializer->method('getDto')->with($configuration)->willReturn($dto);
+        return $file;
     }
 
     public function testGenerateReturnsRedirectResponse(): void
@@ -28,9 +48,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl('https://example.com/file.pdf');
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
     }
@@ -42,9 +62,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl($url);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame($url, $response->getTargetUrl());
@@ -57,9 +77,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl($url);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame($url, $response->getTargetUrl());
@@ -72,9 +92,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl($url);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame($url, $response->getTargetUrl());
@@ -87,9 +107,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl($url);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame($url, $response->getTargetUrl());
@@ -102,9 +122,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl($url);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame($url, $response->getTargetUrl());
@@ -115,12 +135,12 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl(null);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('External URL not found in configuration.');
 
-        $this->generator->generate($file, $dto);
+        $this->generator->generate($file);
     }
 
     public function testGenerateThrowsNotFoundExceptionWhenUrlIsInvalid(): void
@@ -128,12 +148,12 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl('not-a-valid-url');
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('Invalid URL in configuration.');
 
-        $this->generator->generate($file, $dto);
+        $this->generator->generate($file);
     }
 
     public function testGenerateThrowsNotFoundExceptionForEmptyUrl(): void
@@ -141,11 +161,11 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl('');
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
         $this->expectException(NotFoundHttpException::class);
 
-        $this->generator->generate($file, $dto);
+        $this->generator->generate($file);
     }
 
     public function testGenerateThrowsNotFoundExceptionForInvalidProtocol(): void
@@ -153,12 +173,12 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl('javascript:alert(1)');
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('Invalid URL in configuration.');
 
-        $this->generator->generate($file, $dto);
+        $this->generator->generate($file);
     }
 
     public function testGenerateThrowsNotFoundExceptionForRelativeUrl(): void
@@ -166,12 +186,12 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl('/relative/path/file.pdf');
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('Invalid URL in configuration.');
 
-        $this->generator->generate($file, $dto);
+        $this->generator->generate($file);
     }
 
     public function testGenerateHandlesFtpUrls(): void
@@ -181,9 +201,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl($url);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame($url, $response->getTargetUrl());
@@ -196,9 +216,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl($url);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame($url, $response->getTargetUrl());
@@ -211,9 +231,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl($url);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame($url, $response->getTargetUrl());
@@ -226,9 +246,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl($url);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame($url, $response->getTargetUrl());
@@ -241,9 +261,9 @@ final class ExternalUrlFileResponseGeneratorTest extends TestCase
         $dto = new ExternalUrlFileDto();
         $dto->setUrl($url);
 
-        $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
+        $file = $this->createFileWithDto($dto);
 
-        $response = $this->generator->generate($file, $dto);
+        $response = $this->generator->generate($file);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame($url, $response->getTargetUrl());

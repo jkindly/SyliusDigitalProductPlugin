@@ -37,18 +37,15 @@ final class DownloadOrderItemFileActionTest extends TestCase
     }
 
     private function createAction(
-        array $generators = [],
-        array $serializers = []
+        array $generators = []
     ): DownloadOrderItemFileAction {
         $responseGeneratorRegistry = new FileResponseGeneratorRegistry($generators);
-        $serializerRegistry = new FileConfigurationSerializerRegistry($serializers);
 
         return new DownloadOrderItemFileAction(
             $this->orderItemFileRepository,
             $this->security,
             $this->entityManager,
-            $responseGeneratorRegistry,
-            $serializerRegistry
+            $responseGeneratorRegistry
         );
     }
 
@@ -61,8 +58,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
-
-        $configuration = ['path' => '/test/path'];
 
         $this->security->expects($this->once())
             ->method('getUser')
@@ -89,14 +84,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $file->expects($this->once())
-            ->method('getConfiguration')
-            ->willReturn($configuration);
-
-        $serializer->expects($this->once())
-            ->method('getDto')
-            ->with($configuration)
-            ->willReturn($dto);
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -111,10 +98,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
 
         $generator->expects($this->once())
             ->method('generate')
-            ->with($file, $dto)
+            ->with($file)
             ->willReturn($response);
 
-        $action = $this->createAction([$generator], ['uploaded_file' => $serializer]);
+        $action = $this->createAction([$generator]);
         $result = $action($uuid);
 
         $this->assertSame($response, $result);
@@ -181,8 +168,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
-        $configuration = ['path' => '/test/path'];
-
         $this->security->expects($this->once())
             ->method('getUser')
             ->willReturn($user);
@@ -207,14 +192,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $file->expects($this->once())
-            ->method('getConfiguration')
-            ->willReturn($configuration);
-
-        $serializer->expects($this->once())
-            ->method('getDto')
-            ->with($configuration)
-            ->willReturn($dto);
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -229,10 +206,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
 
         $generator->expects($this->once())
             ->method('generate')
-            ->with($file, $dto)
+            ->with($file)
             ->willReturn($response);
 
-        $action = $this->createAction([$generator], ['uploaded_file' => $serializer]);
+        $action = $this->createAction([$generator]);
         $result = $action($uuid);
 
         $this->assertSame($response, $result);
@@ -247,8 +224,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
-
-        $configuration = ['path' => '/test/path'];
 
         $this->security->expects($this->once())
             ->method('getUser')
@@ -275,14 +250,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $file->expects($this->once())
-            ->method('getConfiguration')
-            ->willReturn($configuration);
-
-        $serializer->expects($this->once())
-            ->method('getDto')
-            ->with($configuration)
-            ->willReturn($dto);
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -297,10 +264,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
 
         $generator->expects($this->once())
             ->method('generate')
-            ->with($file, $dto)
+            ->with($file)
             ->willReturn($response);
 
-        $action = $this->createAction([$generator], ['uploaded_file' => $serializer]);
+        $action = $this->createAction([$generator]);
         $result = $action($uuid);
 
         $this->assertSame($response, $result);
@@ -339,14 +306,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->method('getType')
             ->willReturn('external_url');
 
-        $file->expects($this->once())
-            ->method('getConfiguration')
-            ->willReturn($configuration);
-
-        $serializer->expects($this->once())
-            ->method('getDto')
-            ->with($configuration)
-            ->willReturn($dto);
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -361,10 +320,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
 
         $generator->expects($this->once())
             ->method('generate')
-            ->with($file, $dto)
+            ->with($file)
             ->willReturn($response);
 
-        $action = $this->createAction([$generator], ['external_url' => $serializer]);
+        $action = $this->createAction([$generator]);
         $result = $action($uuid);
 
         $this->assertSame($response, $result);
@@ -380,7 +339,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
-        $configuration = ['path' => '/test/path'];
         $callOrder = [];
 
         $this->security->expects($this->once())
@@ -408,14 +366,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $file->expects($this->once())
-            ->method('getConfiguration')
-            ->willReturn($configuration);
-
-        $serializer->expects($this->once())
-            ->method('getDto')
-            ->with($configuration)
-            ->willReturn($dto);
 
         $file->expects($this->once())
             ->method('incrementDownloadCount')
@@ -436,10 +386,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
 
         $generator->expects($this->once())
             ->method('generate')
-            ->with($file, $dto)
+            ->with($file)
             ->willReturn($response);
 
-        $action = $this->createAction([$generator], ['uploaded_file' => $serializer]);
+        $action = $this->createAction([$generator]);
         $action($uuid);
 
         $this->assertSame(['increment', 'flush'], $callOrder);
@@ -485,8 +435,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
-        $configuration = ['path' => '/test/path'];
-
         $this->security->expects($this->once())
             ->method('getUser')
             ->willReturn($user);
@@ -512,14 +460,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->method('getType')
             ->willReturn('uploaded_file');
 
-        $file->expects($this->once())
-            ->method('getConfiguration')
-            ->willReturn($configuration);
-
-        $serializer->expects($this->once())
-            ->method('getDto')
-            ->with($configuration)
-            ->willReturn($dto);
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -534,10 +474,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
 
         $generator->expects($this->once())
             ->method('generate')
-            ->with($file, $dto)
+            ->with($file)
             ->willReturn($response);
 
-        $action = $this->createAction([$generator], ['uploaded_file' => $serializer]);
+        $action = $this->createAction([$generator]);
         $result = $action($uuid);
 
         $this->assertSame($response, $result);
@@ -576,14 +516,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
             ->method('getType')
             ->willReturn('custom_type');
 
-        $file->expects($this->once())
-            ->method('getConfiguration')
-            ->willReturn($configuration);
-
-        $serializer->expects($this->once())
-            ->method('getDto')
-            ->with($configuration)
-            ->willReturn($dto);
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -598,10 +530,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
 
         $generator->expects($this->once())
             ->method('generate')
-            ->with($file, $this->identicalTo($dto))
+            ->with($file)
             ->willReturn($response);
 
-        $action = $this->createAction([$generator], ['custom_type' => $serializer]);
+        $action = $this->createAction([$generator]);
         $result = $action($uuid);
 
         $this->assertSame($response, $result);

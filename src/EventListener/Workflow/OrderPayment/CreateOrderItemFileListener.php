@@ -35,7 +35,6 @@ final readonly class CreateOrderItemFileListener
                 continue;
             }
 
-            $variantSettings = $variant->getDigitalProductVariantSettings();
             $channelSettings = $channel->getDigitalProductFileChannelSettings();
 
             $files = $variant->getFiles();
@@ -44,7 +43,7 @@ final readonly class CreateOrderItemFileListener
                     $item,
                     $file->getName(),
                     $file->getType(),
-                    $variantSettings?->getDownloadLimit() ?? $channelSettings?->getDownloadLimit(),
+                    $file->getSettings()?->getDownloadLimit() ?? $channelSettings?->getDownloadLimit(),
                     $file->getConfiguration(),
                 );
                 $this->entityManager->persist($orderItemFile);
