@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 final class UploadedFileType extends AbstractFileType
 {
     /**
-     * @param DataTransformerInterface<array, UploadedFileDto> $dataTransformer
+     * @param array<string> $validationGroups
      */
     public function __construct(
         DataTransformerInterface $dataTransformer,

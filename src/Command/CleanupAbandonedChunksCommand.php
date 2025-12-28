@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Command;
 
 use DateTimeImmutable;
+use League\Flysystem\FileAttributes;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\StorageAttributes;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -13,6 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Webmozart\Assert\Assert;
 
 #[AsCommand(
     name: 'sylius:digital-product:cleanup-chunks',
@@ -30,22 +32,32 @@ final class CleanupAbandonedChunksCommand extends Command
     {
         $this
             ->addOption('hours', null, InputOption::VALUE_REQUIRED, 'Delete chunks older than X hours', '24')
+            ->addOption('force', null, InputOption::VALUE_NONE, 'Delete all chunks regardless of age')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $hours = (int) $input->getOption('hours');
+        $force = $input->getOption('force');
+        $cutoffTime = null;
 
-        if (1 > $hours) {
-            $io->error('Hours must be greater than 0');
+        if (!$force) {
+            $hoursOption = $input->getOption('hours');
+            Assert::numeric($hoursOption);
+            $hours = (int) $hoursOption;
 
-            return Command::FAILURE;
+            if (1 > $hours) {
+                $io->error('Hours must be greater than 0');
+
+                return Command::FAILURE;
+            }
+
+            $cutoffTime = (new DateTimeImmutable())->modify(sprintf('-%d hours', $hours));
+            $io->info(sprintf('Cleaning up chunks older than %s', $cutoffTime->format('Y-m-d H:i:s')));
+        } else {
+            $io->info('Force mode enabled: deleting all chunks regardless of age');
         }
-
-        $cutoffTime = (new DateTimeImmutable())->modify(sprintf('-%d hours', $hours));
-        $io->info(sprintf('Cleaning up chunks older than %s', $cutoffTime->format('Y-m-d H:i:s')));
 
         $deletedCount = 0;
         $deletedSize = 0;
@@ -66,7 +78,16 @@ final class CleanupAbandonedChunksCommand extends Command
                     continue;
                 }
 
+                if ($force) {
+                    if ($file instanceof FileAttributes) {
+                        $dirSize += $file->fileSize() ?? 0;
+                    }
+
+                    continue;
+                }
+
                 $lastModified = $file->lastModified();
+
                 if (null === $lastModified) {
                     continue;
                 }
@@ -75,11 +96,12 @@ final class CleanupAbandonedChunksCommand extends Command
 
                 if ($fileTime > $cutoffTime) {
                     $shouldDelete = false;
-
                     break;
                 }
 
-                $dirSize += $file->fileSize() ?? 0;
+                if ($file instanceof FileAttributes) {
+                    $dirSize += $file->fileSize() ?? 0;
+                }
             }
 
             if ($shouldDelete && $this->chunksStorage->directoryExists($dirPath)) {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Then;
 use Behat\Step\When;
 use Sylius\Behat\Element\Admin\Product\ChannelPricingsFormElementInterface;
 use Sylius\Behat\Page\Shop\Product\IndexPageInterface as ShopProductIndexPageInterface;
@@ -31,33 +32,25 @@ final class ManagingProductVariantsContext implements Context
     ) {
     }
 
-    /**
-     * @When I name it :name in :language language
-     */
+    #[When('I name it :name in :language language')]
     public function iNameItIn(string $name, string $language): void
     {
         $this->createPage->nameItInLocale($name, $language);
     }
 
-    /**
-     * @When I set its slug to :slug
-     */
+    #[When('I set its slug to :slug')]
     public function iSetItsSlugTo(string $slug): void
     {
         $this->createPage->getDocument()->fillField('Slug', $slug);
     }
 
-    /**
-     * @When I make it available in channel :channel
-     */
+    #[When('I make it available in channel :channel')]
     public function iMakeItAvailableInChannel(ChannelInterface $channel): void
     {
         $this->createPage->getDocument()->checkField(sprintf('sylius_admin_product_variant_channelPricings_%s_enabled', $channel->getCode()));
     }
 
-    /**
-     * @When I open the Digital section
-     */
+    #[When('I open the Digital section')]
     public function iOpenTheDigitalSection(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
@@ -65,25 +58,19 @@ final class ManagingProductVariantsContext implements Context
         $currentPage->changeTab();
     }
 
-    /**
-     * @When I set its price to :price for channel :channel
-     */
+    #[When('I set its price to :price for channel :channel')]
     public function iSetItsPriceTo(string $price, ChannelInterface $channel): void
     {
         $this->channelPricingsFormElement->specifyPrice($channel, $price);
     }
 
-    /**
-     * @When I select accordion for :channel channel
-     */
+    #[When('I select accordion for :channel channel')]
     public function iSelectAccordionForChannel(ChannelInterface $channel): void
     {
         $this->digitalFilesFormElement->openChannelAccordion($channel);
     }
 
-    /**
-     * @When I upload a digital file :path with name :name
-     */
+    #[When('I upload a digital file :path with name :name')]
     public function iUploadADigitalFileWithName(string $path, string $name): void
     {
         $this->digitalFilesFormElement->uploadDigitalFile($path, $name);
@@ -95,9 +82,7 @@ final class ManagingProductVariantsContext implements Context
         $this->digitalFilesFormElement->addExternalUrlFile($url, $name);
     }
 
-    /**
-     * @Then the digital file :name should be listed in the :channel channel accordion
-     */
+    #[Then('the digital file :name should be listed in the :channel channel accordion')]
     public function theDigitalFileShouldBeListedInTheChannelAccordion(string $name, ChannelInterface $channel): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
@@ -112,9 +97,7 @@ final class ManagingProductVariantsContext implements Context
         );
     }
 
-    /**
-     * @Then the uploaded file should have a download link
-     */
+    #[Then('the uploaded file should have a download link')]
     public function theUploadedFileShouldHaveADownloadLink(): void
     {
         Assert::true(
@@ -123,9 +106,7 @@ final class ManagingProductVariantsContext implements Context
         );
     }
 
-    /**
-     * @Then the product :name should appear in the store
-     */
+    #[Then('the product :name should appear in the store')]
     public function theProductShouldAppearInTheStore(string $name): void
     {
         $this->shopProductIndexPage->open();
@@ -136,9 +117,7 @@ final class ManagingProductVariantsContext implements Context
         );
     }
 
-    /**
-     * @When I go to edit page of variant created
-     */
+    #[When('I go to edit page of variant created')]
     public function iGoToEditPageOfVariantCreated(): void
     {
         $this->indexPage->goToEditPage();

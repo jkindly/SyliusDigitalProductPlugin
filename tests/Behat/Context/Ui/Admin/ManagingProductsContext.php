@@ -122,9 +122,7 @@ final class ManagingProductsContext implements Context
         }
     }
 
-    /**
-     * @When I check :product product details in the :channel channel and :locale locale
-     */
+    #[When('I check :product product details in the :channel channel and :locale locale')]
     public function iOpenProductPage(ProductInterface $product, ChannelInterface $channel, string $locale = 'en_US'): void
     {
         $this->productShowPage->open([

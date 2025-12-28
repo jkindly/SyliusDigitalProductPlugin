@@ -9,6 +9,9 @@ use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\User\Model\UserInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 
+/**
+ * @extends ServiceEntityRepository<DigitalProductOrderItemFileInterface>
+ */
 class DigitalProductOrderItemFileRepository extends ServiceEntityRepository implements DigitalProductOrderItemFileRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry, string $entityClass)
@@ -18,6 +21,7 @@ class DigitalProductOrderItemFileRepository extends ServiceEntityRepository impl
 
     public function findOneByUuidAndUser(string $uuid, UserInterface $user): ?DigitalProductOrderItemFileInterface
     {
+        /** @var DigitalProductOrderItemFileInterface|null */
         return $this->createQueryBuilder('oif')
             ->join('oif.orderItem', 'oi')
             ->join('oi.order', 'o')

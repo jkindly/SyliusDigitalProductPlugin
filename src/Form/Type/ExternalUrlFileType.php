@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 final class ExternalUrlFileType extends AbstractFileType
 {
     /**
-     * @param DataTransformerInterface<array, ExternalUrlFileDto> $dataTransformer
+     * @param array<string> $validationGroups
      */
     public function __construct(
         DataTransformerInterface $dataTransformer,

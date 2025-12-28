@@ -14,6 +14,10 @@ use Symfony\Component\Validator\Constraints\Callback;
 
 abstract class AbstractFileType extends AbstractType
 {
+    /**
+     * @param DataTransformerInterface<mixed, mixed> $dataTransformer
+     * @param array<string> $validationGroups
+     */
     public function __construct(
         protected readonly DataTransformerInterface $dataTransformer,
         protected readonly ?FileDtoValidatorInterface $dtoValidator,

@@ -6,6 +6,9 @@ namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
+use Behat\Step\Given;
+use Behat\Step\Then;
+use Behat\Step\When;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
@@ -29,9 +32,7 @@ final readonly class ManagingChannelsContext implements Context
     ) {
     }
 
-    /**
-     * @When I set download limit per customer to :limit
-     */
+    #[When('I set download limit per customer to :limit')]
     public function iSetDownloadLimit(?string $limit = null): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
@@ -40,9 +41,7 @@ final readonly class ManagingChannelsContext implements Context
         $currentPage->setDownloadLimitPerCustomer($limit);
     }
 
-    /**
-     * @When I set days available after purchase to :days
-     */
+    #[When('I set days available after purchase to :days')]
     public function iSetDaysAvailableAfterPurchase(?string $days = null): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
@@ -51,9 +50,7 @@ final readonly class ManagingChannelsContext implements Context
         $currentPage->setDaysAvailableAfterPurchase($days);
     }
 
-    /**
-     * @When I check hide quantity on product page
-     */
+    #[When('I check hide quantity on product page')]
     public function iCheckHideQuantityOnProductPage(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
@@ -62,9 +59,7 @@ final readonly class ManagingChannelsContext implements Context
         $currentPage->setHiddenQuantity(true);
     }
 
-    /**
-     * @When I uncheck hide quantity on product page
-     */
+    #[When('I uncheck hide quantity on product page')]
     public function iUncheckHideQuantityOnProductPage(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
@@ -73,9 +68,7 @@ final readonly class ManagingChannelsContext implements Context
         $currentPage->setHiddenQuantity(false);
     }
 
-    /**
-     * @Then I should see value :value in :field field
-     */
+    #[Then('I should see value :value in :field field')]
     public function iShouldSeeValueInField(string $value, string $field): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
@@ -86,9 +79,7 @@ final readonly class ManagingChannelsContext implements Context
         Assert::true($currentPage->hasResourceValues([$field => $value]));
     }
 
-    /**
-     * @Then the :option option should be checked
-     */
+    #[Then('the :option option should be checked')]
     public function theOptionShouldBeChecked(string $option): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
@@ -97,9 +88,7 @@ final readonly class ManagingChannelsContext implements Context
         Assert::true($currentPage->isOptionChecked($this->friendlyNameToTestName(mb_lcfirst($option))));
     }
 
-    /**
-     * @Then I should be notified that :field should be positive
-     */
+    #[Then('I should be notified that :field should be positive')]
     public function iShouldBeNotifiedThatFieldShouldBePositive(string $field): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
@@ -109,9 +98,7 @@ final readonly class ManagingChannelsContext implements Context
         Assert::same($currentPage->getValidationMessage($field), 'This value should be positive.');
     }
 
-    /**
-     * @Given :channel channel has predefined digital file settings:
-     */
+    #[Given(':channel channel has predefined digital file settings:')]
     public function channelHasPredefinedDigitalFileSettings(DigitalProductChannelInterface $channel, TableNode $tableNode): void
     {
         $values = $tableNode->getRows()[1];
