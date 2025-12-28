@@ -156,7 +156,7 @@ jobs:
 
             -
                 name: Run webserver
-                run: symfony server:start --port=8080 --daemon
+                run: symfony server:start --port=8099 --daemon
 
             -
                 name: Run Behat

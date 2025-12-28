@@ -91,6 +91,10 @@ final class FilesystemChunkedUploadHandlerTest extends TestCase
         $chunk = $this->createMock(UploadedFile::class);
         $chunk->method('getPathname')->willReturn('/non/existent/path');
 
+        set_error_handler(static function (): bool {
+            return true;
+        });
+
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Failed to open chunk file');
 
