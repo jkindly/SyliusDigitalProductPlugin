@@ -29,19 +29,17 @@ final class DigitalFilesFormElement extends FormElement implements DigitalFilesF
         /** @var ChannelInterface $channel */
         $channel = $this->sharedStorage->get('channel');
 
+        $previousCount = count($this->getDocument()->findAll('css', '[data-test-entry-row]'));
         $this->getElement('add_uploaded_file_button', ['%channel_code%' => $channel->getCode()])->click();
-
-        $this->waitForFormUpdate();
+        $this->waitForNewEntryRow($previousCount);
 
         $entries = $this->getDocument()->findAll('css', '[data-test-entry-row]');
         $lastEntry = end($entries);
 
-        $nameField = $lastEntry->find('css', '[data-test-name]');
-        $nameField->setValue($name);
+        $lastEntry->find('css', '[data-test-name]')->setValue($name);
 
         $filesPath = $this->getParameter('files_path');
-        $fileInput = $lastEntry->find('css', '[data-test-uploaded-file]');
-        $fileInput->attachFile($filesPath . $path);
+        $lastEntry->find('css', '[data-test-uploaded-file]')->attachFile($filesPath . $path);
     }
 
     public function addExternalUrlFile(string $url, string $name): void
@@ -53,18 +51,22 @@ final class DigitalFilesFormElement extends FormElement implements DigitalFilesF
         /** @var ChannelInterface $channel */
         $channel = $this->sharedStorage->get('channel');
 
+        $previousCount = count($this->getDocument()->findAll('css', '[data-test-entry-row]'));
         $this->getElement('add_external_url_button', ['%channel_code%' => $channel->getCode()])->click();
-
-        $this->waitForFormUpdate();
+        $this->waitForNewEntryRow($previousCount);
 
         $entries = $this->getDocument()->findAll('css', '[data-test-entry-row]');
         $lastEntry = end($entries);
 
-        $nameField = $lastEntry->find('css', '[data-test-name]');
-        $nameField->setValue($name);
+        $lastEntry->find('css', '[data-test-name]')->setValue($name);
+        $lastEntry->find('css', '[data-test-external-url]')->setValue($url);
+    }
 
-        $urlField = $lastEntry->find('css', '[data-test-external-url]');
-        $urlField->setValue($url);
+    private function waitForNewEntryRow(int $previousCount): void
+    {
+        $this->getDocument()->waitFor(5, function () use ($previousCount): bool {
+            return count($this->getDocument()->findAll('css', '[data-test-entry-row]')) > $previousCount;
+        });
     }
 
     public function openChannelAccordion(ChannelInterface $channel): void

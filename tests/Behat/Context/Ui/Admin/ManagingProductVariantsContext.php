@@ -7,10 +7,8 @@ namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin;
 use Behat\Behat\Context\Context;
 use Behat\Step\Then;
 use Behat\Step\When;
-use Sylius\Behat\Element\Admin\Product\ChannelPricingsFormElementInterface;
 use Sylius\Behat\Page\Shop\Product\IndexPageInterface as ShopProductIndexPageInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
-use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Tests\SyliusDigitalProductPlugin\Behat\Element\Admin\Product\DigitalFilesFormElementInterface;
 use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\CreatePageInterface;
@@ -21,14 +19,12 @@ use Webmozart\Assert\Assert;
 final class ManagingProductVariantsContext implements Context
 {
     public function __construct(
-        private readonly SharedStorageInterface $sharedStorage,
         private readonly CreatePageInterface $createPage,
         private readonly UpdatePageInterface $updatePage,
         private readonly IndexPageInterface $indexPage,
         private readonly CurrentPageResolverInterface $currentPageResolver,
         private readonly DigitalFilesFormElementInterface $digitalFilesFormElement,
         private readonly ShopProductIndexPageInterface $shopProductIndexPage,
-        private readonly ChannelPricingsFormElementInterface $channelPricingsFormElement,
     ) {
     }
 
@@ -50,18 +46,18 @@ final class ManagingProductVariantsContext implements Context
         $this->createPage->getDocument()->checkField(sprintf('sylius_admin_product_variant_channelPricings_%s_enabled', $channel->getCode()));
     }
 
+    #[When('I set its price to :price for channel :channel')]
+    public function iSetItsPriceTo(string $price, ChannelInterface $channel): void
+    {
+        $this->createPage->setChannelPrice($channel->getCode(), $price);
+    }
+
     #[When('I open the Digital section')]
     public function iOpenTheDigitalSection(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
         $currentPage->changeTab();
-    }
-
-    #[When('I set its price to :price for channel :channel')]
-    public function iSetItsPriceTo(string $price, ChannelInterface $channel): void
-    {
-        $this->channelPricingsFormElement->specifyPrice($channel, $price);
     }
 
     #[When('I select accordion for :channel channel')]

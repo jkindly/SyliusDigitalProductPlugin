@@ -11,4 +11,6 @@ interface CreatePageInterface extends BaseCreatePageInterface
     public function changeTab(): void;
 
     public function nameItInLocale(string $name, string $language): void;
+
+    public function setChannelPrice(string $channelCode, string $price): void;
 }
