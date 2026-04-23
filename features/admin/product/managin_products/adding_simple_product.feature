@@ -61,7 +61,7 @@ Feature: Adding a new simple product with digital section
         And I add an external URL file "https://example.com/bonus-content-us.pdf" with name "Bonus Content US"
         And I select accordion for "Europe" channel
         And I upload a digital file "mugs.jpg" with name "User Manual EU"
-        And I upload a digital file "t-shirts.jpg" with name "Quick Start Guide EU"
+        And I upload a digital file "ford.jpg" with name "Quick Start Guide EU"
         And I add an external URL file "https://example.com/video-tutorial-eu.mp4" with name "Video Tutorial EU"
         And I add an external URL file "https://example.com/bonus-content-eu.pdf" with name "Bonus Content EU"
         And I add it
