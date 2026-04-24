@@ -6,7 +6,7 @@ namespace SyliusDigitalProductPlugin\Uploader;
 
 use League\Flysystem\FilesystemOperator;
 use RuntimeException;
-use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
+use SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class FilesystemChunkedUploadHandler implements ChunkedUploadHandlerInterface
@@ -14,7 +14,7 @@ final readonly class FilesystemChunkedUploadHandler implements ChunkedUploadHand
     public function __construct(
         private FilesystemOperator $chunksStorage,
         private FilesystemOperator $localStorage,
-        private PathGeneratorInterface $pathGenerator,
+        private StorageFilePathGeneratorInterface $storageFilePathGenerator,
     ) {
     }
 
@@ -79,9 +79,7 @@ final readonly class FilesystemChunkedUploadHandler implements ChunkedUploadHand
         }
 
         $extension = pathinfo($originalFilename, \PATHINFO_EXTENSION);
-        $uploadPath = sprintf('%s/%s', $this->pathGenerator->generate(), bin2hex(random_bytes(8)));
-        $filename = hash('sha256', random_bytes(32) . microtime(true) . $originalFilename);
-        $finalPath = sprintf('%s/%s%s', $uploadPath, $filename, $extension ? '.' . $extension : '');
+        $finalPath = $this->storageFilePathGenerator->generate($extension);
 
         $stream = $this->chunksStorage->readStream($mergedFile);
         $this->localStorage->writeStream($finalPath, $stream);

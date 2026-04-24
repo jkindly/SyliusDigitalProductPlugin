@@ -9,5 +9,15 @@
         <service id="sylius_digital_product_plugin.generator.date_path"
                  class="SyliusDigitalProductPlugin\Generator\DatePathGenerator"
         />
+
+        <service id="sylius_digital_product_plugin.generator.storage_file_path"
+                 class="SyliusDigitalProductPlugin\Generator\StorageFilePathGenerator"
+        >
+            <argument type="service" id="sylius_digital_product_plugin.generator.date_path"/>
+        </service>
+
+        <service id="SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface"
+                 alias="sylius_digital_product_plugin.generator.storage_file_path"
+        />
     </services>
 </container>

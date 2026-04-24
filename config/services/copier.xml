@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container
+    xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+    <services>
+        <service id="sylius_digital_product_plugin.copier.order_item_file" class="SyliusDigitalProductPlugin\Copier\OrderItemFileCopier">
+            <argument type="service" id="sylius_digital_product.storage.uploaded_file"/>
+            <argument type="service" id="sylius_digital_product.storage.order_file"/>
+            <argument type="service" id="sylius_digital_product_plugin.generator.storage_file_path"/>
+        </service>
+
+        <service id="SyliusDigitalProductPlugin\Copier\OrderItemFileCopierInterface"
+                 alias="sylius_digital_product_plugin.copier.order_item_file"
+        />
+    </services>
+</container>

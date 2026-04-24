@@ -25,6 +25,7 @@ sylius_digital_product:
         download: Download
         download_unlimited: Unlimited
         add_digital_file: Add digital file
+        available_until: Available until
         type: File type
     form:
         digital_product_settings:

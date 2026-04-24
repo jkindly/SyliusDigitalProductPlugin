@@ -10,7 +10,7 @@
                  class="SyliusDigitalProductPlugin\Uploader\LocalDigitalProductFileUploader"
         >
             <argument type="service" id="sylius_digital_product.storage.uploaded_file"/>
-            <argument type="service" id="sylius_digital_product_plugin.generator.date_path"/>
+            <argument type="service" id="sylius_digital_product_plugin.generator.storage_file_path"/>
             <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
         </service>
 
@@ -19,7 +19,7 @@
         >
             <argument type="service" id="sylius_digital_product.storage.chunks"/>
             <argument type="service" id="sylius_digital_product.storage.uploaded_file"/>
-            <argument type="service" id="sylius_digital_product_plugin.generator.date_path"/>
+            <argument type="service" id="sylius_digital_product_plugin.generator.storage_file_path"/>
         </service>
 
         <service id="SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface"

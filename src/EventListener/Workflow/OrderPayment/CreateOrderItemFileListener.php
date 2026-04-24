@@ -6,6 +6,7 @@ namespace SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use SyliusDigitalProductPlugin\Copier\OrderItemFileCopierInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
 use SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
@@ -17,6 +18,8 @@ final readonly class CreateOrderItemFileListener
     public function __construct(
         private OrderItemFileFactoryInterface $orderItemFileFactory,
         private EntityManagerInterface $entityManager,
+        private OrderItemFileCopierInterface $orderItemFileCopier,
+        private string $uploadedFileType,
     ) {
     }
 
@@ -45,13 +48,18 @@ final readonly class CreateOrderItemFileListener
                     ? (new \DateTimeImmutable())->modify(sprintf('+%d days', $daysAvailable))
                     : null;
 
+                $configuration = $file->getConfiguration();
+                if ($this->uploadedFileType === $file->getType()) {
+                    $configuration = $this->orderItemFileCopier->copy($configuration);
+                }
+
                 $orderItemFile = $this->orderItemFileFactory->createWithData(
                     $item,
                     $file->getName(),
                     $file->getType(),
                     $fileSettings?->getDownloadLimit() ?? $channelSettings?->getDownloadLimit(),
                     false !== $availableUntil ? $availableUntil : null,
-                    $file->getConfiguration(),
+                    $configuration,
                 );
                 $this->entityManager->persist($orderItemFile);
             }
