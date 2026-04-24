@@ -16,6 +16,7 @@ interface OrderItemFileFactoryInterface
         ?string $name = null,
         ?string $type = null,
         ?int $downloadLimit = null,
+        ?\DateTimeInterface $availableUntil = null,
         array $configuration = [],
     ): DigitalProductOrderItemFileInterface;
 }

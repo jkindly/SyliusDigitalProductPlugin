@@ -39,11 +39,18 @@ final readonly class CreateOrderItemFileListener
 
             $files = $variant->getFiles();
             foreach ($files as $file) {
+                $fileSettings = $file->getSettings();
+                $daysAvailable = $fileSettings?->getDaysAvailable() ?? $channelSettings?->getDaysAvailable();
+                $availableUntil = null !== $daysAvailable
+                    ? (new \DateTimeImmutable())->modify(sprintf('+%d days', $daysAvailable))
+                    : null;
+
                 $orderItemFile = $this->orderItemFileFactory->createWithData(
                     $item,
                     $file->getName(),
                     $file->getType(),
-                    $file->getSettings()?->getDownloadLimit() ?? $channelSettings?->getDownloadLimit(),
+                    $fileSettings?->getDownloadLimit() ?? $channelSettings?->getDownloadLimit(),
+                    false !== $availableUntil ? $availableUntil : null,
                     $file->getConfiguration(),
                 );
                 $this->entityManager->persist($orderItemFile);
