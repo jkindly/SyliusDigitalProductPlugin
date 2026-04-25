@@ -6,6 +6,7 @@ namespace SyliusDigitalProductPlugin\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\User\Model\UserInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 
@@ -33,6 +34,17 @@ class DigitalProductOrderItemFileRepository extends ServiceEntityRepository impl
             ->setParameter('user', $user)
             ->getQuery()
             ->getOneOrNullResult()
+        ;
+    }
+
+    public function hasFilesForOrderItem(OrderItemInterface $orderItem): bool
+    {
+        return 0 < (int) $this->createQueryBuilder('oif')
+            ->select('COUNT(oif.id)')
+            ->andWhere('oif.orderItem = :orderItem')
+            ->setParameter('orderItem', $orderItem)
+            ->getQuery()
+            ->getSingleScalarResult()
         ;
     }
 }

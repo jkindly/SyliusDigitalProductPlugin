@@ -10,6 +10,7 @@ use SyliusDigitalProductPlugin\Copier\OrderItemFileCopierInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
 use SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
+use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
 use Webmozart\Assert\Assert;
 
@@ -19,6 +20,7 @@ final readonly class CreateOrderItemFileListener
         private OrderItemFileFactoryInterface $orderItemFileFactory,
         private EntityManagerInterface $entityManager,
         private OrderItemFileCopierInterface $orderItemFileCopier,
+        private DigitalProductOrderItemFileRepositoryInterface $orderItemFileRepository,
         private string $uploadedFileType,
     ) {
     }
@@ -35,6 +37,10 @@ final readonly class CreateOrderItemFileListener
             /** @var DigitalProductVariantInterface $variant */
             $variant = $item->getVariant();
             if (!$variant->hasAnyFile()) {
+                continue;
+            }
+
+            if ($this->orderItemFileRepository->hasFilesForOrderItem($item)) {
                 continue;
             }
 
