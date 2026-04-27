@@ -6,6 +6,7 @@ namespace SyliusDigitalProductPlugin\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\User\Model\UserInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
@@ -18,6 +19,17 @@ class DigitalProductOrderItemFileRepository extends ServiceEntityRepository impl
     public function __construct(ManagerRegistry $registry, string $entityClass)
     {
         parent::__construct($registry, $entityClass);
+    }
+
+    public function findOneByUuid(string $uuid): ?DigitalProductOrderItemFileInterface
+    {
+        /** @var DigitalProductOrderItemFileInterface|null */
+        return $this->createQueryBuilder('oif')
+            ->andWhere('oif.uuid = :uuid')
+            ->setParameter('uuid', $uuid)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 
     public function findOneByUuidAndUser(string $uuid, UserInterface $user): ?DigitalProductOrderItemFileInterface
@@ -45,6 +57,18 @@ class DigitalProductOrderItemFileRepository extends ServiceEntityRepository impl
             ->setParameter('orderItem', $orderItem)
             ->getQuery()
             ->getSingleScalarResult()
+        ;
+    }
+
+    public function findByOrder(OrderInterface $order): array
+    {
+        /** @var DigitalProductOrderItemFileInterface[] */
+        return $this->createQueryBuilder('oif')
+            ->join('oif.orderItem', 'oi')
+            ->andWhere('oi.order = :order')
+            ->setParameter('order', $order)
+            ->getQuery()
+            ->getResult()
         ;
     }
 }

@@ -1,0 +1,54 @@
+{% extends '@SyliusCore/Email/layout.html.twig' %}
+
+{% block subject %}{{ 'sylius_digital_product.email.digital_download.subject'|trans({'%orderNumber%': order.number}, null, localeCode) }}{% endblock %}
+
+{% block content %}
+    <div style="text-align: center; margin-bottom: 30px;">
+        {{ 'sylius_digital_product.email.digital_download.greeting'|trans({'%orderNumber%': order.number}, null, localeCode) }}
+        <div style="margin: 10px 0;">
+            <span style="border: 1px solid #eee; padding: 10px; color: #1abb9c; font-size: 28px;">
+                {{ order.number }}
+            </span>
+        </div>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <thead>
+            <tr>
+                <th style="padding: 10px 8px; border-bottom: 2px solid #eee; text-align: left; color: #333;">
+                    {{ 'sylius_digital_product.email.digital_download.file_name'|trans({}, null, localeCode) }}
+                </th>
+                <th style="padding: 10px 8px; border-bottom: 2px solid #eee; text-align: center; color: #333;">
+                    {{ 'sylius_digital_product.email.digital_download.available_until'|trans({}, null, localeCode) }}
+                </th>
+                <th style="padding: 10px 8px; border-bottom: 2px solid #eee; text-align: center; color: #333;">
+                    {{ 'sylius_digital_product.email.digital_download.downloads_left'|trans({}, null, localeCode) }}
+                </th>
+                <th style="padding: 10px 8px; border-bottom: 2px solid #eee; text-align: right; color: #333;">
+                    {{ 'sylius_digital_product.email.digital_download.download_link'|trans({}, null, localeCode) }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for link in download_links %}
+                <tr>
+                    <td style="padding: 10px 8px; border-bottom: 1px solid #eee; color: #333;">
+                        {{ link.name }}
+                    </td>
+                    <td style="padding: 10px 8px; border-bottom: 1px solid #eee; text-align: center; color: #333;">
+                        {{ link.availableUntil ? link.availableUntil|date('Y-m-d') : '∞' }}
+                    </td>
+                    <td style="padding: 10px 8px; border-bottom: 1px solid #eee; text-align: center; color: #333;">
+                        {{ link.downloadLimit ?? '∞' }}
+                    </td>
+                    <td style="padding: 10px 8px; border-bottom: 1px solid #eee; text-align: right;">
+                        <a href="{{ link.url }}"
+                           style="display: inline-block; background: #1abb9c; padding: 10px 16px; color: #fff; text-decoration: none; border-radius: 3px; font-size: 14px;">
+                            {{ 'sylius_digital_product.email.digital_download.download'|trans({}, null, localeCode) }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

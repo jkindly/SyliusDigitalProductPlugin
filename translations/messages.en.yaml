@@ -27,6 +27,15 @@ sylius_digital_product:
         add_digital_file: Add digital file
         available_until: Available until
         type: File type
+    email:
+        digital_download:
+            subject: 'Your digital files for order #%orderNumber%'
+            greeting: 'Thank you for your order #%orderNumber%. Your digital files are ready for download.'
+            file_name: File
+            download_link: Link
+            available_until: Available until
+            downloads_left: Downloads left
+            download: Download
     form:
         digital_product_settings:
             download_limit_per_customer: Download limit per customer

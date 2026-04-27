@@ -70,5 +70,7 @@ final readonly class CreateOrderItemFileListener
                 $this->entityManager->persist($orderItemFile);
             }
         }
+
+        $this->entityManager->flush();
     }
 }

@@ -1,0 +1,5 @@
+sylius_mailer:
+    emails:
+        !php/const SyliusDigitalProductPlugin\Mailer\Emails::DIGITAL_DOWNLOAD:
+            subject: sylius_digital_product.email.digital_download.subject
+            template: "@SyliusDigitalProductPlugin/email/digital_download.html.twig"

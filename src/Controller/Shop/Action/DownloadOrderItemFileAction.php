@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\Controller\Shop\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Sylius\Component\User\Model\UserInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,7 +17,6 @@ final readonly class DownloadOrderItemFileAction
 {
     public function __construct(
         private DigitalProductOrderItemFileRepositoryInterface $orderItemFileRepository,
-        private Security $security,
         private EntityManagerInterface $entityManager,
         private FileResponseGeneratorRegistry $responseGeneratorRegistry,
     ) {
@@ -28,11 +24,8 @@ final readonly class DownloadOrderItemFileAction
 
     public function __invoke(string $uuid): Response
     {
-        $user = $this->security->getUser();
-        Assert::isInstanceOf($user, UserInterface::class);
-
         /** @var DigitalProductOrderItemFileInterface|null $file */
-        $file = $this->orderItemFileRepository->findOneByUuidAndUser($uuid, $user);
+        $file = $this->orderItemFileRepository->findOneByUuid($uuid);
         if (null === $file) {
             throw new NotFoundHttpException('Order item file not found.');
         }
