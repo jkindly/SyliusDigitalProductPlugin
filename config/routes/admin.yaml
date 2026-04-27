@@ -1,3 +1,12 @@
+sylius_digital_product_admin_order_resend_digital_download_email:
+    path: /orders/{id}/resend-digital-download-email
+    methods: [ GET ]
+    defaults:
+        _controller: sylius_digital_product_plugin.controller.admin.action.resend_digital_download_email
+        _sylius:
+            section: admin
+            permission: true
+
 sylius_admin_digital_product_download:
     path: /products/digital/uploaded/download/{id}
     methods: [ GET ]

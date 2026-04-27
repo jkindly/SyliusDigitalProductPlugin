@@ -28,7 +28,7 @@
         </service>
 
         <service id="sylius_digital_product_plugin.event_listener.workflow.order_payment.send_digital_download_email" class="SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\SendDigitalDownloadEmailListener">
-            <argument type="service" id="sylius_digital_product_plugin.mailer.digital_download_email_manager"/>
+            <argument type="service" id="sylius_digital_product_plugin.command_dispatcher.resend_digital_download_email"/>
             <tag name="kernel.event_listener" event="workflow.sylius_order_payment.completed.pay" priority="300"/>
         </service>
 

@@ -25,6 +25,7 @@ sylius_digital_product:
         download: Download
         download_unlimited: Unlimited
         add_digital_file: Add digital file
+        resend_digital_download_email: Resend digital download email
         available_until: Available until
         type: File type
     email:

@@ -8,5 +8,13 @@
             <argument type="service" id="sylius_digital_product.storage.chunks"/>
             <tag name="console.command"/>
         </service>
+
+        <service id="sylius_digital_product_plugin.command_handler.send_digital_download_email"
+                 class="SyliusDigitalProductPlugin\CommandHandler\SendDigitalDownloadEmailHandler"
+        >
+            <argument type="service" id="SyliusDigitalProductPlugin\Mailer\DigitalDownloadEmailManagerInterface"/>
+            <argument type="service" id="sylius.repository.order"/>
+            <tag name="messenger.message_handler"/>
+        </service>
     </services>
 </container>

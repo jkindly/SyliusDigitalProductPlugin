@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment;
 
 use Sylius\Component\Core\Model\OrderInterface;
-use SyliusDigitalProductPlugin\Mailer\DigitalDownloadEmailManagerInterface;
+use SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcherInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
 use Webmozart\Assert\Assert;
 
 final readonly class SendDigitalDownloadEmailListener
 {
     public function __construct(
-        private DigitalDownloadEmailManagerInterface $digitalDownloadEmailManager,
+        private ResendDigitalDownloadEmailDispatcherInterface $digitalDownloadEmailDispatcher,
     ) {
     }
 
@@ -21,6 +21,6 @@ final readonly class SendDigitalDownloadEmailListener
         $order = $event->getSubject();
         Assert::isInstanceOf($order, OrderInterface::class);
 
-        $this->digitalDownloadEmailManager->sendDigitalDownloadEmail($order);
+        $this->digitalDownloadEmailDispatcher->dispatch($order);
     }
 }
