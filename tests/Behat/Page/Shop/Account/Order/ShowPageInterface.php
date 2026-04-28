@@ -15,4 +15,8 @@ interface ShowPageInterface extends BaseShowPageInterface
     public function hasDownloadButtonForFile(string $fileName): bool;
 
     public function isDownloadButtonDisabledForFile(string $fileName): bool;
+
+    public function clickDownloadForFile(string $fileName): void;
+
+    public function getDownloadUrlForFile(string $fileName): string;
 }

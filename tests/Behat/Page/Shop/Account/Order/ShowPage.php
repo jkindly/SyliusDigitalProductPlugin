@@ -62,6 +62,44 @@ final class ShowPage extends BaseShowPage implements ShowPageInterface
         return false;
     }
 
+    public function clickDownloadForFile(string $fileName): void
+    {
+        $link = $this->findDownloadLinkForFile($fileName);
+        $link->click();
+    }
+
+    public function getDownloadUrlForFile(string $fileName): string
+    {
+        $link = $this->findDownloadLinkForFile($fileName);
+        $href = $link->getAttribute('href');
+
+        if (null === $href) {
+            throw new \RuntimeException(sprintf('Download link for "%s" has no href attribute', $fileName));
+        }
+
+        return $href;
+    }
+
+    private function findDownloadLinkForFile(string $fileName): \Behat\Mink\Element\NodeElement
+    {
+        $table = $this->getElement('digital_files_table');
+        $rows = $table->findAll('css', 'tbody tr');
+
+        foreach ($rows as $row) {
+            $nameCell = $row->find('css', 'td:first-child');
+            if (null === $nameCell || !str_contains($nameCell->getText(), $fileName)) {
+                continue;
+            }
+
+            $link = $row->find('css', 'td:last-child a.btn-primary');
+            if (null !== $link) {
+                return $link;
+            }
+        }
+
+        throw new \RuntimeException(sprintf('Download link for "%s" not found on the page', $fileName));
+    }
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [

@@ -5,6 +5,7 @@
         <service id="tests.sylius_digital_product_plugin.behat.context.setup.order" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Setup\OrderContext">
             <argument type="service" id="sylius.behat.shared_storage" />
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="sylius_digital_product_plugin.repository.order_item_file" />
         </service>
 
         <service id="tests.sylius_digital_product_plugin.behat.context.setup.product" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Setup\ProductContext">

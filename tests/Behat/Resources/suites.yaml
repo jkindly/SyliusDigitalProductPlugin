@@ -3,3 +3,4 @@ imports:
     - config/suites/ui/admin/sylius_digital_product_managing_products.yaml
     - config/suites/ui/admin/sylius_digital_product_managing_product_variants.yaml
     - config/suites/ui/shop/sylius_digital_product_viewing_orders.yaml
+    - config/suites/ui/shop/sylius_digital_product_downloading_digital_files.yaml

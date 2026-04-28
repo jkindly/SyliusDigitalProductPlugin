@@ -6,10 +6,13 @@ namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Step\Given;
+use Behat\Step\Then;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductOrderInterface;
+use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemInterface;
+use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use Webmozart\Assert\Assert;
 
 final class OrderContext implements Context
@@ -17,6 +20,7 @@ final class OrderContext implements Context
     public function __construct(
         private SharedStorageInterface $sharedStorage,
         private EntityManagerInterface $entityManager,
+        private DigitalProductOrderItemFileRepositoryInterface $orderItemFileRepository,
     ) {
     }
 
@@ -42,21 +46,66 @@ final class OrderContext implements Context
 
         foreach ($order->getItems() as $item) {
             foreach ($item->getFiles() as $file) {
-                if ($fileName === $file->getName()) {
-                    $downloadLimit = $file->getDownloadLimit();
-                    Assert::notNull($downloadLimit, sprintf('Download limit for file "%s" is not set', $fileName));
-
-                    for ($i = 0; $i < $downloadLimit; ++$i) {
-                        $file->incrementDownloadCount();
-                    }
-
-                    $this->entityManager->flush();
-
-                    return;
+                if ($fileName !== $file->getName()) {
+                    continue;
                 }
+
+                $downloadLimit = $file->getDownloadLimit();
+                Assert::notNull($downloadLimit, sprintf('Download limit for file "%s" is not set', $fileName));
+
+                for ($i = 0; $i < $downloadLimit; ++$i) {
+                    $file->incrementDownloadCount();
+                }
+
+                $this->entityManager->flush();
+
+                return;
             }
         }
 
         throw new \RuntimeException(sprintf('File "%s" not found in order', $fileName));
+    }
+
+    #[Given('I store the download URL for :fileName')]
+    public function iStoreDownloadUrlForFile(string $fileName): void
+    {
+        /** @var OrderInterface $order */
+        $order = $this->sharedStorage->get('order');
+
+        $this->entityManager->refresh($order);
+
+        foreach ($order->getItems() as $item) {
+            Assert::isInstanceOf($item, DigitalProductOrderItemInterface::class);
+
+            foreach ($item->getFiles() as $file) {
+                if ($fileName !== $file->getName()) {
+                    continue;
+                }
+
+                $this->sharedStorage->set('download_url_' . $fileName, '/download/' . $file->getUuid());
+                $this->sharedStorage->set('download_uuid_' . $fileName, $file->getUuid());
+
+                return;
+            }
+        }
+
+        throw new \RuntimeException(sprintf('File "%s" not found in paid order. Ensure the order is paid before calling this step.', $fileName));
+    }
+
+    #[Then('the download count for :fileName should be :count')]
+    public function theDownloadCountForFileShouldBe(string $fileName, int $count): void
+    {
+        $uuid = $this->sharedStorage->get('download_uuid_' . $fileName);
+        $file = $this->orderItemFileRepository->findOneByUuid($uuid);
+
+        Assert::notNull($file, sprintf('Order item file with UUID for "%s" not found', $fileName));
+
+        $this->entityManager->refresh($file);
+
+        Assert::same(
+            $count,
+            $file->getDownloadCount(),
+            sprintf('Expected download count for "%s" to be %d, got %d', $fileName, $count, $file->getDownloadCount()),
+        );
     }
 }

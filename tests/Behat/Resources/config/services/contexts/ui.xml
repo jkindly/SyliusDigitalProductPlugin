@@ -30,5 +30,10 @@
         <service id="tests.sylius_digital_product_plugin.behat.context.ui.shop.account" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop\AccountContext">
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.shop.account.order.show" />
         </service>
+
+        <service id="tests.sylius_digital_product_plugin.behat.context.ui.shop.download" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop\DownloadContext">
+            <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.shop.account.order.show" />
+            <argument type="service" id="sylius.behat.shared_storage" />
+        </service>
     </services>
 </container>
