@@ -8,7 +8,7 @@ use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
+use SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
 use SyliusDigitalProductPlugin\Uploader\FilesystemChunkedUploadHandler;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -16,14 +16,14 @@ final class FilesystemChunkedUploadHandlerTest extends TestCase
 {
     private MockObject&FilesystemOperator $chunksStorage;
     private MockObject&FilesystemOperator $localStorage;
-    private MockObject&PathGeneratorInterface $pathGenerator;
+    private MockObject&StorageFilePathGeneratorInterface $pathGenerator;
     private FilesystemChunkedUploadHandler $handler;
 
     protected function setUp(): void
     {
         $this->chunksStorage = $this->createMock(FilesystemOperator::class);
         $this->localStorage = $this->createMock(FilesystemOperator::class);
-        $this->pathGenerator = $this->createMock(PathGeneratorInterface::class);
+        $this->pathGenerator = $this->createMock(StorageFilePathGeneratorInterface::class);
 
         $this->handler = new FilesystemChunkedUploadHandler(
             $this->chunksStorage,
@@ -191,6 +191,7 @@ final class FilesystemChunkedUploadHandlerTest extends TestCase
     {
         $fileId = 'move-123';
         $originalFilename = 'document.pdf';
+        $finalPath = '2024/01/15/abcdef0123456789/abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789.pdf';
 
         $this->chunksStorage->expects($this->once())
             ->method('fileExists')
@@ -199,7 +200,8 @@ final class FilesystemChunkedUploadHandlerTest extends TestCase
 
         $this->pathGenerator->expects($this->once())
             ->method('generate')
-            ->willReturn('2024/01/15');
+            ->with('pdf')
+            ->willReturn($finalPath);
 
         $mergedStream = fopen('php://memory', 'rb+');
         fwrite($mergedStream, 'merged data');
@@ -212,10 +214,7 @@ final class FilesystemChunkedUploadHandlerTest extends TestCase
 
         $this->localStorage->expects($this->once())
             ->method('writeStream')
-            ->with(
-                $this->matchesRegularExpression('#^2024/01/15/[a-f0-9]{16}/[a-f0-9]{64}\.pdf$#'),
-                $this->isType('resource')
-            );
+            ->with($finalPath, $this->isType('resource'));
 
         $this->chunksStorage->expects($this->once())
             ->method('directoryExists')
@@ -228,13 +227,14 @@ final class FilesystemChunkedUploadHandlerTest extends TestCase
 
         $result = $this->handler->moveToFinalLocation($fileId, $originalFilename);
 
-        $this->assertMatchesRegularExpression('#^2024/01/15/[a-f0-9]{16}/[a-f0-9]{64}\.pdf$#', $result);
+        $this->assertSame($finalPath, $result);
     }
 
     public function testMoveToFinalLocationHandlesFilenameWithoutExtension(): void
     {
         $fileId = 'move-456';
         $originalFilename = 'LICENSE';
+        $finalPath = '2024/02/20/abcdef0123456789/abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789';
 
         $this->chunksStorage->expects($this->once())
             ->method('fileExists')
@@ -242,7 +242,8 @@ final class FilesystemChunkedUploadHandlerTest extends TestCase
 
         $this->pathGenerator->expects($this->once())
             ->method('generate')
-            ->willReturn('2024/02/20');
+            ->with('')
+            ->willReturn($finalPath);
 
         $mergedStream = fopen('php://memory', 'rb+');
         rewind($mergedStream);
@@ -253,10 +254,7 @@ final class FilesystemChunkedUploadHandlerTest extends TestCase
 
         $this->localStorage->expects($this->once())
             ->method('writeStream')
-            ->with(
-                $this->matchesRegularExpression('#^2024/02/20/[a-f0-9]{16}/[a-f0-9]{64}$#'),
-                $this->isType('resource')
-            );
+            ->with($finalPath, $this->isType('resource'));
 
         $this->chunksStorage->expects($this->once())
             ->method('directoryExists')
@@ -267,7 +265,7 @@ final class FilesystemChunkedUploadHandlerTest extends TestCase
 
         $result = $this->handler->moveToFinalLocation($fileId, $originalFilename);
 
-        $this->assertMatchesRegularExpression('#^2024/02/20/[a-f0-9]{16}/[a-f0-9]{64}$#', $result);
+        $this->assertSame($finalPath, $result);
     }
 
     public function testMoveToFinalLocationThrowsExceptionWhenMergedFileNotFound(): void

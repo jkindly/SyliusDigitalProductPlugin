@@ -7,7 +7,6 @@ namespace Tests\SyliusDigitalProductPlugin\Unit\Controller\Shop\Action;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Sylius\Component\User\Model\UserInterface;
 use SyliusDigitalProductPlugin\Controller\Shop\Action\DownloadOrderItemFileAction;
 use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
 use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
@@ -18,7 +17,6 @@ use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
 use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
 use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -26,13 +24,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 final class DownloadOrderItemFileActionTest extends TestCase
 {
     private MockObject&DigitalProductOrderItemFileRepositoryInterface $orderItemFileRepository;
-    private MockObject&Security $security;
     private MockObject&EntityManagerInterface $entityManager;
 
     protected function setUp(): void
     {
         $this->orderItemFileRepository = $this->createMock(DigitalProductOrderItemFileRepositoryInterface::class);
-        $this->security = $this->createMock(Security::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
     }
 
@@ -43,7 +39,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
 
         return new DownloadOrderItemFileAction(
             $this->orderItemFileRepository,
-            $this->security,
             $this->entityManager,
             $responseGeneratorRegistry
         );
@@ -52,20 +47,13 @@ final class DownloadOrderItemFileActionTest extends TestCase
     public function testInvokeReturnsResponseForSuccessfulDownload(): void
     {
         $uuid = 'test-uuid-123';
-        $user = $this->createMock(UserInterface::class);
         $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
-        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
-        $this->security->expects($this->once())
-            ->method('getUser')
-            ->willReturn($user);
-
         $this->orderItemFileRepository->expects($this->once())
-            ->method('findOneByUuidAndUser')
-            ->with($uuid, $user)
+            ->method('findOneByUuid')
+            ->with($uuid)
             ->willReturn($file);
 
         $file->expects($this->once())
@@ -83,7 +71,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
-
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -110,15 +97,10 @@ final class DownloadOrderItemFileActionTest extends TestCase
     public function testInvokeThrowsNotFoundExceptionWhenFileNotFound(): void
     {
         $uuid = 'non-existent-uuid';
-        $user = $this->createMock(UserInterface::class);
-
-        $this->security->expects($this->once())
-            ->method('getUser')
-            ->willReturn($user);
 
         $this->orderItemFileRepository->expects($this->once())
-            ->method('findOneByUuidAndUser')
-            ->with($uuid, $user)
+            ->method('findOneByUuid')
+            ->with($uuid)
             ->willReturn(null);
 
         $this->expectException(NotFoundHttpException::class);
@@ -131,16 +113,11 @@ final class DownloadOrderItemFileActionTest extends TestCase
     public function testInvokeThrowsAccessDeniedExceptionWhenDownloadLimitExceeded(): void
     {
         $uuid = 'test-uuid-123';
-        $user = $this->createMock(UserInterface::class);
         $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
-        $this->security->expects($this->once())
-            ->method('getUser')
-            ->willReturn($user);
-
         $this->orderItemFileRepository->expects($this->once())
-            ->method('findOneByUuidAndUser')
-            ->with($uuid, $user)
+            ->method('findOneByUuid')
+            ->with($uuid)
             ->willReturn($file);
 
         $file->expects($this->once())
@@ -161,20 +138,13 @@ final class DownloadOrderItemFileActionTest extends TestCase
     public function testInvokeAllowsDownloadWhenDownloadLimitIsNull(): void
     {
         $uuid = 'test-uuid-123';
-        $user = $this->createMock(UserInterface::class);
         $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
-        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
-        $this->security->expects($this->once())
-            ->method('getUser')
-            ->willReturn($user);
-
         $this->orderItemFileRepository->expects($this->once())
-            ->method('findOneByUuidAndUser')
-            ->with($uuid, $user)
+            ->method('findOneByUuid')
+            ->with($uuid)
             ->willReturn($file);
 
         $file->expects($this->once())
@@ -191,7 +161,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
-
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -218,20 +187,13 @@ final class DownloadOrderItemFileActionTest extends TestCase
     public function testInvokeAllowsDownloadWhenCountIsJustBelowLimit(): void
     {
         $uuid = 'test-uuid-123';
-        $user = $this->createMock(UserInterface::class);
         $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
-        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
-        $this->security->expects($this->once())
-            ->method('getUser')
-            ->willReturn($user);
-
         $this->orderItemFileRepository->expects($this->once())
-            ->method('findOneByUuidAndUser')
-            ->with($uuid, $user)
+            ->method('findOneByUuid')
+            ->with($uuid)
             ->willReturn($file);
 
         $file->expects($this->once())
@@ -249,7 +211,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
-
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -276,22 +237,13 @@ final class DownloadOrderItemFileActionTest extends TestCase
     public function testInvokeWorksWithExternalUrlFileType(): void
     {
         $uuid = 'test-uuid-123';
-        $user = $this->createMock(UserInterface::class);
         $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
-        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(ExternalUrlFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
-        $configuration = ['url' => 'https://example.com/file.pdf'];
-
-        $this->security->expects($this->once())
-            ->method('getUser')
-            ->willReturn($user);
-
         $this->orderItemFileRepository->expects($this->once())
-            ->method('findOneByUuidAndUser')
-            ->with($uuid, $user)
+            ->method('findOneByUuid')
+            ->with($uuid)
             ->willReturn($file);
 
         $file->expects($this->once())
@@ -305,7 +257,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $file->expects($this->once())
             ->method('getType')
             ->willReturn('external_url');
-
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -332,22 +283,15 @@ final class DownloadOrderItemFileActionTest extends TestCase
     public function testInvokeIncrementsDownloadCountBeforeFlush(): void
     {
         $uuid = 'test-uuid-123';
-        $user = $this->createMock(UserInterface::class);
         $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
-        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
         $callOrder = [];
 
-        $this->security->expects($this->once())
-            ->method('getUser')
-            ->willReturn($user);
-
         $this->orderItemFileRepository->expects($this->once())
-            ->method('findOneByUuidAndUser')
-            ->with($uuid, $user)
+            ->method('findOneByUuid')
+            ->with($uuid)
             ->willReturn($file);
 
         $file->expects($this->once())
@@ -365,7 +309,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
-
 
         $file->expects($this->once())
             ->method('incrementDownloadCount')
@@ -398,16 +341,11 @@ final class DownloadOrderItemFileActionTest extends TestCase
     public function testInvokeThrowsAccessDeniedWhenCountExceedsLimit(): void
     {
         $uuid = 'test-uuid-123';
-        $user = $this->createMock(UserInterface::class);
         $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
 
-        $this->security->expects($this->once())
-            ->method('getUser')
-            ->willReturn($user);
-
         $this->orderItemFileRepository->expects($this->once())
-            ->method('findOneByUuidAndUser')
-            ->with($uuid, $user)
+            ->method('findOneByUuid')
+            ->with($uuid)
             ->willReturn($file);
 
         $file->expects($this->once())
@@ -428,20 +366,13 @@ final class DownloadOrderItemFileActionTest extends TestCase
     public function testInvokeAllowsFirstDownload(): void
     {
         $uuid = 'test-uuid-123';
-        $user = $this->createMock(UserInterface::class);
         $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
-        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(UploadedFileDto::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
-        $this->security->expects($this->once())
-            ->method('getUser')
-            ->willReturn($user);
-
         $this->orderItemFileRepository->expects($this->once())
-            ->method('findOneByUuidAndUser')
-            ->with($uuid, $user)
+            ->method('findOneByUuid')
+            ->with($uuid)
             ->willReturn($file);
 
         $file->expects($this->once())
@@ -459,7 +390,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $file->expects($this->once())
             ->method('getType')
             ->willReturn('uploaded_file');
-
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');
@@ -486,22 +416,13 @@ final class DownloadOrderItemFileActionTest extends TestCase
     public function testInvokePassesCorrectDtoToGenerator(): void
     {
         $uuid = 'test-uuid-123';
-        $user = $this->createMock(UserInterface::class);
         $file = $this->createMock(DigitalProductOrderItemFileInterface::class);
-        $serializer = $this->createMock(FileConfigurationSerializerInterface::class);
-        $dto = $this->createMock(FileDtoInterface::class);
         $generator = $this->createMock(FileResponseGeneratorInterface::class);
         $response = $this->createMock(Response::class);
 
-        $configuration = ['custom' => 'data'];
-
-        $this->security->expects($this->once())
-            ->method('getUser')
-            ->willReturn($user);
-
         $this->orderItemFileRepository->expects($this->once())
-            ->method('findOneByUuidAndUser')
-            ->with($uuid, $user)
+            ->method('findOneByUuid')
+            ->with($uuid)
             ->willReturn($file);
 
         $file->expects($this->once())
@@ -515,7 +436,6 @@ final class DownloadOrderItemFileActionTest extends TestCase
         $file->expects($this->once())
             ->method('getType')
             ->willReturn('custom_type');
-
 
         $file->expects($this->once())
             ->method('incrementDownloadCount');

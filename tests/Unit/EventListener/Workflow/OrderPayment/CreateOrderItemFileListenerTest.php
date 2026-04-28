@@ -10,6 +10,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use SyliusDigitalProductPlugin\Copier\OrderItemFileCopierInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
@@ -18,6 +19,7 @@ use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileOwnedSettingsInterface;
 use SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\CreateOrderItemFileListener;
 use SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
+use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
 use Symfony\Component\Workflow\Marking;
 use Symfony\Component\Workflow\Transition;
@@ -27,16 +29,23 @@ final class CreateOrderItemFileListenerTest extends TestCase
 {
     private MockObject&OrderItemFileFactoryInterface $orderItemFileFactory;
     private MockObject&EntityManagerInterface $entityManager;
+    private MockObject&OrderItemFileCopierInterface $orderItemFileCopier;
+    private MockObject&DigitalProductOrderItemFileRepositoryInterface $orderItemFileRepository;
     private CreateOrderItemFileListener $listener;
 
     protected function setUp(): void
     {
         $this->orderItemFileFactory = $this->createMock(OrderItemFileFactoryInterface::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
+        $this->orderItemFileCopier = $this->createMock(OrderItemFileCopierInterface::class);
+        $this->orderItemFileRepository = $this->createMock(DigitalProductOrderItemFileRepositoryInterface::class);
 
         $this->listener = new CreateOrderItemFileListener(
             $this->orderItemFileFactory,
-            $this->entityManager
+            $this->entityManager,
+            $this->orderItemFileCopier,
+            $this->orderItemFileRepository,
+            'uploaded_file',
         );
     }
 
@@ -80,6 +89,10 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('hasAnyFile')
             ->willReturn(true);
 
+        $this->orderItemFileRepository->expects($this->once())
+            ->method('hasFilesForOrderItem')
+            ->with($orderItem)
+            ->willReturn(false);
 
         $channel->expects($this->once())
             ->method('getDigitalProductFileChannelSettings')
@@ -93,7 +106,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('getName')
             ->willReturn('Test File');
 
-        $file->expects($this->once())
+        $file->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -105,9 +118,14 @@ final class CreateOrderItemFileListenerTest extends TestCase
         $fileSettings->method('getDownloadLimit')->willReturn(10);
         $file->method('getSettings')->willReturn($fileSettings);
 
+        $this->orderItemFileCopier->expects($this->once())
+            ->method('copy')
+            ->with(['path' => '/test/path'])
+            ->willReturn(['path' => '/test/path']);
+
         $this->orderItemFileFactory->expects($this->once())
             ->method('createWithData')
-            ->with($orderItem, 'Test File', 'uploaded_file', 10, ['path' => '/test/path'])
+            ->with($orderItem, 'Test File', 'uploaded_file', 10, null, ['path' => '/test/path'])
             ->willReturn($orderItemFile);
 
         $this->entityManager->expects($this->once())
@@ -203,6 +221,10 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('hasAnyFile')
             ->willReturn(true);
 
+        $this->orderItemFileRepository->expects($this->once())
+            ->method('hasFilesForOrderItem')
+            ->with($orderItem)
+            ->willReturn(false);
 
         $channel->expects($this->once())
             ->method('getDigitalProductFileChannelSettings')
@@ -216,7 +238,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('getName')
             ->willReturn('Test File');
 
-        $file->expects($this->once())
+        $file->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -230,9 +252,14 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('getDownloadLimit')
             ->willReturn(5);
 
+        $this->orderItemFileCopier->expects($this->once())
+            ->method('copy')
+            ->with(['path' => '/test/path'])
+            ->willReturn(['path' => '/test/path']);
+
         $this->orderItemFileFactory->expects($this->once())
             ->method('createWithData')
-            ->with($orderItem, 'Test File', 'uploaded_file', 5, ['path' => '/test/path'])
+            ->with($orderItem, 'Test File', 'uploaded_file', 5, null, ['path' => '/test/path'])
             ->willReturn($orderItemFile);
 
         $this->entityManager->expects($this->once())
@@ -281,6 +308,10 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('hasAnyFile')
             ->willReturn(true);
 
+        $this->orderItemFileRepository->expects($this->once())
+            ->method('hasFilesForOrderItem')
+            ->with($orderItem)
+            ->willReturn(false);
 
         $channel->expects($this->once())
             ->method('getDigitalProductFileChannelSettings')
@@ -294,7 +325,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('getName')
             ->willReturn('Test File');
 
-        $file->expects($this->once())
+        $file->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -304,9 +335,14 @@ final class CreateOrderItemFileListenerTest extends TestCase
 
         $file->method('getSettings')->willReturn(null);
 
+        $this->orderItemFileCopier->expects($this->once())
+            ->method('copy')
+            ->with(['path' => '/test/path'])
+            ->willReturn(['path' => '/test/path']);
+
         $this->orderItemFileFactory->expects($this->once())
             ->method('createWithData')
-            ->with($orderItem, 'Test File', 'uploaded_file', null, ['path' => '/test/path'])
+            ->with($orderItem, 'Test File', 'uploaded_file', null, null, ['path' => '/test/path'])
             ->willReturn($orderItemFile);
 
         $this->entityManager->expects($this->once())
@@ -359,6 +395,10 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('hasAnyFile')
             ->willReturn(true);
 
+        $this->orderItemFileRepository->expects($this->once())
+            ->method('hasFilesForOrderItem')
+            ->with($orderItem)
+            ->willReturn(false);
 
         $channel->expects($this->once())
             ->method('getDigitalProductFileChannelSettings')
@@ -372,7 +412,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('getName')
             ->willReturn('File 1');
 
-        $file1->expects($this->once())
+        $file1->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -384,7 +424,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('getName')
             ->willReturn('File 2');
 
-        $file2->expects($this->once())
+        $file2->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('external_url');
 
@@ -400,13 +440,19 @@ final class CreateOrderItemFileListenerTest extends TestCase
         $fileSettings2->method('getDownloadLimit')->willReturn(3);
         $file2->method('getSettings')->willReturn($fileSettings2);
 
+        $this->orderItemFileCopier->expects($this->once())
+            ->method('copy')
+            ->with(['path' => '/test/path1'])
+            ->willReturn(['path' => '/test/path1']);
+
         $this->orderItemFileFactory->expects($this->exactly(2))
             ->method('createWithData')
-            ->willReturnCallback(function ($item, $name, $type, $limit, $config) use ($orderItem, $orderItemFile1, $orderItemFile2) {
+            ->willReturnCallback(function ($item, $name, $type, $limit, $availableUntil, $config) use ($orderItem, $orderItemFile1, $orderItemFile2) {
                 if ('File 1' === $name) {
                     $this->assertSame($orderItem, $item);
                     $this->assertSame('uploaded_file', $type);
                     $this->assertSame(3, $limit);
+                    $this->assertNull($availableUntil);
                     $this->assertSame(['path' => '/test/path1'], $config);
                     return $orderItemFile1;
                 }
@@ -414,6 +460,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
                     $this->assertSame($orderItem, $item);
                     $this->assertSame('external_url', $type);
                     $this->assertSame(3, $limit);
+                    $this->assertNull($availableUntil);
                     $this->assertSame(['url' => 'https://example.com/file'], $config);
                     return $orderItemFile2;
                 }
@@ -490,7 +537,9 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('hasAnyFile')
             ->willReturn(true);
 
-
+        $this->orderItemFileRepository->expects($this->exactly(2))
+            ->method('hasFilesForOrderItem')
+            ->willReturn(false);
 
         $channel->expects($this->exactly(2))
             ->method('getDigitalProductFileChannelSettings')
@@ -508,7 +557,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('getName')
             ->willReturn('Item 1 File');
 
-        $file1->expects($this->once())
+        $file1->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -520,7 +569,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('getName')
             ->willReturn('Item 2 File');
 
-        $file2->expects($this->once())
+        $file2->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -536,17 +585,25 @@ final class CreateOrderItemFileListenerTest extends TestCase
         $fileSettings2->method('getDownloadLimit')->willReturn(10);
         $file2->method('getSettings')->willReturn($fileSettings2);
 
+        $this->orderItemFileCopier->expects($this->exactly(2))
+            ->method('copy')
+            ->willReturnCallback(function (array $config) {
+                return $config;
+            });
+
         $this->orderItemFileFactory->expects($this->exactly(2))
             ->method('createWithData')
-            ->willReturnCallback(function ($item, $name, $type, $limit, $config) use ($orderItem1, $orderItem2, $orderItemFile1, $orderItemFile2) {
+            ->willReturnCallback(function ($item, $name, $type, $limit, $availableUntil, $config) use ($orderItem1, $orderItem2, $orderItemFile1, $orderItemFile2) {
                 if ($item === $orderItem1) {
                     $this->assertSame('Item 1 File', $name);
                     $this->assertSame(5, $limit);
+                    $this->assertNull($availableUntil);
                     return $orderItemFile1;
                 }
                 if ($item === $orderItem2) {
                     $this->assertSame('Item 2 File', $name);
                     $this->assertSame(10, $limit);
+                    $this->assertNull($availableUntil);
                     return $orderItemFile2;
                 }
                 $this->fail('Unexpected order item');
@@ -617,6 +674,10 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('hasAnyFile')
             ->willReturn(false);
 
+        $this->orderItemFileRepository->expects($this->once())
+            ->method('hasFilesForOrderItem')
+            ->with($digitalOrderItem)
+            ->willReturn(false);
 
         $channel->expects($this->once())
             ->method('getDigitalProductFileChannelSettings')
@@ -630,7 +691,7 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('getName')
             ->willReturn('Digital File');
 
-        $file->expects($this->once())
+        $file->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('uploaded_file');
 
@@ -642,9 +703,14 @@ final class CreateOrderItemFileListenerTest extends TestCase
         $fileSettings->method('getDownloadLimit')->willReturn(7);
         $file->method('getSettings')->willReturn($fileSettings);
 
+        $this->orderItemFileCopier->expects($this->once())
+            ->method('copy')
+            ->with(['path' => '/digital/path'])
+            ->willReturn(['path' => '/digital/path']);
+
         $this->orderItemFileFactory->expects($this->once())
             ->method('createWithData')
-            ->with($digitalOrderItem, 'Digital File', 'uploaded_file', 7, ['path' => '/digital/path'])
+            ->with($digitalOrderItem, 'Digital File', 'uploaded_file', 7, null, ['path' => '/digital/path'])
             ->willReturn($orderItemFile);
 
         $this->entityManager->expects($this->once())
@@ -692,6 +758,10 @@ final class CreateOrderItemFileListenerTest extends TestCase
             ->method('hasAnyFile')
             ->willReturn(true);
 
+        $this->orderItemFileRepository->expects($this->once())
+            ->method('hasFilesForOrderItem')
+            ->with($orderItem)
+            ->willReturn(false);
 
         $channel->expects($this->once())
             ->method('getDigitalProductFileChannelSettings')

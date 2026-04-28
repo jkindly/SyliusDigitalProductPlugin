@@ -9,23 +9,25 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
-use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
+use SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
 use SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
 use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 use SyliusDigitalProductPlugin\Uploader\LocalDigitalProductFileUploader;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class LocalDigitalProductFileUploaderTest extends TestCase
 {
     private MockObject&FilesystemOperator $localStorage;
-    private MockObject&PathGeneratorInterface $pathGenerator;
+    private MockObject&StorageFilePathGeneratorInterface $pathGenerator;
     private LocalDigitalProductFileUploader $uploader;
+
+    private const FIXED_PATH = '2024/01/15/abcdef0123456789/abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789.pdf';
+    private const FIXED_PATH_NO_EXT = '2024/01/15/abcdef0123456789/abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789';
 
     protected function setUp(): void
     {
         $this->localStorage = $this->createMock(FilesystemOperator::class);
-        $this->pathGenerator = $this->createMock(PathGeneratorInterface::class);
+        $this->pathGenerator = $this->createMock(StorageFilePathGeneratorInterface::class);
 
         $this->uploader = new LocalDigitalProductFileUploader(
             $this->localStorage,
@@ -36,7 +38,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
 
     public function testUploadReturnsCorrectArrayStructure(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->pathGenerator->method('generate')->willReturn(self::FIXED_PATH);
         $this->localStorage->method('writeStream');
         $this->localStorage->method('fileExists')->willReturn(true);
         $this->localStorage->method('fileSize')->willReturn(1024);
@@ -56,7 +58,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
 
     public function testUploadStoresOriginalFilename(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->pathGenerator->method('generate')->willReturn(self::FIXED_PATH);
         $this->localStorage->method('writeStream');
         $this->localStorage->method('fileExists')->willReturn(true);
         $this->localStorage->method('fileSize')->willReturn(1024);
@@ -71,7 +73,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
 
     public function testUploadStoresExtension(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->pathGenerator->method('generate')->willReturn(self::FIXED_PATH);
         $this->localStorage->method('writeStream');
         $this->localStorage->method('fileExists')->willReturn(true);
         $this->localStorage->method('fileSize')->willReturn(1024);
@@ -86,7 +88,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
 
     public function testUploadStoresMimeType(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->pathGenerator->method('generate')->willReturn(self::FIXED_PATH);
         $this->localStorage->method('writeStream');
         $this->localStorage->method('fileExists')->willReturn(true);
         $this->localStorage->method('fileSize')->willReturn(1024);
@@ -101,7 +103,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
 
     public function testUploadStoresFileSize(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->pathGenerator->method('generate')->willReturn(self::FIXED_PATH);
         $this->localStorage->method('writeStream');
         $this->localStorage->method('fileExists')->willReturn(true);
         $this->localStorage->method('fileSize')->willReturn(1024);
@@ -116,7 +118,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
 
     public function testUploadCallsFlysystemWriteStream(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->pathGenerator->method('generate')->willReturn(self::FIXED_PATH);
         $this->localStorage->expects($this->once())->method('writeStream');
         $this->localStorage->method('fileExists')->willReturn(true);
         $this->localStorage->method('fileSize')->willReturn(1024);
@@ -129,7 +131,10 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
 
     public function testUploadGeneratesUniqueFilename(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $path1 = '2024/01/15/aaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.pdf';
+        $path2 = '2024/01/15/bbbbbbbbbbbbbbbb/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.pdf';
+
+        $this->pathGenerator->method('generate')->willReturnOnConsecutiveCalls($path1, $path2);
         $this->localStorage->method('writeStream');
         $this->localStorage->method('fileExists')->willReturn(true);
         $this->localStorage->method('fileSize')->willReturn(1024);
@@ -149,7 +154,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
 
     public function testUploadHandlesFileWithoutExtension(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->pathGenerator->method('generate')->willReturn(self::FIXED_PATH_NO_EXT);
         $this->localStorage->method('writeStream');
         $this->localStorage->method('fileExists')->willReturn(true);
         $this->localStorage->method('fileSize')->willReturn(1024);
@@ -165,7 +170,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
 
     public function testUploadThrowsExceptionWhenFileDoesNotExist(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->pathGenerator->method('generate')->willReturn(self::FIXED_PATH);
         $this->localStorage->method('writeStream');
         $this->localStorage->method('fileExists')->willReturn(false);
 
@@ -179,7 +184,7 @@ final class LocalDigitalProductFileUploaderTest extends TestCase
 
     public function testUploadUsesClientOriginalExtensionWhenGuessExtensionFails(): void
     {
-        $this->pathGenerator->method('generate')->willReturn('2024/01/15');
+        $this->pathGenerator->method('generate')->willReturn(self::FIXED_PATH);
         $this->localStorage->method('writeStream');
         $this->localStorage->method('fileExists')->willReturn(true);
         $this->localStorage->method('fileSize')->willReturn(1024);
