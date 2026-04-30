@@ -32,6 +32,8 @@ final class SyliusDigitalProductExtension extends AbstractResourceExtension impl
     public function prepend(ContainerBuilder $container): void
     {
         $this->prependDoctrineMigrations($container);
+        $this->prependApiPlatformMapping($container);
+        $this->prependSerializerMapping($container);
         $this->prependParameters($container);
 
         $validatorConfig = [
@@ -85,6 +87,30 @@ final class SyliusDigitalProductExtension extends AbstractResourceExtension impl
         return [
             'Sylius\Bundle\CoreBundle\Migrations',
         ];
+    }
+
+    private function prependApiPlatformMapping(ContainerBuilder $container): void
+    {
+        $container->prependExtensionConfig('api_platform', [
+            'mapping' => [
+                'paths' => [
+                    __DIR__ . '/../../config/api_platform',
+                ],
+            ],
+        ]);
+    }
+
+    private function prependSerializerMapping(ContainerBuilder $container): void
+    {
+        $container->prependExtensionConfig('framework', [
+            'serializer' => [
+                'mapping' => [
+                    'paths' => [
+                        __DIR__ . '/../../config/serialization',
+                    ],
+                ],
+            ],
+        ]);
     }
 
     private function getCurrentConfiguration(ContainerBuilder $container): array
