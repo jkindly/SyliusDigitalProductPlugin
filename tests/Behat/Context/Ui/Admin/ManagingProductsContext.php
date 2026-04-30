@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Behat\Mink\Exception\ElementNotFoundException;
@@ -12,9 +12,9 @@ use Sylius\Behat\Page\Shop\Product\ShowPageInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Tests\SyliusDigitalProductPlugin\Behat\Element\Admin\Product\DigitalFilesFormElementInterface;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Product\CreatePageInterface;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Product\UpdatePageInterface;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Element\Admin\Product\DigitalFilesFormElementInterface;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\Product\CreatePageInterface;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\Product\UpdatePageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingProductsContext implements Context

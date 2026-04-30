@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Form\Type;
+namespace Jkindly\SyliusDigitalProductPlugin\Form\Type;
 
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
-use SyliusDigitalProductPlugin\Validator\FileDtoValidatorInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
+use Jkindly\SyliusDigitalProductPlugin\Validator\FileDtoValidatorInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;

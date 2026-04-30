@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Handler;
+namespace Jkindly\SyliusDigitalProductPlugin\Handler;
 
-use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\FileDtoInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 
 final readonly class UploadedFileHandler implements FileHandlerInterface
 {

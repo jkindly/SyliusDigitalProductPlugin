@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\CommandHandler;
+namespace Jkindly\SyliusDigitalProductPlugin\CommandHandler;
 
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
-use SyliusDigitalProductPlugin\Command\SendDigitalDownloadEmail;
-use SyliusDigitalProductPlugin\Mailer\DigitalDownloadEmailManagerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Command\SendDigitalDownloadEmail;
+use Jkindly\SyliusDigitalProductPlugin\Mailer\DigitalDownloadEmailManagerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\ResponseGenerator;
+namespace Jkindly\SyliusDigitalProductPlugin\ResponseGenerator;
 
 use League\Flysystem\FilesystemOperator;
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileBaseInterface;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileBaseInterface;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;

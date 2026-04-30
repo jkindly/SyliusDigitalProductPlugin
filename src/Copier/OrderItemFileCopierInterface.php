@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Copier;
+namespace Jkindly\SyliusDigitalProductPlugin\Copier;
 
 interface OrderItemFileCopierInterface
 {

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment;
+namespace Jkindly\SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use SyliusDigitalProductPlugin\Copier\OrderItemFileCopierInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
-use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\Copier\OrderItemFileCopierInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
+use Jkindly\SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
 use Webmozart\Assert\Assert;
 

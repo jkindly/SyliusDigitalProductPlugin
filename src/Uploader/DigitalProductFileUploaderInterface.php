@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Uploader;
+namespace Jkindly\SyliusDigitalProductPlugin\Uploader;
 
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface DigitalProductFileUploaderInterface

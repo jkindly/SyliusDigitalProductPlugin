@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Controller\Admin\Action;
+namespace Jkindly\SyliusDigitalProductPlugin\Controller\Admin\Action;
 
 use Sylius\Component\Core\Model\AdminUserInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFile;
-use SyliusDigitalProductPlugin\Repository\DigitalProductFileRepositoryInterface;
-use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFile;
+use Jkindly\SyliusDigitalProductPlugin\Repository\DigitalProductFileRepositoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

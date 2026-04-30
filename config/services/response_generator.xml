@@ -6,23 +6,23 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="sylius_digital_product_plugin.response_generator.registry" class="SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry">
+        <service id="sylius_digital_product_plugin.response_generator.registry" class="Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry">
             <argument type="tagged_iterator" tag="sylius_digital_product_plugin.file_response_generator"/>
         </service>
 
-        <service id="sylius_digital_product_plugin.response_generator.uploaded_file" class="SyliusDigitalProductPlugin\ResponseGenerator\UploadedFileResponseGenerator">
+        <service id="sylius_digital_product_plugin.response_generator.uploaded_file" class="Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\UploadedFileResponseGenerator">
             <argument type="service" id="sylius_digital_product.storage.uploaded_file"/>
             <argument type="service" id="sylius_digital_product_plugin.serializer.registry"/>
         </service>
 
-        <service id="sylius_digital_product_plugin.response_generator.order.uploaded_file" class="SyliusDigitalProductPlugin\ResponseGenerator\UploadedFileResponseGenerator">
+        <service id="sylius_digital_product_plugin.response_generator.order.uploaded_file" class="Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\UploadedFileResponseGenerator">
             <argument type="service" id="sylius_digital_product.storage.order_file"/>
             <argument type="service" id="sylius_digital_product_plugin.serializer.registry"/>
             <argument>%sylius_digital_product_plugin.file_type.uploaded%</argument>
             <tag name="sylius_digital_product_plugin.file_response_generator"/>
         </service>
 
-        <service id="sylius_digital_product_plugin.response_generator.external_url" class="SyliusDigitalProductPlugin\ResponseGenerator\ExternalUrlFileResponseGenerator">
+        <service id="sylius_digital_product_plugin.response_generator.external_url" class="Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\ExternalUrlFileResponseGenerator">
             <argument type="service" id="sylius_digital_product_plugin.serializer.registry"/>
             <argument>%sylius_digital_product_plugin.file_type.external_url%</argument>
             <tag name="sylius_digital_product_plugin.file_response_generator"/>

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Handler;
+namespace Jkindly\SyliusDigitalProductPlugin\Handler;
 
-use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\FileDtoInterface;
 
 interface FileHandlerInterface
 {

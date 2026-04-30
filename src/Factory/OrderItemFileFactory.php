@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Factory;
+namespace Jkindly\SyliusDigitalProductPlugin\Factory;
 
 use Sylius\Component\Core\Model\OrderItemInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFile;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFile;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 
 final class OrderItemFileFactory implements OrderItemFileFactoryInterface
 {

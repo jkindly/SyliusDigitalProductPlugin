@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Entity\Trait;
+namespace Jkindly\SyliusDigitalProductPlugin\Entity\Trait;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 
 trait DigitalProductFilesAwareTrait
 {

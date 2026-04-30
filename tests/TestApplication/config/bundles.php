@@ -1,5 +1,5 @@
 <?php
 
 return [
-    SyliusDigitalProductPlugin\SyliusDigitalProductPlugin::class => ['all' => true],
+    Jkindly\SyliusDigitalProductPlugin\SyliusDigitalProductPlugin::class => ['all' => true],
 ];

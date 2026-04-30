@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Uploader;
+namespace Jkindly\SyliusDigitalProductPlugin\Uploader;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

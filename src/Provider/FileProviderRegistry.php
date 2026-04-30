@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Provider;
+namespace Jkindly\SyliusDigitalProductPlugin\Provider;
 
 final class FileProviderRegistry implements FileProviderRegistryInterface
 {

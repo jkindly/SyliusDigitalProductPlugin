@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Setup;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Step\Given;
@@ -10,9 +10,9 @@ use Behat\Step\Then;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemInterface;
-use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemInterface;
+use Jkindly\SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use Webmozart\Assert\Assert;
 
 final class OrderContext implements Context

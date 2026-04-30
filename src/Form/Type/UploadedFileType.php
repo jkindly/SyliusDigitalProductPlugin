@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Form\Type;
+namespace Jkindly\SyliusDigitalProductPlugin\Form\Type;
 
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Validator\FileDtoValidatorInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Validator\FileDtoValidatorInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;

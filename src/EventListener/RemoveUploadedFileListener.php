@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\EventListener;
+namespace Jkindly\SyliusDigitalProductPlugin\EventListener;
 
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
-use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 
 final readonly class RemoveUploadedFileListener
 {

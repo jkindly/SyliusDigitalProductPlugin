@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Entity\Trait;
+namespace Jkindly\SyliusDigitalProductPlugin\Entity\Trait;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemInterface;
 use Webmozart\Assert\Assert;
 
 trait DigitalProductOrderAwareTrait

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Mailer;
+namespace Jkindly\SyliusDigitalProductPlugin\Mailer;
 
 use Sylius\Component\Core\Model\OrderInterface;
 

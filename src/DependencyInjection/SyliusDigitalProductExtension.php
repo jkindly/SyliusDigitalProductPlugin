@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\DependencyInjection;
+namespace Jkindly\SyliusDigitalProductPlugin\DependencyInjection;
 
 use Sylius\Bundle\CoreBundle\DependencyInjection\PrependDoctrineMigrationsTrait;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
@@ -72,7 +72,7 @@ final class SyliusDigitalProductExtension extends AbstractResourceExtension impl
 
     protected function getMigrationsNamespace(): string
     {
-        return 'SyliusDigitalProductPlugin\Migrations';
+        return 'Jkindly\SyliusDigitalProductPlugin\Migrations';
     }
 
     protected function getMigrationsDirectory(): string

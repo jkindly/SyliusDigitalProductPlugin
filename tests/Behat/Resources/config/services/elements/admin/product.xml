@@ -4,7 +4,7 @@
     <services>
         <defaults public="true" />
 
-        <service id="tests.sylius_digital_product_plugin.behat.element.admin.product.digital_files_form" class="Tests\SyliusDigitalProductPlugin\Behat\Element\Admin\Product\DigitalFilesFormElement" parent="sylius.behat.element.admin.crud.form">
+        <service id="tests.sylius_digital_product_plugin.behat.element.admin.product.digital_files_form" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Element\Admin\Product\DigitalFilesFormElement" parent="sylius.behat.element.admin.crud.form">
             <argument type="service" id="sylius.behat.shared_storage"/>
         </service>
     </services>

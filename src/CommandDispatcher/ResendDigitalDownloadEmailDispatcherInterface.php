@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\CommandDispatcher;
+namespace Jkindly\SyliusDigitalProductPlugin\CommandDispatcher;
 
 use Sylius\Component\Core\Model\OrderInterface;
 

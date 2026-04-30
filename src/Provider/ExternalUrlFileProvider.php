@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Provider;
+namespace Jkindly\SyliusDigitalProductPlugin\Provider;
 
-use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
-use SyliusDigitalProductPlugin\Form\Type\ExternalUrlFileType;
+use Jkindly\SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Form\Type\ExternalUrlFileType;
 
 final class ExternalUrlFileProvider implements FileProviderInterface
 {

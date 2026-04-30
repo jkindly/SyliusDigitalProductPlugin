@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Controller\Admin\Action;
+namespace Jkindly\SyliusDigitalProductPlugin\Controller\Admin\Action;
 
 use League\Flysystem\FilesystemOperator;
-use SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

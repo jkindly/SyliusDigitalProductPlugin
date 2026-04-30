@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Entity\Trait;
+namespace Jkindly\SyliusDigitalProductPlugin\Entity\Trait;
 
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettingsInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettingsInterface;
 
 trait DigitalProductVariantSettingsAwareTrait
 {

@@ -2,19 +2,19 @@ sylius_product:
     resources:
         product_variant:
             classes:
-                model: Tests\SyliusDigitalProductPlugin\Entity\ProductVariant
+                model: Tests\Jkindly\SyliusDigitalProductPlugin\Entity\ProductVariant
 
 sylius_channel:
     resources:
         channel:
             classes:
-                model: Tests\SyliusDigitalProductPlugin\Entity\Channel
+                model: Tests\Jkindly\SyliusDigitalProductPlugin\Entity\Channel
 
 sylius_order:
     resources:
         order:
             classes:
-                model: Tests\SyliusDigitalProductPlugin\Entity\Order
+                model: Tests\Jkindly\SyliusDigitalProductPlugin\Entity\Order
         order_item:
             classes:
-                model: Tests\SyliusDigitalProductPlugin\Entity\OrderItem
+                model: Tests\Jkindly\SyliusDigitalProductPlugin\Entity\OrderItem

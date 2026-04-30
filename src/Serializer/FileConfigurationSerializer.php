@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Serializer;
+namespace Jkindly\SyliusDigitalProductPlugin\Serializer;
 
-use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\FileDtoInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;

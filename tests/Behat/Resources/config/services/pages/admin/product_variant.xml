@@ -4,15 +4,15 @@
     <services>
         <defaults public="true" />
 
-        <service id="tests.sylius_digital_product_plugin.behat.page.admin.product_variant.create" class="Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\CreatePage" parent="sylius.behat.page.admin.crud.create" public="false">
+        <service id="tests.sylius_digital_product_plugin.behat.page.admin.product_variant.create" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\CreatePage" parent="sylius.behat.page.admin.crud.create" public="false">
             <argument type="string">sylius_admin_product_variant_create</argument>
         </service>
 
-        <service id="tests.sylius_digital_product_plugin.behat.page.admin.product_variant.update" class="Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\UpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
+        <service id="tests.sylius_digital_product_plugin.behat.page.admin.product_variant.update" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\UpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
             <argument type="string">sylius_admin_product_variant_update</argument>
         </service>
 
-        <service id="tests.sylius_digital_product_plugin.behat.page.admin.product_variant.index" class="Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\IndexPage" parent="sylius.behat.page.admin.crud.index" public="false">
+        <service id="tests.sylius_digital_product_plugin.behat.page.admin.product_variant.index" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\IndexPage" parent="sylius.behat.page.admin.crud.index" public="false">
             <argument type="string">sylius_admin_product_variant_index</argument>
         </service>
     </services>

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Controller\Admin\Action;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Controller\Admin\Action;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
-use SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcherInterface;
-use SyliusDigitalProductPlugin\Controller\Admin\Action\ResendDigitalDownloadEmailAction;
+use Jkindly\SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcherInterface;
+use Jkindly\SyliusDigitalProductPlugin\Controller\Admin\Action\ResendDigitalDownloadEmailAction;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;

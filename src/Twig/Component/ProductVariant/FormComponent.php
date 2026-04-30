@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Twig\Component\ProductVariant;
+namespace Jkindly\SyliusDigitalProductPlugin\Twig\Component\ProductVariant;
 
 use Sylius\Bundle\AdminBundle\Twig\Component\ProductVariant\FormComponent as BaseFormComponent;
 use Sylius\Bundle\UiBundle\Twig\Component\LiveCollectionTrait;

@@ -4,11 +4,11 @@
     <services>
         <defaults public="true" />
 
-        <service id="tests.sylius_digital_product_plugin.behat.page.admin.channel.create" class="Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\CreatePage" parent="sylius.behat.page.admin.crud.create" public="false">
+        <service id="tests.sylius_digital_product_plugin.behat.page.admin.channel.create" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\CreatePage" parent="sylius.behat.page.admin.crud.create" public="false">
             <argument type="string">sylius_admin_channel_create</argument>
         </service>
 
-        <service id="tests.sylius_digital_product_plugin.behat.page.admin.channel.update" class="Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\UpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
+        <service id="tests.sylius_digital_product_plugin.behat.page.admin.channel.update" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\UpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
             <argument type="string">sylius_admin_channel_update</argument>
         </service>
     </services>

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Element\Admin\Product;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Element\Admin\Product;
 
 use Sylius\Behat\Element\Admin\Crud\FormElementInterface;
 use Sylius\Component\Core\Model\ChannelInterface;

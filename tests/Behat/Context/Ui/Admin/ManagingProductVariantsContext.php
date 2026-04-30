@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Behat\Step\Then;
@@ -10,10 +10,10 @@ use Behat\Step\When;
 use Sylius\Behat\Page\Shop\Product\IndexPageInterface as ShopProductIndexPageInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Tests\SyliusDigitalProductPlugin\Behat\Element\Admin\Product\DigitalFilesFormElementInterface;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\CreatePageInterface;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\IndexPageInterface;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\UpdatePageInterface;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Element\Admin\Product\DigitalFilesFormElementInterface;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\CreatePageInterface;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\IndexPageInterface;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant\UpdatePageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingProductVariantsContext implements Context

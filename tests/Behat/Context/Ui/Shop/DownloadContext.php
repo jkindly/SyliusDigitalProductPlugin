@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Mink\Mink;
 use Behat\Mink\Session;
 use Behat\MinkExtension\Context\MinkAwareContext;
 use Behat\Step\When;
 use Sylius\Behat\Service\SharedStorageInterface;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Shop\Account\Order\ShowPageInterface;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Shop\Account\Order\ShowPageInterface;
 
 final class DownloadContext implements MinkAwareContext
 {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
 
-    <entity name="SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings" table="sylius_digital_product_channel_settings">
+    <entity name="Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings" table="sylius_digital_product_channel_settings">
         <id name="id" type="integer" column="id">
             <generator/>
         </id>

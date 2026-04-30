@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Generator;
+namespace Jkindly\SyliusDigitalProductPlugin\Generator;
 
 interface PathGeneratorInterface
 {

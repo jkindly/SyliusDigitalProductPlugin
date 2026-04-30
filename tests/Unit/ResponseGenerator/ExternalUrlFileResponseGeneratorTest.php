@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\ResponseGenerator;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\ResponseGenerator;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
-use SyliusDigitalProductPlugin\Provider\ExternalUrlFileProvider;
-use SyliusDigitalProductPlugin\ResponseGenerator\ExternalUrlFileResponseGenerator;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
+use Jkindly\SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Provider\ExternalUrlFileProvider;
+use Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\ExternalUrlFileResponseGenerator;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Generator;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Generator;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
-use SyliusDigitalProductPlugin\Generator\StorageFilePathGenerator;
+use Jkindly\SyliusDigitalProductPlugin\Generator\PathGeneratorInterface;
+use Jkindly\SyliusDigitalProductPlugin\Generator\StorageFilePathGenerator;
 
 final class StorageFilePathGeneratorTest extends TestCase
 {

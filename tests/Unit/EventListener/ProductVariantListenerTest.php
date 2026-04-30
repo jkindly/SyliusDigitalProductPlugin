@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\EventListener;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\EventListener;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\ProductInterface;
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\EventListener\ProductVariantListener;
-use SyliusDigitalProductPlugin\Handler\FileHandlerInterface;
-use SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
+use Jkindly\SyliusDigitalProductPlugin\EventListener\ProductVariantListener;
+use Jkindly\SyliusDigitalProductPlugin\Handler\FileHandlerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
-use SyliusDigitalProductPlugin\Factory\ChunkedUploadedFileFactoryInterface;
-use SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Factory\ChunkedUploadedFileFactoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class ProductVariantListenerTest extends TestCase

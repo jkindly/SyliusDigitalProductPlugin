@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\EventListener;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\EventListener;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
-use SyliusDigitalProductPlugin\EventListener\RemoveUploadedFileListener;
-use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\EventListener\RemoveUploadedFileListener;
+use Jkindly\SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 
 final class RemoveUploadedFileListenerTest extends TestCase
 {

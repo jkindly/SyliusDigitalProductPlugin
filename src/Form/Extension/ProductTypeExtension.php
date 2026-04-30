@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Form\Extension;
+namespace Jkindly\SyliusDigitalProductPlugin\Form\Extension;
 
 use Sylius\Bundle\AdminBundle\Form\Type\AddButtonType;
 use Sylius\Bundle\AdminBundle\Form\Type\ProductType;
-use SyliusDigitalProductPlugin\Form\Type\DigitalProductFileType;
-use SyliusDigitalProductPlugin\Provider\FileProviderRegistryInterface;
+use Jkindly\SyliusDigitalProductPlugin\Form\Type\DigitalProductFileType;
+use Jkindly\SyliusDigitalProductPlugin\Provider\FileProviderRegistryInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;

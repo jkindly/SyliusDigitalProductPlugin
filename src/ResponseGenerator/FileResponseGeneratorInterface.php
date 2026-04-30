@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\ResponseGenerator;
+namespace Jkindly\SyliusDigitalProductPlugin\ResponseGenerator;
 
-use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileBaseInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\FileDtoInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileBaseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 interface FileResponseGeneratorInterface

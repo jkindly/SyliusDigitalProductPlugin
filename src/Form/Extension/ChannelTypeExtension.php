@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Form\Extension;
+namespace Jkindly\SyliusDigitalProductPlugin\Form\Extension;
 
 use Sylius\Bundle\AdminBundle\Form\Type\ChannelType;
-use SyliusDigitalProductPlugin\Form\Type\DigitalProductChannelSettingsType;
+use Jkindly\SyliusDigitalProductPlugin\Form\Type\DigitalProductChannelSettingsType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Valid;

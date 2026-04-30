@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Validator;
+namespace Jkindly\SyliusDigitalProductPlugin\Validator;
 
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;

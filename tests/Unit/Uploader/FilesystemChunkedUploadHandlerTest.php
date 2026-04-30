@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Uploader;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Uploader;
 
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
-use SyliusDigitalProductPlugin\Uploader\FilesystemChunkedUploadHandler;
+use Jkindly\SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
+use Jkindly\SyliusDigitalProductPlugin\Uploader\FilesystemChunkedUploadHandler;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class FilesystemChunkedUploadHandlerTest extends TestCase

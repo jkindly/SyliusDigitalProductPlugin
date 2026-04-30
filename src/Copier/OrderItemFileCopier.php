@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Copier;
+namespace Jkindly\SyliusDigitalProductPlugin\Copier;
 
 use League\Flysystem\FilesystemOperator;
-use SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
-use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
+use Jkindly\SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
+use Jkindly\SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
 
 final readonly class OrderItemFileCopier implements OrderItemFileCopierInterface
 {

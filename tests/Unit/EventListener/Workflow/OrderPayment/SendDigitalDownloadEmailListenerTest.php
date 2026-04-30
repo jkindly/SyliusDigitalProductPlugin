@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\EventListener\Workflow\OrderPayment;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\EventListener\Workflow\OrderPayment;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\OrderInterface;
-use SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcherInterface;
-use SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\SendDigitalDownloadEmailListener;
+use Jkindly\SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcherInterface;
+use Jkindly\SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\SendDigitalDownloadEmailListener;
 use Symfony\Component\Workflow\Event\CompletedEvent;
 use Symfony\Component\Workflow\Marking;
 use Symfony\Component\Workflow\Transition;

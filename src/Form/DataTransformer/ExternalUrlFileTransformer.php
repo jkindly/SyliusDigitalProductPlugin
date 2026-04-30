@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Form\DataTransformer;
+namespace Jkindly\SyliusDigitalProductPlugin\Form\DataTransformer;
 
-use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Webmozart\Assert\Assert;
 

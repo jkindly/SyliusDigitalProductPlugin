@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\ResponseGenerator;
+namespace Jkindly\SyliusDigitalProductPlugin\ResponseGenerator;
 
 final readonly class FileResponseGeneratorRegistry
 {

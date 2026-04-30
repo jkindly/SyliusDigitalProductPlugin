@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Serializer;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Serializer;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializer;
+use Jkindly\SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializer;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;

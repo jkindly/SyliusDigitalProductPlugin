@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Form\Type;
+namespace Jkindly\SyliusDigitalProductPlugin\Form\Type;
 
-use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
-use SyliusDigitalProductPlugin\Validator\FileDtoValidatorInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Validator\FileDtoValidatorInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;

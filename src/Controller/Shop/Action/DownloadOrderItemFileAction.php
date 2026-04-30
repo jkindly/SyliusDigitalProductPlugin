@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Controller\Shop\Action;
+namespace Jkindly\SyliusDigitalProductPlugin\Controller\Shop\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
-use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
-use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

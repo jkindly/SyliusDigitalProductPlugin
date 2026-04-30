@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Entity;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Channel as BaseChannel;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
-use SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFileChannelSettingsAwareTrait;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFileChannelSettingsAwareTrait;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'sylius_channel')]

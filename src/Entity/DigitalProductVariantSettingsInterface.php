@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Entity;
+namespace Jkindly\SyliusDigitalProductPlugin\Entity;
 
 interface DigitalProductVariantSettingsInterface
 {

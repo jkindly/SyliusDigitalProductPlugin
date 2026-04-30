@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Element\Admin;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Element\Admin;
 
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Element\Admin\NotificationsElement as BaseNotificationsElement;

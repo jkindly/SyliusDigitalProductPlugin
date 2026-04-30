@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Validator;
+namespace Jkindly\SyliusDigitalProductPlugin\Validator;
 
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 

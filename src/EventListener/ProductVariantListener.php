@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\EventListener;
+namespace Jkindly\SyliusDigitalProductPlugin\EventListener;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\Factory\ChunkedUploadedFileFactoryInterface;
-use SyliusDigitalProductPlugin\Handler\FileHandlerInterface;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
-use SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
+use Jkindly\SyliusDigitalProductPlugin\Factory\ChunkedUploadedFileFactoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\Handler\FileHandlerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 

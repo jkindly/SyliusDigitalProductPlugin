@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Validator;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Validator;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
-use SyliusDigitalProductPlugin\Validator\UploadedFileDtoValidator;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Validator\UploadedFileDtoValidator;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Serializer\Mapping\AttributeMetadataInterface;

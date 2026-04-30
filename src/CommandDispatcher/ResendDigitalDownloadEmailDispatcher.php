@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\CommandDispatcher;
+namespace Jkindly\SyliusDigitalProductPlugin\CommandDispatcher;
 
 use Sylius\Component\Core\Model\OrderInterface;
-use SyliusDigitalProductPlugin\Command\SendDigitalDownloadEmail;
+use Jkindly\SyliusDigitalProductPlugin\Command\SendDigitalDownloadEmail;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final class ResendDigitalDownloadEmailDispatcher implements ResendDigitalDownloadEmailDispatcherInterface

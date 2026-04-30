@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
@@ -12,11 +12,11 @@ use Behat\Step\When;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\CreatePageInterface;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\FormTrait;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\UpdatePageInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\CreatePageInterface;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\FormTrait;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel\UpdatePageInterface;
 use Webmozart\Assert\Assert;
 
 final readonly class ManagingChannelsContext implements Context

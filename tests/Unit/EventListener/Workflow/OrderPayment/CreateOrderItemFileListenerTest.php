@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\EventListener\Workflow\OrderPayment;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\EventListener\Workflow\OrderPayment;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,16 +10,16 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
-use SyliusDigitalProductPlugin\Copier\OrderItemFileCopierInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileOwnedSettingsInterface;
-use SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\CreateOrderItemFileListener;
-use SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
-use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\Copier\OrderItemFileCopierInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileOwnedSettingsInterface;
+use Jkindly\SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment\CreateOrderItemFileListener;
+use Jkindly\SyliusDigitalProductPlugin\Factory\OrderItemFileFactoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
 use Symfony\Component\Workflow\Marking;
 use Symfony\Component\Workflow\Transition;

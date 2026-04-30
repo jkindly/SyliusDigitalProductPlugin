@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Uploader;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Uploader;
 
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
-use SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
-use SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
-use SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
-use SyliusDigitalProductPlugin\Uploader\LocalDigitalProductFileUploader;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
+use Jkindly\SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
+use Jkindly\SyliusDigitalProductPlugin\Uploader\DigitalProductFileUploaderInterface;
+use Jkindly\SyliusDigitalProductPlugin\Uploader\LocalDigitalProductFileUploader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class LocalDigitalProductFileUploaderTest extends TestCase

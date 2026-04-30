@@ -2,7 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
 
-    <entity name="SyliusDigitalProductPlugin\Entity\DigitalProductFile" table="sylius_digital_product_file">
+    <entity name="Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFile" table="sylius_digital_product_file">
         <id name="id" type="integer" column="id">
             <generator/>
         </id>
@@ -24,7 +24,7 @@
             </cascade>
         </many-to-one>
 
-        <one-to-one field="settings" target-entity="SyliusDigitalProductPlugin\Entity\DigitalProductFileSettings" mapped-by="file" orphan-removal="true">
+        <one-to-one field="settings" target-entity="Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileSettings" mapped-by="file" orphan-removal="true">
             <cascade>
                 <cascade-persist />
                 <cascade-remove />

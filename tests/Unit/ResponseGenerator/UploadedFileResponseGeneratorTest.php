@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\ResponseGenerator;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\ResponseGenerator;
 
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
-use SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
-use SyliusDigitalProductPlugin\ResponseGenerator\UploadedFileResponseGenerator;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Provider\UploadedFileProvider;
+use Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\UploadedFileResponseGenerator;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

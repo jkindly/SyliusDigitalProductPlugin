@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Entity;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFile;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettings;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettingsInterface;
-use SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFilesAwareTrait;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFile;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettings;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettingsInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFilesAwareTrait;
 use Sylius\Component\Core\Model\ProductVariant as BaseProductVariant;
-use SyliusDigitalProductPlugin\Entity\Trait\DigitalProductVariantAwareTrait;
-use SyliusDigitalProductPlugin\Entity\Trait\DigitalProductVariantSettingsAwareTrait;
+use Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductVariantAwareTrait;
+use Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductVariantSettingsAwareTrait;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'sylius_product_variant')]

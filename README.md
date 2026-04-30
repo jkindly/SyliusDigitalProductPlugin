@@ -53,7 +53,7 @@ Add the plugin bundle to `config/bundles.php` if it is not registered automatica
 <?php
 
 return [
-    SyliusDigitalProductPlugin\SyliusDigitalProductPlugin::class => ['all' => true],
+    Jkindly\SyliusDigitalProductPlugin\SyliusDigitalProductPlugin::class => ['all' => true],
 ];
 ```
 
@@ -76,9 +76,9 @@ The plugin expects your application models to implement its interfaces and use i
 
 Your product variant model should:
 
-- implement `SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface`
-- use `SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFilesAwareTrait`
-- use `SyliusDigitalProductPlugin\Entity\Trait\DigitalProductVariantSettingsAwareTrait`
+- implement `Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface`
+- use `Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFilesAwareTrait`
+- use `Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductVariantSettingsAwareTrait`
 - add the matching Doctrine relations for:
   - `DigitalProductVariantSettings`
   - `DigitalProductFile`
@@ -95,12 +95,12 @@ namespace App\Entity\Product;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\ProductVariant as BaseProductVariant;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFile;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettings;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettingsInterface;
-use SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFilesAwareTrait;
-use SyliusDigitalProductPlugin\Entity\Trait\DigitalProductVariantSettingsAwareTrait;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFile;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettings;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantSettingsInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFilesAwareTrait;
+use Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductVariantSettingsAwareTrait;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'sylius_product_variant')]
@@ -127,23 +127,23 @@ class ProductVariant extends BaseProductVariant implements DigitalProductVariant
 
 Your channel model should:
 
-- implement `SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface`
-- use `SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFileChannelSettingsAwareTrait`
+- implement `Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface`
+- use `Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFileChannelSettingsAwareTrait`
 - add the relation for `DigitalProductChannelSettings`
 
 #### Order
 
 Your order model should:
 
-- implement `SyliusDigitalProductPlugin\Entity\DigitalProductOrderInterface`
-- use `SyliusDigitalProductPlugin\Entity\Trait\DigitalProductOrderAwareTrait`
+- implement `Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderInterface`
+- use `Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductOrderAwareTrait`
 
 #### Order item
 
 Your order item model should:
 
-- implement `SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemInterface`
-- use `SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFilesAwareTrait`
+- implement `Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemInterface`
+- use `Jkindly\SyliusDigitalProductPlugin\Entity\Trait\DigitalProductFilesAwareTrait`
 - add the relation for `DigitalProductOrderItemFile`
 
 The test application in `tests/TestApplication/src/Entity/` shows the full working setup.

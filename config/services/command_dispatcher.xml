@@ -7,12 +7,12 @@
 >
     <services>
         <service id="sylius_digital_product_plugin.command_dispatcher.resend_digital_download_email"
-                 class="SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcher"
+                 class="Jkindly\SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcher"
         >
             <argument type="service" id="sylius.command_bus"/>
         </service>
 
-        <service id="SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcherInterface"
+        <service id="Jkindly\SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcherInterface"
                  alias="sylius_digital_product_plugin.command_dispatcher.resend_digital_download_email"
         />
     </services>

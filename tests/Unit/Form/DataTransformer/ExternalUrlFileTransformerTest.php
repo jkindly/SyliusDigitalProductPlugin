@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Form\DataTransformer;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Form\DataTransformer;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
-use SyliusDigitalProductPlugin\Form\DataTransformer\ExternalUrlFileTransformer;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Form\DataTransformer\ExternalUrlFileTransformer;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 
 final class ExternalUrlFileTransformerTest extends TestCase
 {

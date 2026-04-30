@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Mailer;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Mailer;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -10,10 +10,10 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Mailer\Sender\SenderInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
-use SyliusDigitalProductPlugin\Mailer\DigitalDownloadEmailManager;
-use SyliusDigitalProductPlugin\Mailer\Emails;
-use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Mailer\DigitalDownloadEmailManager;
+use Jkindly\SyliusDigitalProductPlugin\Mailer\Emails;
+use Jkindly\SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class DigitalDownloadEmailManagerTest extends TestCase

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Command;
+namespace Jkindly\SyliusDigitalProductPlugin\Command;
 
 use DateTimeImmutable;
 use League\Flysystem\FileAttributes;

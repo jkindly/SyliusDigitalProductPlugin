@@ -2,7 +2,7 @@
     <services>
         <defaults public="true" />
 
-        <service id="tests.sylius_digital_product_plugin.behat.context.ui.admin.managing_channels" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext">
+        <service id="tests.sylius_digital_product_plugin.behat.context.ui.admin.managing_channels" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext">
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.admin.channel.create" />
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.admin.channel.update" />
             <argument type="service" id="sylius.behat.current_page_resolver" />
@@ -10,7 +10,7 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
-        <service id="tests.sylius_digital_product_plugin.behat.context.ui.admin.managing_products" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin\ManagingProductsContext">
+        <service id="tests.sylius_digital_product_plugin.behat.context.ui.admin.managing_products" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin\ManagingProductsContext">
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.admin.product.create" />
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.admin.product.update" />
             <argument type="service" id="sylius.behat.page.shop.product.show" />
@@ -18,7 +18,7 @@
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.element.admin.product.digital_files_form" />
         </service>
 
-        <service id="tests.sylius_digital_product_plugin.behat.context.ui.admin.managing_product_variants" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin\ManagingProductVariantsContext">
+        <service id="tests.sylius_digital_product_plugin.behat.context.ui.admin.managing_product_variants" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Ui\Admin\ManagingProductVariantsContext">
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.admin.product_variant.create" />
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.admin.product_variant.update" />
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.admin.product_variant.index" />
@@ -27,11 +27,11 @@
             <argument type="service" id="sylius.behat.page.shop.product.index" />
         </service>
 
-        <service id="tests.sylius_digital_product_plugin.behat.context.ui.shop.account" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop\AccountContext">
+        <service id="tests.sylius_digital_product_plugin.behat.context.ui.shop.account" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop\AccountContext">
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.shop.account.order.show" />
         </service>
 
-        <service id="tests.sylius_digital_product_plugin.behat.context.ui.shop.download" class="Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop\DownloadContext">
+        <service id="tests.sylius_digital_product_plugin.behat.context.ui.shop.download" class="Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop\DownloadContext">
             <argument type="service" id="tests.sylius_digital_product_plugin.behat.page.shop.account.order.show" />
             <argument type="service" id="sylius.behat.shared_storage" />
         </service>

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Form\DataTransformer;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Form\DataTransformer;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Form\DataTransformer\UploadedFileTransformer;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Form\DataTransformer\UploadedFileTransformer;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class UploadedFileTransformerTest extends TestCase

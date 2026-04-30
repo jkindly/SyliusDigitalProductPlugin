@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Mailer;
+namespace Jkindly\SyliusDigitalProductPlugin\Mailer;
 
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Mailer\Sender\SenderInterface;
-use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Webmozart\Assert\Assert;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\ProductVariant;
 
 interface IndexPageInterface
 {

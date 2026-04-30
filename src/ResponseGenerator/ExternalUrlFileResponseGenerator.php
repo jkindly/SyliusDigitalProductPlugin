@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\ResponseGenerator;
+namespace Jkindly\SyliusDigitalProductPlugin\ResponseGenerator;
 
-use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
-use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFileBaseInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
+use Jkindly\SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Dto\FileDtoInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileBaseInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

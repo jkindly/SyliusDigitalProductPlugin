@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Generator;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Generator;
 
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Generator\DatePathGenerator;
+use Jkindly\SyliusDigitalProductPlugin\Generator\DatePathGenerator;
 
 final class DatePathGeneratorTest extends TestCase
 {

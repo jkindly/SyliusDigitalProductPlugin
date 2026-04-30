@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Setup;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Step\Given;
@@ -10,11 +10,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings;
-use SyliusDigitalProductPlugin\Entity\DigitalProductFile;
-use SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
-use SyliusDigitalProductPlugin\Provider\ExternalUrlFileProvider;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettings;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFile;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
+use Jkindly\SyliusDigitalProductPlugin\Provider\ExternalUrlFileProvider;
 use Webmozart\Assert\Assert;
 
 final class ProductContext implements Context

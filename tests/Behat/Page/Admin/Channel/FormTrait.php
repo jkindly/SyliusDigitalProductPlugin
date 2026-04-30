@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Admin\Channel;
 
 trait FormTrait
 {

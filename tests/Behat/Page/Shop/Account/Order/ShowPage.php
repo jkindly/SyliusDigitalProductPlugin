@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Page\Shop\Account\Order;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Shop\Account\Order;
 
 use Sylius\Behat\Page\Shop\Account\Order\ShowPage as BaseShowPage;
 

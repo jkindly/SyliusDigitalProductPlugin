@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Serializer;
+namespace Jkindly\SyliusDigitalProductPlugin\Serializer;
 
 final readonly class FileConfigurationSerializerRegistry
 {

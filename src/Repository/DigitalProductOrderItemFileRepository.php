@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Repository;
+namespace Jkindly\SyliusDigitalProductPlugin\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\User\Model\UserInterface;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 
 /**
  * @extends ServiceEntityRepository<DigitalProductOrderItemFileInterface>

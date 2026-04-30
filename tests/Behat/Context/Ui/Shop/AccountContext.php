@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
 use Behat\Step\Then;
-use Tests\SyliusDigitalProductPlugin\Behat\Page\Shop\Account\Order\ShowPageInterface;
+use Tests\Jkindly\SyliusDigitalProductPlugin\Behat\Page\Shop\Account\Order\ShowPageInterface;
 use Webmozart\Assert\Assert;
 
 final class AccountContext implements Context

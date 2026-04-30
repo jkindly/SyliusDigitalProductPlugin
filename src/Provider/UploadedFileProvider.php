@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Provider;
+namespace Jkindly\SyliusDigitalProductPlugin\Provider;
 
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Form\Type\UploadedFileType;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Form\Type\UploadedFileType;
 
 final class UploadedFileProvider implements FileProviderInterface
 {

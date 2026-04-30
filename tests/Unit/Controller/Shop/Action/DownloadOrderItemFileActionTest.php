@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Tests\SyliusDigitalProductPlugin\Unit\Controller\Shop\Action;
+namespace Tests\Jkindly\SyliusDigitalProductPlugin\Unit\Controller\Shop\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SyliusDigitalProductPlugin\Controller\Shop\Action\DownloadOrderItemFileAction;
-use SyliusDigitalProductPlugin\Dto\FileDtoInterface;
-use SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
-use SyliusDigitalProductPlugin\Dto\UploadedFileDto;
-use SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
-use SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
-use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
-use SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
-use SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
+use Jkindly\SyliusDigitalProductPlugin\Controller\Shop\Action\DownloadOrderItemFileAction;
+use Jkindly\SyliusDigitalProductPlugin\Dto\FileDtoInterface;
+use Jkindly\SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use Jkindly\SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
+use Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
+use Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorRegistry;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
+use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

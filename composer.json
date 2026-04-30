@@ -70,12 +70,12 @@
     },
     "autoload": {
         "psr-4": {
-            "SyliusDigitalProductPlugin\\": "src/"
+            "Jkindly\\SyliusDigitalProductPlugin\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\SyliusDigitalProductPlugin\\": ["tests/", "tests/TestApplication/src/"]
+            "Tests\\Jkindly\\SyliusDigitalProductPlugin\\": ["tests/", "tests/TestApplication/src/"]
         }
     },
     "scripts": {

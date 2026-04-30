@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\Dto;
+namespace Jkindly\SyliusDigitalProductPlugin\Dto;
 
 interface FileDtoInterface
 {

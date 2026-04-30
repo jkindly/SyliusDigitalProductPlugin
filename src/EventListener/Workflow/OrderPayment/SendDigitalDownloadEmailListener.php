@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment;
+namespace Jkindly\SyliusDigitalProductPlugin\EventListener\Workflow\OrderPayment;
 
 use Sylius\Component\Core\Model\OrderInterface;
-use SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcherInterface;
+use Jkindly\SyliusDigitalProductPlugin\CommandDispatcher\ResendDigitalDownloadEmailDispatcherInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
 use Webmozart\Assert\Assert;
 
