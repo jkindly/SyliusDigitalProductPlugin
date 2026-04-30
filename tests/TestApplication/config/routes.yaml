@@ -1,6 +1,6 @@
-acme_sylius_example_admin:
+sylius_digital_product_plugin_admin:
     resource: "@SyliusDigitalProductPlugin/config/routes/admin.yaml"
     prefix: /admin
 
-acme_sylius_example_shop:
+sylius_digital_product_plugin_shop:
     resource: "@SyliusDigitalProductPlugin/config/routes/shop.yaml"

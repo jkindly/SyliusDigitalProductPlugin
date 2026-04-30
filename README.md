@@ -33,7 +33,7 @@ For uploaded files, the plugin copies the original product file into an order-sp
 ## Requirements
 
 - PHP 8.2+
-- Symfony 6.4
+- Symfony 6.4 or 7.4
 - Sylius 2.x
 - League Flysystem Bundle 3.x
 
