@@ -23,19 +23,21 @@ class DigitalProductOrderItemFileRepository extends ServiceEntityRepository impl
 
     public function findOneByUuid(string $uuid): ?DigitalProductOrderItemFileInterface
     {
-        /** @var DigitalProductOrderItemFileInterface|null */
-        return $this->createQueryBuilder('oif')
+        /** @var DigitalProductOrderItemFileInterface|null $file */
+        $file = $this->createQueryBuilder('oif')
             ->andWhere('oif.uuid = :uuid')
             ->setParameter('uuid', $uuid)
             ->getQuery()
             ->getOneOrNullResult()
         ;
+
+        return $file;
     }
 
     public function findOneByUuidAndUser(string $uuid, UserInterface $user): ?DigitalProductOrderItemFileInterface
     {
-        /** @var DigitalProductOrderItemFileInterface|null */
-        return $this->createQueryBuilder('oif')
+        /** @var DigitalProductOrderItemFileInterface|null $file */
+        $file = $this->createQueryBuilder('oif')
             ->join('oif.orderItem', 'oi')
             ->join('oi.order', 'o')
             ->join('o.customer', 'c')
@@ -47,6 +49,8 @@ class DigitalProductOrderItemFileRepository extends ServiceEntityRepository impl
             ->getQuery()
             ->getOneOrNullResult()
         ;
+
+        return $file;
     }
 
     public function hasFilesForOrderItem(OrderItemInterface $orderItem): bool
@@ -62,13 +66,15 @@ class DigitalProductOrderItemFileRepository extends ServiceEntityRepository impl
 
     public function findByOrder(OrderInterface $order): array
     {
-        /** @var DigitalProductOrderItemFileInterface[] */
-        return $this->createQueryBuilder('oif')
+        /** @var DigitalProductOrderItemFileInterface[] $files */
+        $files = $this->createQueryBuilder('oif')
             ->join('oif.orderItem', 'oi')
             ->andWhere('oi.order = :order')
             ->setParameter('order', $order)
             ->getQuery()
             ->getResult()
         ;
+
+        return $files;
     }
 }

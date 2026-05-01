@@ -7,6 +7,7 @@ namespace Jkindly\SyliusDigitalProductPlugin\DependencyInjection;
 use Jkindly\SyliusDigitalProductPlugin\Mailer\Emails;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 use Sylius\Bundle\CoreBundle\DependencyInjection\PrependDoctrineMigrationsTrait;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -178,6 +179,10 @@ final class SyliusDigitalProductExtension extends AbstractResourceExtension impl
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
 
         foreach ($iterator as $file) {
+            if (!$file instanceof SplFileInfo) {
+                continue;
+            }
+
             if (!$file->isFile() || 'yaml' !== $file->getExtension()) {
                 continue;
             }
