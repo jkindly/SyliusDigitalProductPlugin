@@ -8,10 +8,10 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Jkindly\SyliusDigitalProductPlugin\Command\SendDigitalDownloadEmail;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class ResendDigitalDownloadEmailDispatcher implements ResendDigitalDownloadEmailDispatcherInterface
+final readonly class ResendDigitalDownloadEmailDispatcher implements ResendDigitalDownloadEmailDispatcherInterface
 {
     public function __construct(
-        private readonly MessageBusInterface $messageBus,
+        private MessageBusInterface $messageBus,
     ) {
     }
 
