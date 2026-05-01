@@ -1,13 +1,3 @@
-<p align="center">
-    <a href="https://sylius.com" target="_blank">
-        <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="https://media.sylius.com/sylius-logo-800-dark.png">
-            <source media="(prefers-color-scheme: light)" srcset="https://media.sylius.com/sylius-logo-800.png">
-            <img alt="Sylius Logo." src="https://media.sylius.com/sylius-logo-800.png">
-        </picture>
-    </a>
-</p>
-
 <h1 align="center">Sylius Digital Product Plugin</h1>
 
 <p align="center">Sell digital products in Sylius with uploaded files, external URLs, download limits, and post-payment delivery.</p>
