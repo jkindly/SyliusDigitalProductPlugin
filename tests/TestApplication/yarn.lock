@@ -2,3 +2,134 @@
 # yarn lockfile v1
 
 
+"@transloadit/prettier-bytes@^0.3.4":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@transloadit/prettier-bytes/-/prettier-bytes-0.3.5.tgz#0cca83975293e3f4990229914942c69714122ede"
+  integrity sha512-xF4A3d/ZyX2LJWeQZREZQw+qFX4TGQ8bGVP97OLRt6sPO6T0TNHBFTuRHOJh7RNmYOBmQ9MHxpolD9bXihpuVA==
+
+"@uppy/core@^5.2":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@uppy/core/-/core-5.2.0.tgz#baeb0f9f1ef5bec1882eac912f5a41094af69f84"
+  integrity sha512-uvfNyz4cnaplt7LYJmEZHuqOuav0tKp4a9WKJIaH6iIj7XiqYvS2J5SEByexAlUFlzefOAyjzj4Ja2dd/8aMrw==
+  dependencies:
+    "@transloadit/prettier-bytes" "^0.3.4"
+    "@uppy/store-default" "^5.0.0"
+    "@uppy/utils" "^7.1.4"
+    lodash "^4.17.21"
+    mime-match "^1.0.2"
+    namespace-emitter "^2.0.1"
+    nanoid "^5.0.9"
+    preact "^10.5.13"
+
+"@uppy/dashboard@^5.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@uppy/dashboard/-/dashboard-5.1.1.tgz#6e95c65c5658e9f85cf5bf8927f544cafe1aa6be"
+  integrity sha512-6H/xVvhhdfwp1+FRMp2C+tudyaedqD5+LMDB8Iw20k9+QCL1eGzOh4wXm6MCqJtNfQ1tLaprGMG1jlo7yS/uyw==
+  dependencies:
+    "@transloadit/prettier-bytes" "^0.3.4"
+    "@uppy/provider-views" "^5.2.2"
+    "@uppy/thumbnail-generator" "^5.1.0"
+    "@uppy/utils" "^7.1.5"
+    classnames "^2.2.6"
+    lodash "^4.17.23"
+    nanoid "^5.0.9"
+    preact "^10.26.10"
+    shallow-equal "^3.0.0"
+
+"@uppy/provider-views@^5.2.2":
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/@uppy/provider-views/-/provider-views-5.2.2.tgz#81e66f6983121e115d5d385c8a649f3721e9e10d"
+  integrity sha512-NAazIJ5sjrAc6++CeJ/u9dB5gDaaAOLHrYeEmWs/HqLlftlIinRZOybnyzJRXwI8jWI/FK5moluzt2HXu6dPQQ==
+  dependencies:
+    "@uppy/utils" "^7.1.5"
+    classnames "^2.2.6"
+    lodash "^4.17.21"
+    nanoid "^5.0.9"
+    p-queue "^8.0.0"
+    preact "^10.5.13"
+
+"@uppy/store-default@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@uppy/store-default/-/store-default-5.0.0.tgz#2466162857a999b8c99051426e5f412e2f34cb26"
+  integrity sha512-hQtCSQ1yGiaval/wVYUWquYGDJ+bpQ7e4FhUUAsRQz1x1K+o7NBtjfp63O9I4Ks1WRoKunpkarZ+as09l02cPw==
+
+"@uppy/thumbnail-generator@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@uppy/thumbnail-generator/-/thumbnail-generator-5.1.0.tgz#6537f327ba5eeb32b72b681ed667b900c4e26a3a"
+  integrity sha512-QAKJHHkMrD/30GOyUb5U9HyJ7Ie3jiMLp4pVdw27PoA4pNV7fDQz0tyDeRPj2H+BWPEB1NsTSSfHI2pjHNI+OQ==
+  dependencies:
+    "@uppy/utils" "^7.1.4"
+    exifr "^7.0.0"
+
+"@uppy/utils@^7.1.4", "@uppy/utils@^7.1.5":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@uppy/utils/-/utils-7.2.0.tgz#10212e92d8b57ff9d854276d056e98fdcd4643c9"
+  integrity sha512-6lC246qszMv6bTyl/+QyHwrudgeguWkA94ME1wHn+a6uRAvmtAEaUManIfGqTJfoKvWAiCJqdJPl5xRJjhAloQ==
+  dependencies:
+    lodash "^4.17.23"
+    preact "^10.26.10"
+
+classnames@^2.2.6:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.5.1.tgz#ba774c614be0f016da105c858e7159eae8e7687b"
+  integrity sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==
+
+eventemitter3@^5.0.1:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.4.tgz#a86d66170433712dde814707ac52b5271ceb1feb"
+  integrity sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw==
+
+exifr@^7.0.0:
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/exifr/-/exifr-7.1.3.tgz#f6218012c36dbb7d843222011b27f065fddbab6f"
+  integrity sha512-g/aje2noHivrRSLbAUtBPWFbxKdKhgj/xr1vATDdUXPOFYJlQ62Ft0oy+72V6XLIpDJfHs6gXLbBLAolqOXYRw==
+
+lodash@^4.17.21, lodash@^4.17.23:
+  version "4.18.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.18.1.tgz#ff2b66c1f6326d59513de2407bf881439812771c"
+  integrity sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==
+
+mime-match@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/mime-match/-/mime-match-1.0.2.tgz#3f87c31e9af1a5fd485fb9db134428b23bbb7ba8"
+  integrity sha512-VXp/ugGDVh3eCLOBCiHZMYWQaTNUHv2IJrut+yXA6+JbLPXHglHwfS/5A5L0ll+jkCY7fIzRJcH6OIunF+c6Cg==
+  dependencies:
+    wildcard "^1.1.0"
+
+namespace-emitter@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/namespace-emitter/-/namespace-emitter-2.0.1.tgz#978d51361c61313b4e6b8cf6f3853d08dfa2b17c"
+  integrity sha512-N/sMKHniSDJBjfrkbS/tpkPj4RAbvW3mr8UAzvlMHyun93XEm83IAvhWtJVHo+RHn/oO8Job5YN4b+wRjSVp5g==
+
+nanoid@^5.0.9:
+  version "5.1.11"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-5.1.11.tgz#559dbdbc41737da341ac938c25514563d2dd94c7"
+  integrity sha512-v+KEsUv2ps74PaSKv0gHTxTCgMXOIfBEbaqa6w6ISIGC7ZsvHN4N9oJ8d4cmf0n5oTzQz2SLmThbQWhjd/8eKg==
+
+p-queue@^8.0.0:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/p-queue/-/p-queue-8.1.1.tgz#dac3e8c57412fffa18fe6c341b141dbb3a16408b"
+  integrity sha512-aNZ+VfjobsWryoiPnEApGGmf5WmNsCo9xu8dfaYamG5qaLP7ClhLN6NgsFe6SwJ2UbLEBK5dv9x8Mn5+RVhMWQ==
+  dependencies:
+    eventemitter3 "^5.0.1"
+    p-timeout "^6.1.2"
+
+p-timeout@^6.1.2:
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/p-timeout/-/p-timeout-6.1.4.tgz#418e1f4dd833fa96a2e3f532547dd2abdb08dbc2"
+  integrity sha512-MyIV3ZA/PmyBN/ud8vV9XzwTrNtR4jFrObymZYnZqMmW0zA8Z17vnT0rBgFE/TlohB+YCHqXMgZzb3Csp49vqg==
+
+preact@^10.26.10, preact@^10.5.13:
+  version "10.29.1"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.29.1.tgz#2a5b936efe91cfe1e773cdb55dceb55d148d1d4b"
+  integrity sha512-gQCLc/vWroE8lIpleXtdJhTFDogTdZG9AjMUpVkDf2iTCNwYNWA+u16dL41TqUDJO4gm2IgrcMv3uTpjd4Pwmg==
+
+shallow-equal@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-3.1.0.tgz#e7a54bac629c7f248eff6c2f5b63122ba4320bec"
+  integrity sha512-pfVOw8QZIXpMbhBWvzBISicvToTiM5WBF1EeAUZDDSb5Dt29yl4AYbyywbJFSEsRUMr7gJaxqCdr4L3tQf9wVg==
+
+wildcard@^1.1.0:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/wildcard/-/wildcard-1.1.2.tgz#a7020453084d8cd2efe70ba9d3696263de1710a5"
+  integrity sha512-DXukZJxpHA8LuotRwL0pP1+rS6CS7FF2qStDDE1C7DDg2rLud2PXRMuEDYIPhgEezwnlHNL4c+N6MfMTjCGTng==

@@ -1,9 +1,3 @@
-framework:
-    serializer:
-        mapping:
-            paths: [ '%kernel.project_dir%/config/serialization' ]
-
 imports:
     - { resource: "twig_hooks/**/*.yaml" }
     - { resource: "packages/*.yaml" }
-

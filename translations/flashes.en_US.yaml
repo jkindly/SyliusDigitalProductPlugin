@@ -1,0 +1,3 @@
+sylius_digital_product:
+    email:
+        digital_download_resent: 'Digital download email has been successfully resent.'

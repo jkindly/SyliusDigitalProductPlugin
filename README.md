@@ -36,6 +36,7 @@ For uploaded files, the plugin copies the original product file into an order-sp
 - Symfony 6.4 or 7.4
 - Sylius 2.x
 - League Flysystem Bundle 3.x
+- Node.js 20+ for building Sylius Standard frontend assets
 
 ## Installation
 
@@ -183,15 +184,16 @@ The plugin prepends its Doctrine migrations automatically. Run:
 bin/console doctrine:migrations:migrate
 ```
 
-### 7. Configure mailer and storage if needed
+### 7. Configure mailer, storage, and Twig hooks if needed
 
-The plugin ships with:
+The bundle automatically registers:
 
 - Sylius Mailer configuration for the digital download email
 - Flysystem storages for product files, order files, and upload chunks
 - Twig hooks for admin and shop UI integration
+- serializer and validator mapping
 
-In a standard Sylius app, those are loaded automatically from the plugin bundle. You only need extra configuration if you want to override the defaults.
+You only need extra configuration if you want to override the defaults.
 
 ## Configuration
 
@@ -325,7 +327,7 @@ vendor/bin/console assets:install
 
 ```bash
 vendor/bin/phpunit
-vendor/bin/behat --strict --tags="~@javascript&&~@mink:chromedriver"
+vendor/bin/behat
 vendor/bin/phpstan analyse -c phpstan.neon -l max src
 vendor/bin/ecs check
 ```
