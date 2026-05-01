@@ -96,6 +96,7 @@ final class CleanupAbandonedChunksCommand extends Command
 
                 if ($fileTime > $cutoffTime) {
                     $shouldDelete = false;
+
                     break;
                 }
 

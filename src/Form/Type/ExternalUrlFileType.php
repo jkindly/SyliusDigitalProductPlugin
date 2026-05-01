@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\Form\Type;
 
-use Jkindly\SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
 use Jkindly\SyliusDigitalProductPlugin\Validator\FileDtoValidatorInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\CommandHandler;
 
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Jkindly\SyliusDigitalProductPlugin\Command\SendDigitalDownloadEmail;
 use Jkindly\SyliusDigitalProductPlugin\Mailer\DigitalDownloadEmailManagerInterface;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

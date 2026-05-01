@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\Controller\Admin\Action;
 
-use Sylius\Component\Core\Model\AdminUserInterface;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFile;
 use Jkindly\SyliusDigitalProductPlugin\Repository\DigitalProductFileRepositoryInterface;
 use Jkindly\SyliusDigitalProductPlugin\ResponseGenerator\FileResponseGeneratorInterface;
+use Sylius\Component\Core\Model\AdminUserInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

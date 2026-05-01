@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\Uploader;
 
+use Jkindly\SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
 use League\Flysystem\FilesystemOperator;
 use RuntimeException;
-use Jkindly\SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class FilesystemChunkedUploadHandler implements ChunkedUploadHandlerInterface

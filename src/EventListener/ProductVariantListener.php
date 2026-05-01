@@ -6,7 +6,6 @@ namespace Jkindly\SyliusDigitalProductPlugin\EventListener;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Sylius\Component\Core\Model\ProductInterface;
 use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
@@ -14,6 +13,7 @@ use Jkindly\SyliusDigitalProductPlugin\Factory\ChunkedUploadedFileFactoryInterfa
 use Jkindly\SyliusDigitalProductPlugin\Handler\FileHandlerInterface;
 use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerInterface;
 use Jkindly\SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\Form\Type;
 
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelSettingsInterface;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use Jkindly\SyliusDigitalProductPlugin\Provider\FileProviderRegistryInterface;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

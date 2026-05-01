@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\Controller\Admin\Action;
 
-use League\Flysystem\FilesystemOperator;
 use Jkindly\SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

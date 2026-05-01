@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\Factory;
 
-use Sylius\Component\Core\Model\OrderItemInterface;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
+use Sylius\Component\Core\Model\OrderItemInterface;
 
 interface OrderItemFileFactoryInterface
 {

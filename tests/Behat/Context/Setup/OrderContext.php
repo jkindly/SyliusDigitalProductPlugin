@@ -8,11 +8,11 @@ use Behat\Behat\Context\Context;
 use Behat\Step\Given;
 use Behat\Step\Then;
 use Doctrine\ORM\EntityManagerInterface;
-use Sylius\Behat\Service\SharedStorageInterface;
-use Sylius\Component\Core\Model\OrderInterface;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderInterface;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemInterface;
 use Jkindly\SyliusDigitalProductPlugin\Repository\DigitalProductOrderItemFileRepositoryInterface;
+use Sylius\Behat\Service\SharedStorageInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Webmozart\Assert\Assert;
 
 final class OrderContext implements Context

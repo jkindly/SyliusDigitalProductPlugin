@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\Uploader;
 
-use League\Flysystem\FilesystemOperator;
-use RuntimeException;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileInterface;
 use Jkindly\SyliusDigitalProductPlugin\Generator\StorageFilePathGeneratorInterface;
+use League\Flysystem\FilesystemOperator;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class LocalDigitalProductFileUploader implements DigitalProductFileUploaderInterface

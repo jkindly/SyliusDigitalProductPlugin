@@ -6,10 +6,10 @@ namespace Jkindly\SyliusDigitalProductPlugin\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\User\Model\UserInterface;
-use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 
 /**
  * @extends ServiceEntityRepository<DigitalProductOrderItemFileInterface>

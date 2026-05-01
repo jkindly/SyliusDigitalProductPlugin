@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\Form\Extension;
 
-use Sylius\Bundle\AdminBundle\Form\Type\AddButtonType;
-use Sylius\Bundle\CoreBundle\Form\Type\ChannelCollectionType;
-use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantType;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductChannelInterface;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductVariantInterface;
 use Jkindly\SyliusDigitalProductPlugin\Form\EventSubscriber\ChannelBasedFilesSubscriber;
 use Jkindly\SyliusDigitalProductPlugin\Form\Type\DigitalProductFileType;
 use Jkindly\SyliusDigitalProductPlugin\Form\Type\DigitalProductVariantSettingsType;
 use Jkindly\SyliusDigitalProductPlugin\Provider\FileProviderRegistryInterface;
+use Sylius\Bundle\AdminBundle\Form\Type\AddButtonType;
+use Sylius\Bundle\CoreBundle\Form\Type\ChannelCollectionType;
+use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;

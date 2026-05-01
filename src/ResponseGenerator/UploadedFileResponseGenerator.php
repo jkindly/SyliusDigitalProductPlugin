@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\ResponseGenerator;
 
-use League\Flysystem\FilesystemOperator;
 use Jkindly\SyliusDigitalProductPlugin\Dto\UploadedFileDto;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileBaseInterface;
 use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;

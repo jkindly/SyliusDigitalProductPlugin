@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Jkindly\SyliusDigitalProductPlugin\Factory;
 
+use Jkindly\SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
 use League\Flysystem\FilesystemOperator;
 use RuntimeException;
-use Jkindly\SyliusDigitalProductPlugin\Uploader\ChunkedUploadHandlerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class ChunkedUploadedFileFactory implements ChunkedUploadedFileFactoryInterface

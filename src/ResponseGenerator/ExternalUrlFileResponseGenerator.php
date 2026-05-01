@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Jkindly\SyliusDigitalProductPlugin\ResponseGenerator;
 
 use Jkindly\SyliusDigitalProductPlugin\Dto\ExternalUrlFileDto;
-use Jkindly\SyliusDigitalProductPlugin\Dto\FileDtoInterface;
 use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductFileBaseInterface;
-use Jkindly\SyliusDigitalProductPlugin\Entity\DigitalProductOrderItemFileInterface;
 use Jkindly\SyliusDigitalProductPlugin\Serializer\FileConfigurationSerializerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
